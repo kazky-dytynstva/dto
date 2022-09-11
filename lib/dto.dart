@@ -1,8 +1,9 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library dto;
 
-export 'src/dto_base.dart';
+export 'src/person/person_dto.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+export 'src/tale/chapter/audio/chapter_audio_dto.dart';
+export 'src/tale/chapter/chapter_dto.dart';
+export 'src/tale/crew/crew_dto.dart';
+export 'src/tale/rating/rating_dto.dart';
+export 'src/tale/tale_dto.dart';
