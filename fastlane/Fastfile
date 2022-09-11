@@ -1,0 +1,105 @@
+import("lib/config.rb")
+import("lib/utils.rb")
+
+# Common checks before running a lane
+before_all do |lane, options|
+  allowedOptions = Options.constants.map { |c| Options.const_get(c) }
+  options.each do |k, v|
+    UI.user_error!("Unknown Option ''#{k}'\nAllowed options:\n#{Options::all_variables}") unless allowedOptions.include?(k)
+  end
+  setIfNotSet = lambda { |key, value|
+    options[key] = options.key?(key) ? options[key] : value
+  }
+
+  # set default variables
+  setIfNotSet.call(Options::WATCH, false)
+  setIfNotSet.call(Options::CLEAN, true)
+  setIfNotSet.call(Options::COVERAGE, false)
+
+  UI.important "Initial params:\n#{JSON.pretty_generate(options)}"
+end
+
+
+
+################################################################################
+############################## PUBLIC LANES ####################################
+################################################################################
+##### can also be used via tab completion: `fastlane enable_auto_complete` #####
+################################################################################
+
+desc "Execute flutter build runner cmd\n" \
+     "Available options:\n" \
+     "   - #{Options::WATCH}: [true, false]"
+lane :build_runner do |options|
+  maybe_pub_get(options)
+
+  mode = options[Options::WATCH] ? "watch" : "build"
+  command = "pub run build_runner #{mode} --delete-conflicting-outputs"
+  dart(command)
+end
+
+desc "Execute flutter pub get cmd"
+lane :pub_get do |options|
+  dart("pub get")
+end
+
+desc "Watch changes for rerunning the build_runner"
+lane :watch do |options|
+  options[Options::WATCH] = true
+  build_runner(options)
+end
+
+desc "Run sanity checks: analyzer, formatter, tests"
+lane :check do |options|
+  maybe_pub_get(options)
+  dart("analyze lib test")
+
+  if is_ci
+    dart("format ./ --set-exit-if-changed")
+  else
+    dart("format ./")
+  end
+
+  if options[Options::COVERAGE] == true
+      dart("pub global activate coverage")
+      dart("pub global run coverage:test_with_coverage")
+      shell("genhtml coverage/lcov.info -o coverage/html")
+      shell("open coverage/html/index.html")
+    else
+      dart("test")
+    end
+end
+
+
+########################################################################################
+#################### PRIVATE LANES AND HELPER METHODS BELOW ############################
+###################### that we only call internally ####################################
+########################################################################################
+
+
+
+def dart(args)
+  Dir.chdir("..") do
+    sh "dart #{args}"
+  end
+end
+
+def shell(args)
+  Dir.chdir("..") do
+    sh(args)
+  end
+end
+
+def maybe_pub_get(options)
+  lastLock = getLastModifiedForFile("../pubspec.lock")
+  lastPubGet = getLastModifiedForFile("../pubspec.yaml")
+  lastPackages = getLastModifiedForFile("../.packages")
+
+  if lastPubGet == nil
+    UI.user_error! "No pubspec.yaml file found!"
+  end
+
+  if lastLock == nil || lastPackages == nil || lastLock < lastPubGet
+    pub_get(options)
+  end
+end
