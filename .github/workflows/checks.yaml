@@ -1,0 +1,30 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - '.github/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  checks:
+    name: Check code quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏬ Checkout repo last commit
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: ⚙️ Install Dart
+        uses: dart-lang/setup-dart@v1.3
+
+      - name: 🚑 Run sanity checks
+        run: fastlane check
