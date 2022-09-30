@@ -10,7 +10,7 @@ const chapterImageCount = 2;
 const _keyTitle = "title";
 const _keyText = "text";
 const _keyAudio = "audio";
-const _keyImageCount = "imageCount";
+const _keyImageCount = "image_count";
 
 Map<String, dynamic> chapterJson = {
   _keyTitle: chapterTitle,

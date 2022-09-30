@@ -9,7 +9,6 @@ part 'rating_dto.g.dart';
 class RatingDto extends Equatable {
   @JsonKey(name: "id")
   final int taleId;
-  @JsonKey(name: "amount")
   final int amount;
   @JsonKey(name: "avg_rating")
   final double averageRating;

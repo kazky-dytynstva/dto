@@ -13,8 +13,8 @@ const taleIgnore = true;
 
 const _keyId = 'id';
 const _keyName = 'name';
-const _keyCreateDate = 'createDate';
-const _keyUpdateDate = 'updateDate';
+const _keyCreateDate = 'create_date';
+const _keyUpdateDate = 'update_date';
 const _keyTags = 'tags';
 const _keyContent = 'content';
 const _keyCrew = 'crew';
