@@ -1,10 +1,12 @@
+import 'package:dto/src/utils/to_json.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'person_dto.g.dart';
 
 @JsonSerializable()
-class PersonDto extends Equatable {
+class PersonDto extends Equatable implements ToJsonItem {
+  @override
   final int id;
   final String name;
   final String? url;
@@ -20,6 +22,7 @@ class PersonDto extends Equatable {
   factory PersonDto.fromJson(Map<String, dynamic> json) =>
       _$PersonDtoFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$PersonDtoToJson(this);
 
   @override

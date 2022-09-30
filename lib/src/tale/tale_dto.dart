@@ -1,12 +1,14 @@
 import 'package:dto/src/tale/chapter/chapter_dto.dart';
 import 'package:dto/src/tale/crew/crew_dto.dart';
+import 'package:dto/src/utils/to_json.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tale_dto.g.dart';
 
 @JsonSerializable()
-class TaleDto extends Equatable {
+class TaleDto extends Equatable implements ToJsonItem {
+  @override
   final int id;
   final String name;
 
@@ -58,6 +60,7 @@ class TaleDto extends Equatable {
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$TaleDtoToJson(this);
 
   @override

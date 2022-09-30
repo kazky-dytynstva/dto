@@ -1,4 +1,5 @@
 import 'package:dto/dto.dart';
+import 'package:dto/src/utils/to_json.dart';
 import 'package:equatable/equatable.dart';
 import 'package:test/test.dart';
 
@@ -10,6 +11,10 @@ void main() {
 
   test('GIVEN instance THEN verify it is equatable', () {
     expect(personFull, isA<Equatable>());
+  });
+
+  test('GIVEN instance THEN verify it is ToJsonItem', () {
+    expect(personFull, isA<ToJsonItem>());
   });
 
   test('GIVEN instance THEN verify all props correct', () {
