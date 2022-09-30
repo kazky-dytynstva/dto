@@ -23,6 +23,27 @@ TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
       ignore: json['ignore'] as bool? ?? false,
     );
 
+Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+    'create_date': instance.createDate,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('update_date', instance.updateDate);
+  val['tags'] = instance.tags.map((e) => _$TaleTagEnumMap[e]!).toList();
+  val['content'] = instance.content.map((e) => e.toJson()).toList();
+  writeNotNull('crew', instance.crew?.toJson());
+  val['ignore'] = instance.ignore;
+  return val;
+}
+
 const _$TaleTagEnumMap = {
   TaleTag.audio: 'audio',
   TaleTag.text: 'text',

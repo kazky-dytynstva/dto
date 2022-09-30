@@ -11,3 +11,9 @@ ChapterAudioDto _$ChapterAudioDtoFromJson(Map<String, dynamic> json) =>
       size: json['size'] as int,
       duration: json['duration'] as int,
     );
+
+Map<String, dynamic> _$ChapterAudioDtoToJson(ChapterAudioDto instance) =>
+    <String, dynamic>{
+      'size': instance.size,
+      'duration': instance.duration,
+    };

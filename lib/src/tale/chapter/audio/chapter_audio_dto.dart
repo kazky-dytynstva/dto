@@ -3,9 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'chapter_audio_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class ChapterAudioDto extends Equatable {
   final int size;
   final int duration;
@@ -17,6 +15,8 @@ class ChapterAudioDto extends Equatable {
 
   factory ChapterAudioDto.fromJson(Map<String, dynamic> json) =>
       _$ChapterAudioDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChapterAudioDtoToJson(this);
 
   @override
   List<Object> get props => [

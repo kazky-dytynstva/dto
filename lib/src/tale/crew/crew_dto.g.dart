@@ -19,3 +19,20 @@ CrewDto _$CrewDtoFromJson(Map<String, dynamic> json) => CrewDto(
       graphics:
           (json['graphics'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
+
+Map<String, dynamic> _$CrewDtoToJson(CrewDto instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('authors', instance.authors);
+  writeNotNull('readers', instance.readers);
+  writeNotNull('musicians', instance.musicians);
+  writeNotNull('translators', instance.translators);
+  writeNotNull('graphics', instance.graphics);
+  return val;
+}

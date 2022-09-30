@@ -4,9 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'chapter_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class ChapterDto extends Equatable {
   final String? title;
 
@@ -36,6 +34,8 @@ class ChapterDto extends Equatable {
 
   factory ChapterDto.fromJson(Map<String, dynamic> json) =>
       _$ChapterDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChapterDtoToJson(this);
 
   @override
   List<Object?> get props => [

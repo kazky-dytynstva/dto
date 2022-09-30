@@ -32,4 +32,9 @@ void main() {
     final dto = ChapterAudioDto.fromJson(chapterAudioJson);
     expect(dto, equals(chapterAudio));
   });
+
+  test('GIVEN model with all params THEN converted to json correctly', () {
+    final model = chapterAudio;
+    expect(model.toJson(), equals(chapterAudioJson));
+  });
 }

@@ -77,4 +77,9 @@ void main() {
     );
     expect(dto, isA<ChapterDto>());
   });
+
+  test('GIVEN model with all params THEN converted to json correctly', () {
+    final model = chapter;
+    expect(model.toJson(), equals(chapterJson));
+  });
 }

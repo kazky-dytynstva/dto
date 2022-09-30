@@ -5,9 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'tale_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class TaleDto extends Equatable {
   final int id;
   final String name;
@@ -59,6 +57,8 @@ class TaleDto extends Equatable {
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TaleDtoToJson(this);
 
   @override
   List<Object?> get props => [

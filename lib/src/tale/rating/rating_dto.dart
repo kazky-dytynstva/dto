@@ -3,9 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'rating_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-)
+@JsonSerializable()
 class RatingDto extends Equatable {
   @JsonKey(name: "id")
   final int taleId;

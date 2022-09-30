@@ -12,3 +12,20 @@ PersonDto _$PersonDtoFromJson(Map<String, dynamic> json) => PersonDto(
       url: json['url'] as String?,
       info: json['info'] as String?,
     );
+
+Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('url', instance.url);
+  writeNotNull('info', instance.info);
+  return val;
+}

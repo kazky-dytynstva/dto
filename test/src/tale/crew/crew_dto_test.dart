@@ -113,4 +113,9 @@ void main() {
       throwsA(isA<AssertionError>()),
     );
   });
+
+  test('GIVEN model with all params THEN converted to json correctly', () {
+    final model = crew;
+    expect(model.toJson(), equals(crewJson));
+  });
 }
