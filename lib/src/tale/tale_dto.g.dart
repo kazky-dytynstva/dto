@@ -40,7 +40,7 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
   val['tags'] = instance.tags.map((e) => _$TaleTagEnumMap[e]!).toList();
   val['content'] = instance.content.map((e) => e.toJson()).toList();
   writeNotNull('crew', instance.crew?.toJson());
-  val['ignore'] = instance.ignore;
+  writeNotNull('ignore', instance.ignore);
   return val;
 }
 

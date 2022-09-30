@@ -23,7 +23,7 @@ class TaleDto extends Equatable {
   /// Used for the development and testing.
   /// When flag is true, the tale should not be shown in the production tales list
   @JsonKey(defaultValue: false)
-  final bool ignore;
+  final bool? ignore;
 
   TaleDto({
     required this.id,
