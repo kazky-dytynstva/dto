@@ -139,4 +139,9 @@ void main() {
       isA<TaleDto>(),
     );
   });
+
+  test('GIVEN model with all params THEN converted to json correctly', () {
+    final model = taleDto;
+    expect(model.toJson(), equals(taleJsonFull));
+  });
 }

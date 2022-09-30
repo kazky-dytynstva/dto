@@ -3,9 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'crew_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class CrewDto extends Equatable {
   final List<int>? authors;
   final List<int>? readers;
@@ -29,6 +27,8 @@ class CrewDto extends Equatable {
 
   factory CrewDto.fromJson(Map<String, dynamic> json) =>
       _$CrewDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CrewDtoToJson(this);
 
   @override
   List<Object?> get props => [

@@ -52,4 +52,9 @@ void main() {
     final person = PersonDto.fromJson(personJsonWithAllFields);
     expect(person, equals(personFull));
   });
+
+  test('GIVEN model with all params THEN converted to json correctly', () {
+    final model = personFull;
+    expect(model.toJson(), equals(personJsonWithAllFields));
+  });
 }

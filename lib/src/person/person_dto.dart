@@ -3,9 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'person_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class PersonDto extends Equatable {
   final int id;
   final String name;
@@ -21,6 +19,8 @@ class PersonDto extends Equatable {
 
   factory PersonDto.fromJson(Map<String, dynamic> json) =>
       _$PersonDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PersonDtoToJson(this);
 
   @override
   List<Object?> get props => [
