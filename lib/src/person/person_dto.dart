@@ -13,7 +13,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   final String name;
   final String? url;
   final String? info;
-  final List<PersonRoleDto> roles;
+  final List<PersonRoleDto>? roles;
 
   PersonDto({
     required this.id,

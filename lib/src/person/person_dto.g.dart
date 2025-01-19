@@ -11,8 +11,8 @@ PersonDto _$PersonDtoFromJson(Map<String, dynamic> json) => PersonDto(
       name: json['name'] as String,
       url: json['url'] as String?,
       info: json['info'] as String?,
-      roles: (json['roles'] as List<dynamic>)
-          .map((e) => $enumDecode(_$PersonRoleDtoEnumMap, e))
+      roles: (json['roles'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$PersonRoleDtoEnumMap, e))
           .toList(),
     );
 
@@ -30,7 +30,8 @@ Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
 
   writeNotNull('url', instance.url);
   writeNotNull('info', instance.info);
-  val['roles'] = instance.roles.map((e) => _$PersonRoleDtoEnumMap[e]!).toList();
+  writeNotNull(
+      'roles', instance.roles?.map((e) => _$PersonRoleDtoEnumMap[e]!).toList());
   return val;
 }
 
