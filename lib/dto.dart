@@ -1,6 +1,7 @@
 library dto;
 
 export 'src/person/person_dto.dart';
+export 'src/person/person_role_dto.dart';
 
 export 'src/tale/chapter/audio/chapter_audio_dto.dart';
 export 'src/tale/chapter/chapter_dto.dart';
