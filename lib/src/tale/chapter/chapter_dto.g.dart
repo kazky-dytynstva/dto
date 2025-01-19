@@ -12,7 +12,7 @@ ChapterDto _$ChapterDtoFromJson(Map<String, dynamic> json) => ChapterDto(
       audio: json['audio'] == null
           ? null
           : ChapterAudioDto.fromJson(json['audio'] as Map<String, dynamic>),
-      imageCount: json['image_count'] as int?,
+      imageCount: (json['image_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ChapterDtoToJson(ChapterDto instance) {

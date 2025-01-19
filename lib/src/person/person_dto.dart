@@ -1,3 +1,4 @@
+import 'package:dto/src/person/person_role_dto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,12 +10,14 @@ class PersonDto extends Equatable {
   final String name;
   final String? url;
   final String? info;
+  final List<PersonRoleDto> roles;
 
   PersonDto({
     required this.id,
     required this.name,
-    this.url,
-    this.info,
+    required this.url,
+    required this.info,
+    required this.roles,
   });
 
   factory PersonDto.fromJson(Map<String, dynamic> json) =>
@@ -28,5 +31,6 @@ class PersonDto extends Equatable {
         name,
         url,
         info,
+        roles,
       ];
 }

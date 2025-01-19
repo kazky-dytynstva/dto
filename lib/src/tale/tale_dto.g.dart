@@ -7,10 +7,10 @@ part of 'tale_dto.dart';
 // **************************************************************************
 
 TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      createDate: json['create_date'] as int,
-      updateDate: json['update_date'] as int?,
+      createDate: (json['create_date'] as num).toInt(),
+      updateDate: (json['update_date'] as num?)?.toInt(),
       tags: (json['tags'] as List<dynamic>)
           .map((e) => $enumDecode(_$TaleTagEnumMap, e))
           .toSet(),

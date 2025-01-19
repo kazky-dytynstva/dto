@@ -1,4 +1,5 @@
 import 'package:dto/dto.dart';
+import 'package:dto/src/person/person_role_dto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:test/test.dart';
 
@@ -13,21 +14,23 @@ void main() {
   });
 
   test('GIVEN instance THEN verify all props correct', () {
-    const props = [
+    final props = [
       personId,
       personName,
       personUrl,
       personInfo,
+      personRoles,
     ];
     expect(personFull.props, equals(props));
   });
 
   test('GIVEN instance with min params THEN all props correct', () {
-    const props = [
+    final props = [
       personId,
       personName,
       null,
       null,
+      [],
     ];
     expect(personMin.props, equals(props));
   });
@@ -37,8 +40,21 @@ void main() {
     const name = 'custom name';
     const info = 'custom info';
     const url = 'custom url';
-    final instanceOne = getPersonFull(id: id, name: name, info: info, url: url);
-    final instanceTwo = getPersonFull(id: id, name: name, info: info, url: url);
+    final roles = PersonRoleDto.values;
+    final instanceOne = getPersonFull(
+      id: id,
+      name: name,
+      info: info,
+      url: url,
+      roles: roles,
+    );
+    final instanceTwo = getPersonFull(
+      id: id,
+      name: name,
+      info: info,
+      url: url,
+      roles: roles,
+    );
 
     expect(instanceOne, equals(instanceTwo));
   });

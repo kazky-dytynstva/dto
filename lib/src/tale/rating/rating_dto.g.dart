@@ -7,8 +7,8 @@ part of 'rating_dto.dart';
 // **************************************************************************
 
 RatingDto _$RatingDtoFromJson(Map<String, dynamic> json) => RatingDto(
-      json['id'] as int,
-      json['amount'] as int,
+      (json['id'] as num).toInt(),
+      (json['amount'] as num).toInt(),
       (json['avg_rating'] as num).toDouble(),
     );
 

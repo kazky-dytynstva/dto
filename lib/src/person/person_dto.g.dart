@@ -7,10 +7,13 @@ part of 'person_dto.dart';
 // **************************************************************************
 
 PersonDto _$PersonDtoFromJson(Map<String, dynamic> json) => PersonDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       url: json['url'] as String?,
       info: json['info'] as String?,
+      roles: (json['roles'] as List<dynamic>)
+          .map((e) => $enumDecode(_$PersonRoleDtoEnumMap, e))
+          .toList(),
     );
 
 Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
@@ -27,5 +30,15 @@ Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
 
   writeNotNull('url', instance.url);
   writeNotNull('info', instance.info);
+  val['roles'] = instance.roles.map((e) => _$PersonRoleDtoEnumMap[e]!).toList();
   return val;
 }
+
+const _$PersonRoleDtoEnumMap = {
+  PersonRoleDto.author: 'author',
+  PersonRoleDto.reader: 'reader',
+  PersonRoleDto.musician: 'musician',
+  PersonRoleDto.graphic: 'graphic',
+  PersonRoleDto.translator: 'translator',
+  PersonRoleDto.crew: 'crew',
+};
