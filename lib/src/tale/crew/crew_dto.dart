@@ -5,12 +5,6 @@ part 'crew_dto.g.dart';
 
 @JsonSerializable()
 class CrewDto extends Equatable {
-  final List<int>? authors;
-  final List<int>? readers;
-  final List<int>? musicians;
-  final List<int>? translators;
-  final List<int>? graphics;
-
   CrewDto({
     required this.authors,
     required this.readers,
@@ -24,6 +18,12 @@ class CrewDto extends Equatable {
               (translators?.isNotEmpty == true) ||
               (graphics?.isNotEmpty == true),
         );
+
+  final List<int>? authors;
+  final List<int>? readers;
+  final List<int>? musicians;
+  final List<int>? translators;
+  final List<int>? graphics;
 
   factory CrewDto.fromJson(Map<String, dynamic> json) =>
       _$CrewDtoFromJson(json);

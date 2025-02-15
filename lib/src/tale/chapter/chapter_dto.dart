@@ -6,6 +6,16 @@ part 'chapter_dto.g.dart';
 
 @JsonSerializable()
 class ChapterDto extends Equatable {
+  ChapterDto({
+    required this.title,
+    required this.text,
+    required this.audio,
+    required this.imageCount,
+  }) : assert(
+          (text != null && text.isNotEmpty) || audio != null,
+          'Chapter should contain at least text or audio',
+        );
+        
   final String? title;
 
   /// text might contain image references as a number
@@ -21,16 +31,6 @@ class ChapterDto extends Equatable {
   /// amount of images per chapter,
   /// if its equal null - its mean there is 1 main image
   final int? imageCount;
-
-  ChapterDto({
-    required this.title,
-    required this.text,
-    required this.audio,
-    required this.imageCount,
-  }) : assert(
-          (text != null && text.isNotEmpty) || audio != null,
-          'Chapter should contain at least text or audio',
-        );
 
   factory ChapterDto.fromJson(Map<String, dynamic> json) =>
       _$ChapterDtoFromJson(json);

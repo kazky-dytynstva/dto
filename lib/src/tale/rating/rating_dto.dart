@@ -5,12 +5,6 @@ part 'rating_dto.g.dart';
 
 @JsonSerializable()
 class RatingDto extends Equatable {
-  @JsonKey(name: "id")
-  final int taleId;
-  final int amount;
-  @JsonKey(name: "avg_rating")
-  final double averageRating;
-
   RatingDto(
     this.taleId,
     this.amount,
@@ -18,6 +12,12 @@ class RatingDto extends Equatable {
   )   : assert(taleId >= 0),
         assert(amount > 0),
         assert(averageRating > 0 && averageRating <= 5);
+
+  @JsonKey(name: "id")
+  final int taleId;
+  final int amount;
+  @JsonKey(name: "avg_rating")
+  final double averageRating;
 
   factory RatingDto.fromJson(Map<String, dynamic> json) =>
       _$RatingDtoFromJson(json);

@@ -9,25 +9,6 @@ part 'tale_dto.g.dart';
 
 @JsonSerializable()
 class TaleDto extends Equatable implements ToJsonItem, IdHolder {
-  @override
-  final int id;
-  final String name;
-
-  /// in microsecondsSinceEpoch
-  final int createDate;
-
-  /// in microsecondsSinceEpoch
-  final int? updateDate;
-  final Set<TaleTag> tags;
-  final List<ChapterDto> content;
-
-  final CrewDto? crew;
-
-  /// Used for the development and testing.
-  /// When flag is true, the tale should not be shown in the production tales list
-  @JsonKey(defaultValue: false)
-  final bool? ignore;
-
   TaleDto({
     required this.id,
     required this.name,
@@ -57,6 +38,25 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           tags.isNotEmpty,
           'There should be at least one tag',
         );
+
+  @override
+  final int id;
+  final String name;
+
+  /// in microsecondsSinceEpoch
+  final int createDate;
+
+  /// in microsecondsSinceEpoch
+  final int? updateDate;
+  final Set<TaleTag> tags;
+  final List<ChapterDto> content;
+
+  final CrewDto? crew;
+
+  /// Used for the development and testing.
+  /// When flag is true, the tale should not be shown in the production tales list
+  @JsonKey(defaultValue: false)
+  final bool? ignore;
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);

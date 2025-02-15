@@ -9,15 +9,6 @@ part 'person_dto.g.dart';
 
 @JsonSerializable()
 class PersonDto extends Equatable implements ToJsonItem, IdHolder {
-  @override
-  final int id;
-  final String name;
-  final String surname;
-  final PersonGenderDto gender;
-  final String? url;
-  final String? info;
-  final List<PersonRoleDto>? roles;
-
   PersonDto({
     required this.id,
     required this.name,
@@ -27,6 +18,15 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.info,
     required this.roles,
   });
+
+  @override
+  final int id;
+  final String name;
+  final String surname;
+  final PersonGenderDto gender;
+  final String? url;
+  final String? info;
+  final List<PersonRoleDto>? roles;
 
   factory PersonDto.fromJson(Map<String, dynamic> json) =>
       _$PersonDtoFromJson(json);

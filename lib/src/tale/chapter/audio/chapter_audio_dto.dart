@@ -5,13 +5,13 @@ part 'chapter_audio_dto.g.dart';
 
 @JsonSerializable()
 class ChapterAudioDto extends Equatable {
-  final int size;
-  final int duration;
-
   ChapterAudioDto({
     required this.size,
     required this.duration,
   });
+
+  final int size;
+  final int duration;
 
   factory ChapterAudioDto.fromJson(Map<String, dynamic> json) =>
       _$ChapterAudioDtoFromJson(json);
