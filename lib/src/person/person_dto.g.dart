@@ -9,6 +9,8 @@ part of 'person_dto.dart';
 PersonDto _$PersonDtoFromJson(Map<String, dynamic> json) => PersonDto(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
+      surname: json['surname'] as String,
+      gender: $enumDecode(_$PersonGenderDtoEnumMap, json['gender']),
       url: json['url'] as String?,
       info: json['info'] as String?,
       roles: (json['roles'] as List<dynamic>?)
@@ -20,6 +22,8 @@ Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
   final val = <String, dynamic>{
     'id': instance.id,
     'name': instance.name,
+    'surname': instance.surname,
+    'gender': _$PersonGenderDtoEnumMap[instance.gender]!,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -34,6 +38,11 @@ Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
       'roles', instance.roles?.map((e) => _$PersonRoleDtoEnumMap[e]!).toList());
   return val;
 }
+
+const _$PersonGenderDtoEnumMap = {
+  PersonGenderDto.female: 'female',
+  PersonGenderDto.male: 'male',
+};
 
 const _$PersonRoleDtoEnumMap = {
   PersonRoleDto.author: 'author',
