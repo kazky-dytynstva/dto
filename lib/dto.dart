@@ -4,6 +4,7 @@ export 'src/to_json_item.dart';
 export 'src/id_holder.dart';
 
 export 'src/person/person_dto.dart';
+export 'src/person/person_gender_dto.dart';
 export 'src/person/person_role_dto.dart';
 
 export 'src/tale/chapter/audio/chapter_audio_dto.dart';
