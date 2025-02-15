@@ -1,4 +1,5 @@
 import 'package:dto/src/id_holder.dart';
+import 'package:dto/src/person/person_gender_dto.dart';
 import 'package:dto/src/person/person_role_dto.dart';
 import 'package:dto/src/to_json_item.dart';
 import 'package:equatable/equatable.dart';
@@ -12,6 +13,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   final int id;
   final String name;
   final String surname;
+  final PersonGenderDto gender;
   final String? url;
   final String? info;
   final List<PersonRoleDto>? roles;
@@ -20,6 +22,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.id,
     required this.name,
     required this.surname,
+    required this.gender,
     required this.url,
     required this.info,
     required this.roles,
@@ -36,6 +39,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
         id,
         name,
         surname,
+        gender,
         url,
         info,
         roles,
