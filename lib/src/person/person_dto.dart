@@ -11,6 +11,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   @override
   final int id;
   final String name;
+  final String surname;
   final String? url;
   final String? info;
   final List<PersonRoleDto>? roles;
@@ -18,6 +19,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   PersonDto({
     required this.id,
     required this.name,
+    required this.surname,
     required this.url,
     required this.info,
     required this.roles,
@@ -33,6 +35,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   List<Object?> get props => [
         id,
         name,
+        surname,
         url,
         info,
         roles,
