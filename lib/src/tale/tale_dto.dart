@@ -15,6 +15,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.name,
     required this.createDate,
     required this.updateDate,
+    required this.summary,
     required this.tags,
     required this.text,
     required this.audio,
@@ -37,6 +38,10 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           'There should be at least one tag',
         ),
         assert(
+          summary.isNotEmpty,
+          'Tale summary should NOT be empty',
+        ),
+        assert(
           tags.contains(TaleTag.text) == false && text == null ||
               tags.contains(TaleTag.text) == true && text != null,
           'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
@@ -56,6 +61,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   /// In millisecondsSinceEpoch
   final int? updateDate;
+
+  final String summary;
 
   final Set<TaleTag> tags;
 
@@ -81,6 +88,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         name,
         createDate,
         updateDate,
+        summary,
         tags,
         text,
         audio,
