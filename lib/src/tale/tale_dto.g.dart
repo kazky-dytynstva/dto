@@ -14,13 +14,16 @@ TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
       tags: (json['tags'] as List<dynamic>)
           .map((e) => $enumDecode(_$TaleTagEnumMap, e))
           .toSet(),
-      content: (json['content'] as List<dynamic>)
-          .map((e) => ChapterDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      text: json['text'] == null
+          ? null
+          : TextContentDto.fromJson(json['text'] as Map<String, dynamic>),
+      audio: json['audio'] == null
+          ? null
+          : AudioContentDto.fromJson(json['audio'] as Map<String, dynamic>),
       crew: json['crew'] == null
           ? null
           : CrewDto.fromJson(json['crew'] as Map<String, dynamic>),
-      ignore: json['ignore'] as bool? ?? false,
+      ignore: json['ignore'] as bool?,
     );
 
 Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
@@ -38,7 +41,8 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
 
   writeNotNull('update_date', instance.updateDate);
   val['tags'] = instance.tags.map((e) => _$TaleTagEnumMap[e]!).toList();
-  val['content'] = instance.content.map((e) => e.toJson()).toList();
+  writeNotNull('text', instance.text?.toJson());
+  writeNotNull('audio', instance.audio?.toJson());
   writeNotNull('crew', instance.crew?.toJson());
   writeNotNull('ignore', instance.ignore);
   return val;

@@ -1,5 +1,6 @@
 import 'package:dto/src/id_holder.dart';
-import 'package:dto/src/tale/chapter/chapter_dto.dart';
+import 'package:dto/src/tale/content/audio_content.dart';
+import 'package:dto/src/tale/content/text_content.dart';
 import 'package:dto/src/tale/crew/crew_dto.dart';
 import 'package:dto/src/to_json_item.dart';
 import 'package:equatable/equatable.dart';
@@ -15,7 +16,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.createDate,
     required this.updateDate,
     required this.tags,
-    required this.content,
+    required this.text,
+    required this.audio,
     required this.crew,
     required this.ignore,
   })  : assert(
@@ -31,31 +33,40 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           'updateDate can NOT be before createDate',
         ),
         assert(
-          content.isNotEmpty == true,
-          'Content can NOT be empty',
-        ),
-        assert(
           tags.isNotEmpty,
           'There should be at least one tag',
+        ),
+        assert(
+          tags.contains(TaleTag.text) == false && text == null ||
+              tags.contains(TaleTag.text) == true && text != null,
+          'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
+        ),
+        assert(
+          tags.contains(TaleTag.audio) == false && audio == null ||
+              tags.contains(TaleTag.audio) == true && audio != null,
+          'Audio content should be present if and only if the tale has a ${TaleTag.audio} tag',
         );
 
   @override
   final int id;
   final String name;
 
-  /// in microsecondsSinceEpoch
+  /// In millisecondsSinceEpoch
   final int createDate;
 
-  /// in microsecondsSinceEpoch
+  /// In millisecondsSinceEpoch
   final int? updateDate;
+
   final Set<TaleTag> tags;
-  final List<ChapterDto> content;
+
+  final TextContentDto? text;
+  final AudioContentDto? audio;
 
   final CrewDto? crew;
 
   /// Used for the development and testing.
   /// When flag is true, the tale should not be shown in the production tales list
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   final bool? ignore;
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
@@ -71,7 +82,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         createDate,
         updateDate,
         tags,
-        content,
+        text,
+        audio,
         crew,
         ignore,
       ];
