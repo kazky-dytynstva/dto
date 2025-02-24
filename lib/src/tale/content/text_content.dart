@@ -9,7 +9,7 @@ class TextContentDto extends Equatable {
   ///
   /// If list item is a number, it means that this is an image reference.
   /// In that case, the number represents the image index for this tale.
-  final List<String> text;
+  final List<String> paragraphs;
 
   /// Represents a minimum reading time in minutes.
   final int minReadingTime;
@@ -18,12 +18,12 @@ class TextContentDto extends Equatable {
   final int maxReadingTime;
 
   const TextContentDto({
-    required this.text,
+    required this.paragraphs,
     required this.minReadingTime,
     required this.maxReadingTime,
   })  : assert(
-          text.length > 0,
-          'Text content should not be empty',
+          paragraphs.length > 0,
+          'Paragraphs should not be empty',
         ),
         assert(
           minReadingTime > 0,
@@ -41,7 +41,7 @@ class TextContentDto extends Equatable {
 
   @override
   List<Object?> get props => [
-        text,
+        paragraphs,
         minReadingTime,
         maxReadingTime,
       ];
