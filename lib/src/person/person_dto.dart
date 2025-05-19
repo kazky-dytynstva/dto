@@ -17,7 +17,30 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.url,
     required this.info,
     required this.roles,
-  });
+  })  : assert(
+          id >= 0,
+          'Person id should be positive',
+        ),
+        assert(
+          name.isNotEmpty,
+          'Person name should NOT be empty',
+        ),
+        assert(
+          surname.isNotEmpty,
+          'Person surname should NOT be empty',
+        ),
+        assert(
+          roles == null || roles.isNotEmpty,
+          'Person roles should NOT be empty',
+        ),
+        assert(
+          roles == null || roles.length == roles.toSet().length,
+          'Person roles should be unique',
+        ),
+        assert(
+          url == null || Uri.tryParse(url) != null,
+          'Person url should be a valid URL',
+        );
 
   @override
   final int id;

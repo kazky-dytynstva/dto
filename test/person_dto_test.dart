@@ -1,47 +1,92 @@
 import 'package:test/test.dart';
+import 'utils/throws_assert_error_with_message.dart';
 import 'package:dto/dto.dart';
 
 void main() {
-group('$PersonDto', () {
+  group('$PersonDto', () {
     group('$PersonDto constructor', () {
+      test(
+        'given empty for name '
+        'when creating $PersonDto '
+        'then throws assertion error with correct message',
+        () {
+          // Given/When/Then
+          expect(
+            () => PersonDto(
+              id: 100,
+              name: '',
+              surname: 'Doe',
+              gender: PersonGenderDto.male,
+              url: null,
+              info: null,
+              roles: null,
+            ),
+            throwsAssertErrorWithMessage('Person name should NOT be empty'),
+          );
+        },
+      );
+
+      test(
+        'given empty for surname '
+        'when creating $PersonDto '
+        'then throws assertion error with correct message',
+        () {
+          // Given/When/Then
+          expect(
+            () => PersonDto(
+              id: 101,
+              name: 'John',
+              surname: '',
+              gender: PersonGenderDto.male,
+              url: null,
+              info: null,
+              roles: null,
+            ),
+            throwsAssertErrorWithMessage('Person surname should NOT be empty'),
+          );
+        },
+      );
+
+      // No assertion for gender being null in the current implementation
       test(
         'given empty strings for name and surname '
         'when creating $PersonDto '
-        'then fields are set to empty strings',
+        'then throws assertion error for name',
         () {
-          // Given
-          final person = PersonDto(
-            id: 10,
-            name: '',
-            surname: '',
-            gender: PersonGenderDto.male,
-            url: null,
-            info: null,
-            roles: null,
+          // Given/When/Then
+          expect(
+            () => PersonDto(
+              id: 10,
+              name: '',
+              surname: '',
+              gender: PersonGenderDto.male,
+              url: null,
+              info: null,
+              roles: null,
+            ),
+            throwsAssertErrorWithMessage('Person name should NOT be empty'),
           );
-          // Then
-          expect(person.name, '');
-          expect(person.surname, '');
         },
       );
 
       test(
         'given negative id '
         'when creating $PersonDto '
-        'then id is set to negative value',
+        'then throws assertion error with correct message',
         () {
-          // Given
-          final person = PersonDto(
-            id: -1,
-            name: 'Neg',
-            surname: 'Id',
-            gender: PersonGenderDto.female,
-            url: null,
-            info: null,
-            roles: null,
+          // Given/When/Then
+          expect(
+            () => PersonDto(
+              id: -1,
+              name: 'Neg',
+              surname: 'Id',
+              gender: PersonGenderDto.female,
+              url: null,
+              info: null,
+              roles: null,
+            ),
+            throwsAssertErrorWithMessage('Person id should be positive'),
           );
-          // Then
-          expect(person.id, -1);
         },
       );
       test(
@@ -120,7 +165,7 @@ group('$PersonDto', () {
       test(
         'given JSON with duplicate roles '
         'when calling $PersonDto.fromJson '
-        'then roles list contains duplicates',
+        'then throws assertion error with correct message',
         () {
           // Given
           final json = {
@@ -130,10 +175,11 @@ group('$PersonDto', () {
             'gender': 'female',
             'roles': ['author', 'author'],
           };
-          // When
-          final person = PersonDto.fromJson(json);
           // Then
-          expect(person.roles, [PersonRoleDto.author, PersonRoleDto.author]);
+          expect(
+            () => PersonDto.fromJson(json),
+            throwsAssertErrorWithMessage('Person roles should be unique'),
+          );
         },
       );
 
