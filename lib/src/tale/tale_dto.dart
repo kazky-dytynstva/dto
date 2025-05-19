@@ -95,6 +95,101 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         crew,
         ignore,
       ];
+
+  factory TaleDto.fromSupaJson(Map<String, dynamic> json) {
+    json[_keyCreateDate] =
+        DateTime.parse(json[_keyCreateDate] as String).millisecondsSinceEpoch;
+
+    if (json[_keyUpdateDate] != null) {
+      json[_keyUpdateDate] =
+          DateTime.parse(json[_keyUpdateDate] as String).millisecondsSinceEpoch;
+    }
+
+    final dto = TaleDto.fromJson(json);
+
+    final text = TextContentDto.fromJson(json);
+
+    final audioSize = json[_keyAudioSize] as int?;
+    final audioDuration = json[_keyAudioDuration] as int?;
+    assert(
+      audioSize == null && audioDuration == null ||
+          audioSize != null && audioDuration != null,
+      'Audio size and duration should be both present or absent',
+    );
+
+    final audio = audioSize != null && audioDuration != null
+        ? AudioContentDto(
+            fileSize: audioSize,
+            duration: audioDuration,
+          )
+        : null;
+
+    final crew = CrewDto.fromJson(json);
+
+    return dto._copyWith(
+      text: text,
+      audio: audio,
+      crew: crew,
+    );
+  }
+
+  Map<String, dynamic> toSupaJsonItem() {
+    final json = toJson();
+    json[_keyCreateDate] =
+        DateTime.fromMillisecondsSinceEpoch(createDate).toIso8601String();
+
+    if (json[_keyUpdateDate] != null) {
+      json[_keyUpdateDate] =
+          DateTime.fromMillisecondsSinceEpoch(updateDate!).toIso8601String();
+    }
+
+    final Map<String, dynamic>? textJson = json.remove('text');
+    if (textJson != null) {
+      for (final entry in textJson.entries) {
+        json[entry.key] = entry.value;
+      }
+    }
+
+    json.remove('audio');
+    if (audio != null) {
+      json[_keyAudioSize] = audio!.fileSize;
+      json[_keyAudioDuration] = audio!.duration;
+    }
+
+    final Map<String, dynamic>? crewJson = json.remove('crew');
+    if (crewJson != null) {
+      for (final entry in crewJson.entries) {
+        json[entry.key] = entry.value;
+      }
+    }
+
+    return json;
+  }
+
+  TaleDto _copyWith({
+    TextContentDto? text,
+    AudioContentDto? audio,
+    CrewDto? crew,
+  }) {
+    return TaleDto(
+      id: id,
+      name: name,
+      createDate: createDate,
+      updateDate: updateDate,
+      summary: summary,
+      tags: tags,
+      text: text ?? this.text,
+      audio: audio ?? this.audio,
+      crew: crew ?? this.crew,
+      ignore: ignore,
+    );
+  }
+
+  static final _keyCreateDate = 'create_date';
+  static final _keyUpdateDate = 'update_date';
+
+  static final _keyAudioSize = 'audio_file_size';
+  static final _keyAudioDuration = 'audio_duration';
 }
 
 enum TaleTag {
