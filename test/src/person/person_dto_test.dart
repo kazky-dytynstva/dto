@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'utils/throws_assert_error_with_message.dart';
+import '../../utils/throws_assert_error_with_message.dart';
 import 'package:dto/dto.dart';
 
 void main() {
