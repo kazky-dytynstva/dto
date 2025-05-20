@@ -17,7 +17,30 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.url,
     required this.info,
     required this.roles,
-  });
+  })  : assert(
+          id >= 0,
+          'Person id should be positive',
+        ),
+        assert(
+          name.isNotEmpty,
+          'Person name should NOT be empty',
+        ),
+        assert(
+          surname.isNotEmpty,
+          'Person surname should NOT be empty',
+        ),
+        assert(
+          roles == null || roles.isNotEmpty,
+          'Person roles should NOT be empty',
+        ),
+        assert(
+          roles == null || roles.length == roles.toSet().length,
+          'Person roles should be unique',
+        ),
+        assert(
+          url == null || Uri.tryParse(url) != null,
+          'Person url should be a valid URL',
+        );
 
   @override
   final int id;
@@ -44,4 +67,49 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
         info,
         roles,
       ];
+
+  factory PersonDto.fromSupaJson(Map<String, dynamic> json) {
+    final dto = PersonDto.fromJson(json);
+
+    final isCrew = json[_keyIsCrew] as bool?;
+    if (isCrew == null || isCrew == false) {
+      return dto;
+    }
+
+    return dto._copyWith(
+      roles: [PersonRoleDto.crew],
+    );
+  }
+
+  Map<String, dynamic> toSupaJson() {
+    final json = toJson();
+
+    if (roles == null) {
+      return json;
+    }
+
+    json.remove('roles');
+
+    final isCrew = roles!.contains(PersonRoleDto.crew);
+    if (isCrew) {
+      json[_keyIsCrew] = true;
+    }
+    return json;
+  }
+
+  PersonDto _copyWith({
+    List<PersonRoleDto>? roles,
+  }) {
+    return PersonDto(
+      id: id,
+      name: name,
+      surname: surname,
+      gender: gender,
+      url: url,
+      info: info,
+      roles: roles ?? this.roles,
+    );
+  }
+
+  static final _keyIsCrew = 'is_crew';
 }

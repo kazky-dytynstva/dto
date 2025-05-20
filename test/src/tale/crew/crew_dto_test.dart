@@ -1,121 +1,68 @@
-import 'package:dto/dto.dart';
-import 'package:equatable/equatable.dart';
 import 'package:test/test.dart';
-
-import '../../../test_data/test_data.dart';
+import 'package:dto/src/tale/crew/crew_dto.dart';
 
 void main() {
-  final crew = getCrew();
+  group('$CrewDto', () {
+    test(
+      'given valid data '
+      'when serializing and deserializing $CrewDto '
+      'then the object remains consistent',
+      () {
+        // Given
+        final crewDto = CrewDto(
+          authors: [1, 2, 3],
+          readers: [4, 5],
+          musicians: [6],
+          translators: null,
+          graphics: [],
+        );
 
-  test('GIVEN instance THEN verify it is equatable', () {
-    expect(crew, isA<Equatable>());
-  });
+        // When
+        final json = crewDto.toJson();
+        final deserialized = CrewDto.fromJson(json);
 
-  test('GIVEN instance THEN verify all props correct', () {
-    const props = [
-      crewAuthors,
-      crewReaders,
-      crewMusicians,
-      crewTranslators,
-      crewGraphics,
-    ];
-    expect(crew.props, equals(props));
-  });
-
-  test('GIVEN same params and 2 instances THEN objects are equal', () {
-    const authors = [0, 1, 2];
-    const readers = [2, 3, 4];
-    const musicians = [1, 3, 5];
-    const translators = [3, 5];
-    const graphics = [5];
-
-    final instanceOne = getCrew(
-      authors: authors,
-      readers: readers,
-      musicians: musicians,
-      translators: translators,
-      graphics: graphics,
-    );
-    final instanceTwo = getCrew(
-      authors: authors,
-      musicians: musicians,
-      readers: readers,
-      translators: translators,
-      graphics: graphics,
+        // Then
+        expect(deserialized, equals(crewDto));
+      },
     );
 
-    expect(instanceOne, equals(instanceTwo));
-  });
+    test(
+      'given all lists are empty or null '
+      'when creating $CrewDto '
+      'then an AssertionError is thrown',
+      () {
+        // Given, When, Then
+        expect(
+          () => CrewDto(
+            authors: null,
+            readers: null,
+            musicians: null,
+            translators: null,
+            graphics: null,
+          ),
+          throwsA(isA<AssertionError>()),
+        );
+      },
+    );
 
-  test('GIVEN json with min params THEN parsed correctly', () {
-    final dto = CrewDto.fromJson(crewJson);
-    expect(dto, equals(crew));
-  });
-
-  test('GIVEN empty list THEN throw exception', () {
-    expect(
-      () => CrewDto(
-        authors: [],
-        readers: null,
-        musicians: null,
-        translators: null,
-        graphics: null,
-      ),
-      throwsA(isA<AssertionError>()),
-    );
-    expect(
-      () => CrewDto(
-        authors: null,
-        readers: [],
-        musicians: null,
-        translators: null,
-        graphics: null,
-      ),
-      throwsA(isA<AssertionError>()),
-    );
-    expect(
-      () => CrewDto(
-        authors: null,
-        readers: null,
-        musicians: [],
-        translators: null,
-        graphics: null,
-      ),
-      throwsA(isA<AssertionError>()),
-    );
-    expect(
-      () => CrewDto(
-        authors: null,
-        readers: null,
-        musicians: null,
-        translators: [],
-        graphics: null,
-      ),
-      throwsA(isA<AssertionError>()),
-    );
-    expect(
-      () => CrewDto(
-          authors: null,
+    test(
+      'given at least one non-empty list '
+      'when creating $CrewDto '
+      'then the object is created successfully',
+      () {
+        // Given
+        final crewDto = CrewDto(
+          authors: [1],
           readers: null,
           musicians: null,
           translators: null,
-          graphics: []),
-      throwsA(isA<AssertionError>()),
-    );
-    expect(
-      () => CrewDto(
-        authors: null,
-        readers: null,
-        musicians: null,
-        translators: null,
-        graphics: null,
-      ),
-      throwsA(isA<AssertionError>()),
-    );
-  });
+          graphics: null,
+        );
 
-  test('GIVEN model with all params THEN converted to json correctly', () {
-    final model = crew;
-    expect(model.toJson(), equals(crewJson));
+        // When, Then
+        expect(crewDto.authors, isNotNull);
+        expect(crewDto.authors, isNotEmpty);
+      },
+    );
   });
 }

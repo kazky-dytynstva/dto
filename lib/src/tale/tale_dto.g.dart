@@ -24,7 +24,7 @@ TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
       crew: json['crew'] == null
           ? null
           : CrewDto.fromJson(json['crew'] as Map<String, dynamic>),
-      ignore: json['ignore'] as bool?,
+      isHidden: json['is_hidden'] as bool?,
     );
 
 Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
@@ -46,7 +46,7 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
   writeNotNull('text', instance.text?.toJson());
   writeNotNull('audio', instance.audio?.toJson());
   writeNotNull('crew', instance.crew?.toJson());
-  writeNotNull('ignore', instance.ignore);
+  writeNotNull('is_hidden', instance.isHidden);
   return val;
 }
 
