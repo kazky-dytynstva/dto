@@ -110,9 +110,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     }
 
     TextContentDto? textDto;
-    final paragrphs = json['paragraphs'] as List<dynamic>?;
-    final minReadingTime = json['min_reading_time'] as int?;
-    final maxReadingTime = json['max_reading_time'] as int?;
+    final paragrphs = json[_keyParagraphs] as List<dynamic>?;
+    final minReadingTime = json[_keyMinReadingTime] as int?;
+    final maxReadingTime = json[_keyMaxReadingTime] as int?;
 
     if (paragrphs != null && minReadingTime != null && maxReadingTime != null) {
       textDto = TextContentDto(
@@ -120,7 +120,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         minReadingTime: minReadingTime,
         maxReadingTime: maxReadingTime,
       );
-      json['text'] = textDto.toJson();
+      json[_keyText] = textDto.toJson();
     } else if (paragrphs != null ||
         minReadingTime != null ||
         maxReadingTime != null) {
@@ -146,24 +146,24 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       json[_keyAudio] = audioDto.toJson();
     }
 
-    final authors = json['authors'] as List<dynamic>?;
-    final readers = json['readers'] as List<dynamic>?;
-    final graphics = json['graphics'] as List<dynamic>?;
-    final musicians = json['musicians'] as List<dynamic>?;
-    final translators = json['translators'] as List<dynamic>?;
+    final authors = json[_keyAuthors] as List<dynamic>?;
+    final readers = json[_keyReaders] as List<dynamic>?;
+    final graphics = json[_keyGraphics] as List<dynamic>?;
+    final musicians = json[_keyMusicians] as List<dynamic>?;
+    final translators = json[_keyTranslators] as List<dynamic>?;
 
     if (authors != null ||
         readers != null ||
         graphics != null ||
         musicians != null ||
         translators != null) {
-      json['crew'] = CrewDto.fromJson(json).toJson();
+      json[_keyCrew] = CrewDto.fromJson(json).toJson();
     }
 
     return TaleDto.fromJson(json);
   }
 
-  Map<String, dynamic> toSupaJsonItem() {
+  Map<String, dynamic> toSupaJson() {
     final json = toJson();
     json[_keyCreateDate] =
         DateTime.fromMillisecondsSinceEpoch(createDate).toIso8601String();
@@ -173,7 +173,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           DateTime.fromMillisecondsSinceEpoch(updateDate!).toIso8601String();
     }
 
-    final Map<String, dynamic>? textJson = json.remove('text');
+    final Map<String, dynamic>? textJson = json.remove(_keyText);
     if (textJson != null) {
       for (final entry in textJson.entries) {
         json[entry.key] = entry.value;
@@ -186,7 +186,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       json[_keyAudioDuration] = audio!.duration;
     }
 
-    final Map<String, dynamic>? crewJson = json.remove('crew');
+    final Map<String, dynamic>? crewJson = json.remove(_keyCrew);
     if (crewJson != null) {
       for (final entry in crewJson.entries) {
         json[entry.key] = entry.value;
@@ -202,6 +202,17 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   static final _keyAudioSize = 'audio_file_size';
   static final _keyAudioDuration = 'audio_duration';
   static final _keyAudio = 'audio';
+  static final _keyCrew = 'crew';
+  static final _keyText = 'text';
+  static final _keyParagraphs = 'paragraphs';
+  static final _keyMinReadingTime = 'min_reading_time';
+  static final _keyMaxReadingTime = 'max_reading_time';
+
+  static const _keyAuthors = 'authors';
+  static const _keyReaders = 'readers';
+  static const _keyGraphics = 'graphics';
+  static const _keyMusicians = 'musicians';
+  static const _keyTranslators = 'translators';
 }
 
 enum TaleTag {
