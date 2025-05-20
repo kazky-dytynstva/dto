@@ -30,7 +30,7 @@ void main() {
               ),
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage('Tale id should be positive'),
           );
@@ -58,7 +58,7 @@ void main() {
               ),
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage('Tale name should NOT be empty'),
           );
@@ -86,7 +86,7 @@ void main() {
               ),
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage(
                 'updateDate can NOT be before createDate'),
@@ -111,7 +111,7 @@ void main() {
               text: null,
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage('There should be at least one tag'),
           );
@@ -139,7 +139,7 @@ void main() {
               ),
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage('Tale summary should NOT be empty'),
           );
@@ -163,7 +163,7 @@ void main() {
               text: null,
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage(
                 'Text content should be present if and only if the tale has a TaleTag.text tag'),
@@ -188,7 +188,7 @@ void main() {
               text: null,
               audio: null,
               crew: null,
-              ignore: false,
+              isHidden: false,
             ),
             throwsAssertErrorWithMessage(
                 'Audio content should be present if and only if the tale has a TaleTag.audio tag'),
@@ -218,7 +218,7 @@ void main() {
             },
             'audio': null,
             'crew': null,
-            'ignore': false,
+            'is_hidden': false,
           };
 
           // When
@@ -236,7 +236,7 @@ void main() {
           expect(tale.text?.maxReadingTime, equals(10));
           expect(tale.audio, isNull);
           expect(tale.crew, isNull);
-          expect(tale.ignore, isFalse);
+          expect(tale.isHidden, isNull);
         },
       );
 
@@ -338,7 +338,7 @@ void main() {
             },
             'audio': null,
             'crew': null,
-            'ignore': null,
+            'is_hidden': null,
           };
 
           // When
@@ -356,7 +356,7 @@ void main() {
           expect(tale.text?.maxReadingTime, equals(10));
           expect(tale.audio, isNull);
           expect(tale.crew, isNull);
-          expect(tale.ignore, isNull);
+          expect(tale.isHidden, isNull);
         },
       );
     });
@@ -385,7 +385,7 @@ void main() {
             'audio_duration': 120,
             'audio': null,
             'crew': null,
-            'ignore': false,
+            'is_hidden': false,
           };
 
           // When
@@ -404,7 +404,7 @@ void main() {
           expect(tale.audio?.fileSize, equals(42));
           expect(tale.audio?.duration, equals(120));
           expect(tale.crew, isNull);
-          expect(tale.ignore, isFalse);
+          expect(tale.isHidden, isNull);
         },
       );
 
@@ -503,7 +503,7 @@ void main() {
             'text': {},
             'audio': null,
             'crew': null,
-            'ignore': null,
+            'is_hidden': null,
           };
 
           // When
@@ -521,7 +521,7 @@ void main() {
           expect(tale.text?.maxReadingTime, equals(10));
           expect(tale.audio, isNull);
           expect(tale.crew, isNull);
-          expect(tale.ignore, isNull);
+          expect(tale.isHidden, isNull);
         },
       );
     });
@@ -547,7 +547,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            ignore: null,
+            isHidden: null,
           );
 
           final expectedJson = {
@@ -636,7 +636,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            ignore: null,
+            isHidden: null,
           );
 
           // When
@@ -645,7 +645,7 @@ void main() {
           // Then
           expect(json['audio'], isNull);
           expect(json['crew'], isNull);
-          expect(json['ignore'], isNull);
+          expect(json['is_hidden'], isNull);
         },
       );
 
@@ -672,7 +672,7 @@ void main() {
               duration: 456,
             ),
             crew: null,
-            ignore: false,
+            isHidden: false,
           );
           final expectedAudioJson = {
             'file_size': 123,
@@ -719,7 +719,7 @@ void main() {
               translators: [1, 2, 3, 4, 5, 6],
               graphics: [1, 2, 3],
             ),
-            ignore: false,
+            isHidden: false,
           );
           final expectedCrewJson = {
             'authors': [1],
@@ -740,8 +740,8 @@ void main() {
 
     group('toSupaJson', () {
       test(
-        'given all fields are present\n'
-        'when calling toSupaJson on $TaleDto\n'
+        'given all fields are present '
+        // 'when calling toSupaJson on $TaleDto '
         'then the resulting map contains all expected key-value pairs with ISO8601 dates',
         () {
           // Given
@@ -770,7 +770,7 @@ void main() {
               translators: [4],
               graphics: [5],
             ),
-            ignore: true,
+            isHidden: true,
           );
 
           final expectedJson = {
@@ -790,7 +790,7 @@ void main() {
             'musicians': [3],
             'translators': [4],
             'graphics': [5],
-            'ignore': true,
+            'is_hidden': true,
           };
 
           // When
@@ -802,8 +802,8 @@ void main() {
       );
 
       test(
-        'given only required fields are present\n'
-        'when calling toSupaJson on $TaleDto\n'
+        'given only required fields are present '
+        'when calling toSupaJson on $TaleDto '
         'then the resulting map contains only required key-value pairs',
         () {
           // Given
@@ -823,7 +823,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            ignore: null,
+            isHidden: null,
           );
 
           final expectedJson = {
@@ -847,8 +847,8 @@ void main() {
       );
 
       test(
-        'given optional fields are null\n'
-        'when calling toSupaJson on $TaleDto\n'
+        'given optional fields are null '
+        'when calling toSupaJson on $TaleDto '
         'then the resulting map omits those fields',
         () {
           // Given
@@ -868,7 +868,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            ignore: null,
+            isHidden: null,
           );
 
           final expectedJson = {
@@ -892,8 +892,8 @@ void main() {
       );
 
       test(
-        'given $TaleDto with both text and audio tags and content\n'
-        'when calling toSupaJson\n'
+        'given $TaleDto with both text and audio tags and content '
+        'when calling toSupaJson '
         'then both text and audio fields are present in the map',
         () {
           // Given
@@ -916,7 +916,7 @@ void main() {
               duration: 456,
             ),
             crew: null,
-            ignore: false,
+            isHidden: false,
           );
 
           final expectedJson = {
@@ -931,7 +931,6 @@ void main() {
             'max_reading_time': 2,
             'audio_file_size': 123,
             'audio_duration': 456,
-            'ignore': false,
           };
 
           // When
@@ -943,8 +942,8 @@ void main() {
       );
 
       test(
-        'given $TaleDto with crew\n'
-        'when calling toSupaJson\n'
+        'given $TaleDto with crew '
+        'when calling toSupaJson '
         'then crew fields are present in the map',
         () {
           // Given
@@ -970,7 +969,7 @@ void main() {
               translators: [1, 2, 3, 4, 5, 6],
               graphics: [1, 2, 3],
             ),
-            ignore: null,
+            isHidden: null,
           );
 
           final expectedJson = {
