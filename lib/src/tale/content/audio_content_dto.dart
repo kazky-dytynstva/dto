@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'audio_content.g.dart';
+part 'audio_content_dto.g.dart';
 
 @JsonSerializable()
 class AudioContentDto extends Equatable {

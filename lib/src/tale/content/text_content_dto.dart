@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'text_content.g.dart';
+part 'text_content_dto.g.dart';
 
 @JsonSerializable()
 class TextContentDto extends Equatable {
