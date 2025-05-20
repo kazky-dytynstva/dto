@@ -10,6 +10,7 @@ part 'tale_dto.g.dart';
 
 @JsonSerializable()
 class TaleDto extends Equatable implements ToJsonItem, IdHolder {
+  /// Creates a TaleDto object.
   TaleDto({
     required this.id,
     required this.name,
@@ -20,8 +21,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.text,
     required this.audio,
     required this.crew,
-    this.ignore,
-  })  : assert(
+    bool? isHidden,
+  })  : isHidden = isHidden == true ? true : null,
+        assert(
           id >= 0,
           'Tale id should be positive',
         ),
@@ -71,10 +73,12 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   final CrewDto? crew;
 
-  /// Used for the development and testing.
+  /// Used for the development and testing purposes
   /// When flag is true, the tale should not be shown in the production tales list
+  ///
+  /// This value can be or true or null. False is not allowed.
   @JsonKey()
-  final bool? ignore;
+  final bool? isHidden;
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);
@@ -93,7 +97,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         text,
         audio,
         crew,
-        ignore,
+        isHidden,
       ];
 
   factory TaleDto.fromSupaJson(Map<String, dynamic> json) {
