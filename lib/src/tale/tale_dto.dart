@@ -1,6 +1,6 @@
 import 'package:dto/src/id_holder.dart';
-import 'package:dto/src/tale/content/audio_content.dart';
-import 'package:dto/src/tale/content/text_content.dart';
+import 'package:dto/src/tale/content/audio_content_dto.dart';
+import 'package:dto/src/tale/content/text_content_dto.dart';
 import 'package:dto/src/tale/crew/crew_dto.dart';
 import 'package:dto/src/to_json_item.dart';
 import 'package:equatable/equatable.dart';
@@ -20,7 +20,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.text,
     required this.audio,
     required this.crew,
-    required this.ignore,
+    this.ignore,
   })  : assert(
           id >= 0,
           'Tale id should be positive',
@@ -105,9 +105,25 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           DateTime.parse(json[_keyUpdateDate] as String).millisecondsSinceEpoch;
     }
 
-    final dto = TaleDto.fromJson(json);
+    TextContentDto? textDto;
+    final paragrphs = json['paragraphs'] as List<dynamic>?;
+    final minReadingTime = json['min_reading_time'] as int?;
+    final maxReadingTime = json['max_reading_time'] as int?;
 
-    final text = TextContentDto.fromJson(json);
+    if (paragrphs != null && minReadingTime != null && maxReadingTime != null) {
+      textDto = TextContentDto(
+        paragraphs: paragrphs.cast<String>(),
+        minReadingTime: minReadingTime,
+        maxReadingTime: maxReadingTime,
+      );
+      json['text'] = textDto.toJson();
+    } else if (paragrphs != null ||
+        minReadingTime != null ||
+        maxReadingTime != null) {
+      throw Exception(
+        'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
+      );
+    }
 
     final audioSize = json[_keyAudioSize] as int?;
     final audioDuration = json[_keyAudioDuration] as int?;
@@ -117,20 +133,30 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       'Audio size and duration should be both present or absent',
     );
 
-    final audio = audioSize != null && audioDuration != null
-        ? AudioContentDto(
-            fileSize: audioSize,
-            duration: audioDuration,
-          )
-        : null;
+    if (audioSize != null && audioDuration != null) {
+      final audioDto = AudioContentDto(
+        fileSize: audioSize,
+        duration: audioDuration,
+      );
 
-    final crew = CrewDto.fromJson(json);
+      json[_keyAudio] = audioDto.toJson();
+    }
 
-    return dto._copyWith(
-      text: text,
-      audio: audio,
-      crew: crew,
-    );
+    final authors = json['authors'] as List<dynamic>?;
+    final readers = json['readers'] as List<dynamic>?;
+    final graphics = json['graphics'] as List<dynamic>?;
+    final musicians = json['musicians'] as List<dynamic>?;
+    final translators = json['translators'] as List<dynamic>?;
+
+    if (authors != null ||
+        readers != null ||
+        graphics != null ||
+        musicians != null ||
+        translators != null) {
+      json['crew'] = CrewDto.fromJson(json).toJson();
+    }
+
+    return TaleDto.fromJson(json);
   }
 
   Map<String, dynamic> toSupaJsonItem() {
@@ -150,7 +176,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       }
     }
 
-    json.remove('audio');
+    json.remove(_keyAudio);
     if (audio != null) {
       json[_keyAudioSize] = audio!.fileSize;
       json[_keyAudioDuration] = audio!.duration;
@@ -166,30 +192,12 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     return json;
   }
 
-  TaleDto _copyWith({
-    TextContentDto? text,
-    AudioContentDto? audio,
-    CrewDto? crew,
-  }) {
-    return TaleDto(
-      id: id,
-      name: name,
-      createDate: createDate,
-      updateDate: updateDate,
-      summary: summary,
-      tags: tags,
-      text: text ?? this.text,
-      audio: audio ?? this.audio,
-      crew: crew ?? this.crew,
-      ignore: ignore,
-    );
-  }
-
   static final _keyCreateDate = 'create_date';
   static final _keyUpdateDate = 'update_date';
 
   static final _keyAudioSize = 'audio_file_size';
   static final _keyAudioDuration = 'audio_duration';
+  static final _keyAudio = 'audio';
 }
 
 enum TaleTag {
