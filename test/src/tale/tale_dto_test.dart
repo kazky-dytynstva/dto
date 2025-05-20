@@ -741,7 +741,7 @@ void main() {
     group('toSupaJson', () {
       test(
         'given all fields are present '
-        // 'when calling toSupaJson on $TaleDto '
+        'when calling toSupaJson on $TaleDto '
         'then the resulting map contains all expected key-value pairs with ISO8601 dates',
         () {
           // Given
@@ -794,7 +794,7 @@ void main() {
           };
 
           // When
-          final json = tale.toSupaJsonItem();
+          final json = tale.toSupaJson();
 
           // Then
           expect(json, equals(expectedJson));
@@ -839,7 +839,7 @@ void main() {
           };
 
           // When
-          final json = tale.toSupaJsonItem();
+          final json = tale.toSupaJson();
 
           // Then
           expect(json, equals(expectedJson));
@@ -884,7 +884,7 @@ void main() {
           };
 
           // When
-          final json = tale.toSupaJsonItem();
+          final json = tale.toSupaJson();
 
           // Then
           expect(json, equals(expectedJson));
@@ -934,7 +934,7 @@ void main() {
           };
 
           // When
-          final json = tale.toSupaJsonItem();
+          final json = tale.toSupaJson();
 
           // Then
           expect(json, equals(expectedJson));
@@ -990,7 +990,7 @@ void main() {
           };
 
           // When
-          final json = tale.toSupaJsonItem();
+          final json = tale.toSupaJson();
 
           // Then
           expect(json, equals(expectedJson));
