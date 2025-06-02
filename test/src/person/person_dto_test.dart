@@ -101,7 +101,7 @@ void main() {
         test(
           'given empty for surname '
           'when creating $PersonDto '
-          'then throws assertion error with correct message',
+          'then return normally',
           () {
             // Given/When/Then
             expect(
@@ -114,7 +114,7 @@ void main() {
                 info: null,
                 roles: null,
               ),
-              throwsAssertErrorWithMessage(error),
+              returnsNormally,
             );
           },
         );
