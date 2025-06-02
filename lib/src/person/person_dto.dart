@@ -124,7 +124,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   static const surnameMaxLength = 50;
 
   static const urlMinLength = 8;
-  static const urlMaxLength = 100;
+  static const urlMaxLength = 256;
 
   static const infoMinLength = 0;
   static const infoMaxLength = 200;
