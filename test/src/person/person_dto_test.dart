@@ -5,90 +5,225 @@ import 'package:dto/dto.dart';
 void main() {
   group('$PersonDto', () {
     group('$PersonDto constructor', () {
-      test(
-        'given empty for name '
-        'when creating $PersonDto '
-        'then throws assertion error with correct message',
-        () {
-          // Given/When/Then
-          expect(
-            () => PersonDto(
-              id: 100,
-              name: '',
-              surname: 'Doe',
-              gender: PersonGenderDto.male,
-              url: null,
-              info: null,
-              roles: null,
-            ),
-            throwsAssertErrorWithMessage('Person name should NOT be empty'),
-          );
-        },
-      );
+      group('id', () {
+        test(
+          'given negative id '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: -1,
+                name: 'Neg',
+                surname: 'Id',
+                gender: PersonGenderDto.female,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage('Person id should be positive'),
+            );
+          },
+        );
+      });
 
-      test(
-        'given empty for surname '
-        'when creating $PersonDto '
-        'then throws assertion error with correct message',
-        () {
-          // Given/When/Then
-          expect(
-            () => PersonDto(
-              id: 101,
-              name: 'John',
-              surname: '',
-              gender: PersonGenderDto.male,
-              url: null,
-              info: null,
-              roles: null,
-            ),
-            throwsAssertErrorWithMessage('Person surname should NOT be empty'),
-          );
-        },
-      );
+      group('name', () {
+        const error =
+            'Person name should be between ${PersonDto.nameMinLength} and ${PersonDto.nameMaxLength} characters long';
+        test(
+          'given empty for name '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 100,
+                name: '',
+                surname: 'Doe',
+                gender: PersonGenderDto.male,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
 
-      // No assertion for gender being null in the current implementation
-      test(
-        'given empty strings for name and surname '
-        'when creating $PersonDto '
-        'then throws assertion error for name',
-        () {
-          // Given/When/Then
-          expect(
-            () => PersonDto(
-              id: 10,
-              name: '',
-              surname: '',
-              gender: PersonGenderDto.male,
-              url: null,
-              info: null,
-              roles: null,
-            ),
-            throwsAssertErrorWithMessage('Person name should NOT be empty'),
-          );
-        },
-      );
+        test(
+          'given name with length less than ${PersonDto.nameMinLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 100,
+                name: 'A' * (PersonDto.nameMinLength - 1),
+                surname: 'Doe',
+                gender: PersonGenderDto.male,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
 
-      test(
-        'given negative id '
-        'when creating $PersonDto '
-        'then throws assertion error with correct message',
-        () {
-          // Given/When/Then
-          expect(
-            () => PersonDto(
-              id: -1,
-              name: 'Neg',
-              surname: 'Id',
-              gender: PersonGenderDto.female,
-              url: null,
-              info: null,
-              roles: null,
-            ),
-            throwsAssertErrorWithMessage('Person id should be positive'),
-          );
-        },
-      );
+        test(
+          'given name with length greater than ${PersonDto.nameMaxLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 100,
+                name: 'A' * (PersonDto.nameMaxLength + 1),
+                surname: 'Doe',
+                gender: PersonGenderDto.values.first,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+      });
+
+      group('surname', () {
+        const error =
+            'Person surname should be between ${PersonDto.surnameMinLength} and ${PersonDto.surnameMaxLength} characters long';
+        test(
+          'given empty for surname '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 101,
+                name: 'John',
+                surname: '',
+                gender: PersonGenderDto.male,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+
+        test(
+          'given surname with length less than ${PersonDto.surnameMinLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 101,
+                name: 'John',
+                surname: 'D' * (PersonDto.surnameMinLength - 1),
+                gender: PersonGenderDto.values.first,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+
+        test(
+          'given surname with length greater than ${PersonDto.surnameMaxLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: 101,
+                name: 'John',
+                surname: 'D' * (PersonDto.surnameMaxLength + 1),
+                gender: PersonGenderDto.values.first,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+      });
+
+      group('url', () {
+        const error =
+            'Person url should be a valid URL, with length between ${PersonDto.urlMinLength} and ${PersonDto.urlMaxLength} characters';
+        final urlLessThanMinLength = Uri.parse('a.co');
+        final urlGreaterThanMaxLength =
+            Uri.parse('${'b' * (PersonDto.urlMaxLength - 3)}.com');
+
+        test(
+          'given url with length less than ${PersonDto.urlMinLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given
+            assert(
+              urlLessThanMinLength.toString().length < PersonDto.urlMinLength,
+              'Test setup failed: URL length is not less than minimum',
+            );
+
+            // When/Then
+            expect(
+              () => PersonDto(
+                id: 102,
+                name: 'John',
+                surname: 'Doe',
+                gender: PersonGenderDto.values.first,
+                url: urlLessThanMinLength,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+
+        test(
+          'given url with length greater than ${PersonDto.urlMaxLength} '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given
+            assert(
+              urlGreaterThanMaxLength.toString().length >
+                  PersonDto.urlMaxLength,
+              'Test setup failed: URL length is not greater than maximum',
+            );
+            // When/Then
+            expect(
+              () => PersonDto(
+                id: 102,
+                name: 'John',
+                surname: 'Doe',
+                gender: PersonGenderDto.values.first,
+                url: urlGreaterThanMaxLength,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage(error),
+            );
+          },
+        );
+      });
+
       test(
         'given valid data '
         'when creating $PersonDto '
@@ -99,7 +234,7 @@ void main() {
           final name = 'John';
           final surname = 'Doe';
           final gender = PersonGenderDto.male;
-          final url = 'https://example.com';
+          final url = Uri.parse('https://example.com');
           final info = 'Some info';
           final roles = [PersonRoleDto.author, PersonRoleDto.reader];
 
@@ -243,13 +378,16 @@ void main() {
           final person = PersonDto.fromJson(json);
 
           // Then
-          expect(person.id, 2);
-          expect(person.name, 'Jane');
-          expect(person.surname, 'Smith');
-          expect(person.gender, PersonGenderDto.female);
-          expect(person.url, 'https://example.org');
-          expect(person.info, 'Other info');
-          expect(person.roles, [PersonRoleDto.musician, PersonRoleDto.graphic]);
+          expect(person.id, equals(2));
+          expect(person.name, equals('Jane'));
+          expect(person.surname, equals('Smith'));
+          expect(person.gender, equals(PersonGenderDto.female));
+          expect(person.url, equals(Uri.parse('https://example.org')));
+          expect(person.info, equals('Other info'));
+          expect(
+            person.roles,
+            equals([PersonRoleDto.musician, PersonRoleDto.graphic]),
+          );
         },
       );
 

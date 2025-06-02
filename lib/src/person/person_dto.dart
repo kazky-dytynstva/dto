@@ -22,12 +22,13 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
           'Person id should be positive',
         ),
         assert(
-          name.isNotEmpty,
-          'Person name should NOT be empty',
+          name.length >= nameMinLength && name.length <= nameMaxLength,
+          'Person name should be between $nameMinLength and $nameMaxLength characters long',
         ),
         assert(
-          surname.isNotEmpty,
-          'Person surname should NOT be empty',
+          surname.length >= surnameMinLength &&
+              surname.length <= surnameMaxLength,
+          'Person surname should be between $surnameMinLength and $surnameMaxLength characters long',
         ),
         assert(
           roles == null || roles.isNotEmpty,
@@ -38,8 +39,10 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
           'Person roles should be unique',
         ),
         assert(
-          url == null || Uri.tryParse(url) != null,
-          'Person url should be a valid URL',
+          url == null ||
+              url.toString().length >= urlMinLength &&
+                  url.toString().length <= urlMaxLength,
+          'Person url should be a valid URL, with length between $urlMinLength and $urlMaxLength characters',
         );
 
   @override
@@ -47,7 +50,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   final String name;
   final String surname;
   final PersonGenderDto gender;
-  final String? url;
+  final Uri? url;
   final String? info;
   final List<PersonRoleDto>? roles;
 
@@ -76,7 +79,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
       return dto;
     }
 
-    return dto._copyWith(
+    return dto.copyWith(
       roles: [PersonRoleDto.crew],
     );
   }
@@ -97,19 +100,32 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     return json;
   }
 
-  PersonDto _copyWith({
+  PersonDto copyWith({
+    int? id,
     List<PersonRoleDto>? roles,
   }) {
     return PersonDto(
-      id: id,
+      id: id ?? this.id,
       name: name,
       surname: surname,
       gender: gender,
       url: url,
       info: info,
-      roles: roles ?? this.roles,
+      roles: roles,
     );
   }
 
   static final _keyIsCrew = 'is_crew';
+
+  static const nameMinLength = 2;
+  static const nameMaxLength = 50;
+
+  static const surnameMinLength = 2;
+  static const surnameMaxLength = 50;
+
+  static const urlMinLength = 8;
+  static const urlMaxLength = 100;
+
+  static const infoMinLength = 0;
+  static const infoMaxLength = 200;
 }
