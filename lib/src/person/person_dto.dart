@@ -26,8 +26,9 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
           'Person name should be between $nameMinLength and $nameMaxLength characters long',
         ),
         assert(
-          surname.length >= surnameMinLength &&
-              surname.length <= surnameMaxLength,
+          surname.isEmpty ||
+              surname.length >= surnameMinLength &&
+                  surname.length <= surnameMaxLength,
           'Person surname should be between $surnameMinLength and $surnameMaxLength characters long',
         ),
         assert(
