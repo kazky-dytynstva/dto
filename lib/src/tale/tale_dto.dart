@@ -41,8 +41,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           'There should be at least one tag',
         ),
         assert(
-          summary.isNotEmpty,
-          'Tale summary should NOT be empty',
+          summary.length >= summaryMinLength &&
+              summary.length <= summaryMaxLength,
+          'Tale summary should be between $summaryMinLength and $summaryMaxLength characters long',
         ),
         assert(
           tags.contains(TaleTag.text) == false && text == null ||
@@ -216,6 +217,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   static const nameMinLength = 2;
   static const nameMaxLength = 50;
+
+  static const summaryMinLength = 140;
+  static const summaryMaxLength = 200;
 
   static const _keyCreateDate = 'create_date';
   static const _keyUpdateDate = 'update_date';
