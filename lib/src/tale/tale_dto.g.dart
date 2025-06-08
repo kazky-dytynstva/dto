@@ -9,8 +9,10 @@ part of 'tale_dto.dart';
 TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      createDate: (json['create_date'] as num).toInt(),
-      updateDate: (json['update_date'] as num?)?.toInt(),
+      createDate: DateTime.parse(json['create_date'] as String),
+      updateDate: json['update_date'] == null
+          ? null
+          : DateTime.parse(json['update_date'] as String),
       summary: json['summary'] as String,
       tags: (json['tags'] as List<dynamic>)
           .map((e) => $enumDecode(_$TaleTagEnumMap, e))
@@ -31,7 +33,7 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
   final val = <String, dynamic>{
     'id': instance.id,
     'name': instance.name,
-    'create_date': instance.createDate,
+    'create_date': instance.createDate.toIso8601String(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -40,7 +42,7 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) {
     }
   }
 
-  writeNotNull('update_date', instance.updateDate);
+  writeNotNull('update_date', instance.updateDate?.toIso8601String());
   val['summary'] = instance.summary;
   val['tags'] = instance.tags.map((e) => _$TaleTagEnumMap[e]!).toList();
   writeNotNull('text', instance.text?.toJson());

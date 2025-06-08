@@ -21,6 +21,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
           id >= 0,
           'Person id should be positive',
         ),
+        assert(id != stubId, 'Person id should NOT be a stub id'),
         assert(
           name.length >= nameMinLength && name.length <= nameMaxLength,
           'Person name should be between $nameMinLength and $nameMaxLength characters long',
@@ -116,7 +117,9 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     );
   }
 
-  static final _keyIsCrew = 'is_crew';
+  static const stubId = 4242424242;
+
+  static const _keyIsCrew = 'is_crew';
 
   static const nameMinLength = 2;
   static const nameMaxLength = 50;

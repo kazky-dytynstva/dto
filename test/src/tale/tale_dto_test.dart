@@ -8,6 +8,9 @@ import '../../utils/throws_assert_error_with_message.dart';
 
 void main() {
   group('$TaleDto', () {
+    final createDate = DateTime.fromMillisecondsSinceEpoch(1620000000000);
+    final updateDate = DateTime.fromMillisecondsSinceEpoch(1620003600000);
+
     group('constructor asserts', () {
       test(
         'given id is negative '
@@ -19,8 +22,8 @@ void main() {
             () => TaleDto(
               id: -1,
               name: 'Valid Name',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              createDate: createDate,
+              updateDate: updateDate,
               summary: 'Valid Summary',
               tags: {TaleTag.text},
               text: TextContentDto(
@@ -38,17 +41,17 @@ void main() {
       );
 
       test(
-        'given name is empty '
+        'given id that equals ${TaleDto.stubId} '
         'when creating $TaleDto '
         'then an AssertionError with a specific message is thrown',
         () {
           // Given, When, Then
           expect(
             () => TaleDto(
-              id: 1,
-              name: '',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              id: TaleDto.stubId,
+              name: 'Valid Name',
+              createDate: createDate,
+              updateDate: updateDate,
               summary: 'Valid Summary',
               tags: {TaleTag.text},
               text: TextContentDto(
@@ -60,7 +63,67 @@ void main() {
               crew: null,
               isHidden: false,
             ),
-            throwsAssertErrorWithMessage('Tale name should NOT be empty'),
+            throwsAssertErrorWithMessage('Tale id should NOT be a stub id'),
+          );
+        },
+      );
+
+      test(
+        'given name too short '
+        'when creating $TaleDto '
+        'then an AssertionError with a specific message is thrown',
+        () {
+          // Given, When, Then
+          final name = 'a' * (TaleDto.nameMinLength - 1);
+          expect(
+            () => TaleDto(
+              id: 1,
+              name: name,
+              createDate: createDate,
+              updateDate: updateDate,
+              summary: 'Valid Summary',
+              tags: {TaleTag.text},
+              text: TextContentDto(
+                paragraphs: ['Paragraph 1'],
+                minReadingTime: 5,
+                maxReadingTime: 10,
+              ),
+              audio: null,
+              crew: null,
+              isHidden: false,
+            ),
+            throwsAssertErrorWithMessage(
+                'Tale name should be between ${TaleDto.nameMinLength} and ${TaleDto.nameMaxLength} characters long'),
+          );
+        },
+      );
+
+      test(
+        'given name too long '
+        'when creating $TaleDto '
+        'then an AssertionError with a specific message is thrown',
+        () {
+          // Given, When, Then
+          final name = 'a' * (TaleDto.nameMaxLength + 1);
+          expect(
+            () => TaleDto(
+              id: 1,
+              name: name,
+              createDate: createDate,
+              updateDate: updateDate,
+              summary: 'Valid Summary',
+              tags: {TaleTag.text},
+              text: TextContentDto(
+                paragraphs: ['Paragraph 1'],
+                minReadingTime: 5,
+                maxReadingTime: 10,
+              ),
+              audio: null,
+              crew: null,
+              isHidden: false,
+            ),
+            throwsAssertErrorWithMessage(
+                'Tale name should be between ${TaleDto.nameMinLength} and ${TaleDto.nameMaxLength} characters long'),
           );
         },
       );
@@ -75,8 +138,8 @@ void main() {
             () => TaleDto(
               id: 1,
               name: 'Valid Name',
-              createDate: 1620003600000,
-              updateDate: 1620000000000,
+              createDate: updateDate,
+              updateDate: createDate,
               summary: 'Valid Summary',
               tags: {TaleTag.text},
               text: TextContentDto(
@@ -104,8 +167,8 @@ void main() {
             () => TaleDto(
               id: 1,
               name: 'Valid Name',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              createDate: createDate,
+              updateDate: updateDate,
               summary: 'Valid Summary',
               tags: {},
               text: null,
@@ -128,8 +191,8 @@ void main() {
             () => TaleDto(
               id: 1,
               name: 'Valid Name',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              createDate: createDate,
+              updateDate: updateDate,
               summary: '',
               tags: {TaleTag.text},
               text: TextContentDto(
@@ -156,8 +219,8 @@ void main() {
             () => TaleDto(
               id: 1,
               name: 'Valid Name',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              createDate: createDate,
+              updateDate: updateDate,
               summary: 'Valid Summary',
               tags: {TaleTag.text},
               text: null,
@@ -181,8 +244,8 @@ void main() {
             () => TaleDto(
               id: 1,
               name: 'Valid Name',
-              createDate: 1620000000000,
-              updateDate: 1620003600000,
+              createDate: createDate,
+              updateDate: updateDate,
               summary: 'Valid Summary',
               tags: {TaleTag.audio},
               text: null,
@@ -207,8 +270,8 @@ void main() {
           final validJson = {
             'id': 1,
             'name': 'Tale Name',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'summary': 'A short summary',
             'tags': ['text'],
             'text': {
@@ -227,8 +290,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(1620000000000));
-          expect(tale.updateDate, equals(1620003600000));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -248,7 +311,7 @@ void main() {
           // Given
           final invalidJson = {
             'name': 'Tale Name',
-            'create_date': 1620000000000,
+            'create_date': createDate.toIso8601String(),
           };
 
           // When, Then
@@ -268,8 +331,8 @@ void main() {
           final invalidJson = {
             'id': 'invalid_id',
             'name': 'Tale Name',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'tags': [],
           };
 
@@ -290,8 +353,8 @@ void main() {
           final jsonWithExtraFields = {
             'id': 1,
             'name': 'Tale Name',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'summary': 'A short summary',
             'tags': ['text'],
             'text': {
@@ -308,8 +371,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(1620000000000));
-          expect(tale.updateDate, equals(1620003600000));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -327,8 +390,8 @@ void main() {
           final jsonWithNullFields = {
             'id': 1,
             'name': 'Tale Name',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'summary': 'A short summary',
             'tags': ['text'],
             'text': {
@@ -347,8 +410,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(1620000000000));
-          expect(tale.updateDate, equals(1620003600000));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -394,8 +457,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(createDate.millisecondsSinceEpoch));
-          expect(tale.updateDate, equals(updateDate.millisecondsSinceEpoch));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text, TaleTag.audio}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -416,7 +479,7 @@ void main() {
           // Given
           final invalidSupaJson = {
             'name': 'Tale Name',
-            'create_date': 1620000000000,
+            'create_date': createDate.toIso8601String(),
           };
 
           // When, Then
@@ -474,8 +537,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(createDate.millisecondsSinceEpoch));
-          expect(tale.updateDate, equals(updateDate.millisecondsSinceEpoch));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -512,8 +575,8 @@ void main() {
           // Then
           expect(tale.id, equals(1));
           expect(tale.name, equals('Tale Name'));
-          expect(tale.createDate, equals(createDate.millisecondsSinceEpoch));
-          expect(tale.updateDate, equals(updateDate.millisecondsSinceEpoch));
+          expect(tale.createDate, equals(createDate));
+          expect(tale.updateDate, equals(updateDate));
           expect(tale.summary, equals('A short summary'));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
@@ -536,8 +599,8 @@ void main() {
           final tale = TaleDto(
             id: 1,
             name: 'Tale Name',
-            createDate: 1620000000000,
-            updateDate: 1620003600000,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Valid Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -553,8 +616,8 @@ void main() {
           final expectedJson = {
             'id': 1,
             'name': 'Tale Name',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'summary': 'Valid Summary',
             'tags': ['text'],
             'text': {
@@ -581,8 +644,8 @@ void main() {
           final tale = TaleDto(
             id: 2,
             name: 'Minimal Tale',
-            createDate: 1620000000000,
-            updateDate: 1620003600000,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -597,8 +660,8 @@ void main() {
           final expectedJson = {
             'id': 2,
             'name': 'Minimal Tale',
-            'create_date': 1620000000000,
-            'update_date': 1620003600000,
+            'create_date': createDate.toIso8601String(),
+            'update_date': updateDate.toIso8601String(),
             'summary': 'Summary',
             'tags': ['text'],
             'text': {
@@ -625,8 +688,8 @@ void main() {
           final tale = TaleDto(
             id: 3,
             name: 'Null Optionals',
-            createDate: 1620000000000,
-            updateDate: 1620003600000,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -658,8 +721,8 @@ void main() {
           final tale = TaleDto(
             id: 4,
             name: 'Text and Audio',
-            createDate: 1620000000000,
-            updateDate: 1620003600000,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
@@ -702,8 +765,8 @@ void main() {
           final tale = TaleDto(
             id: 5,
             name: 'With Crew',
-            createDate: 1620000000000,
-            updateDate: 1620003600000,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -745,13 +808,12 @@ void main() {
         'then the resulting map contains all expected key-value pairs with ISO8601 dates',
         () {
           // Given
-          final createDate = DateTime.fromMillisecondsSinceEpoch(1620000000000);
-          final updateDate = DateTime.fromMillisecondsSinceEpoch(1620003600000);
+
           final tale = TaleDto(
             id: 1,
             name: 'Tale Name',
-            createDate: createDate.millisecondsSinceEpoch,
-            updateDate: updateDate.millisecondsSinceEpoch,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'A short summary',
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
@@ -812,8 +874,8 @@ void main() {
           final tale = TaleDto(
             id: 2,
             name: 'Minimal Tale',
-            createDate: createDate.millisecondsSinceEpoch,
-            updateDate: updateDate.millisecondsSinceEpoch,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -857,8 +919,8 @@ void main() {
           final tale = TaleDto(
             id: 3,
             name: 'Null Optionals',
-            createDate: createDate.millisecondsSinceEpoch,
-            updateDate: updateDate.millisecondsSinceEpoch,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
@@ -902,8 +964,8 @@ void main() {
           final tale = TaleDto(
             id: 4,
             name: 'Text and Audio',
-            createDate: createDate.millisecondsSinceEpoch,
-            updateDate: updateDate.millisecondsSinceEpoch,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
@@ -952,8 +1014,8 @@ void main() {
           final tale = TaleDto(
             id: 5,
             name: 'With Crew',
-            createDate: createDate.millisecondsSinceEpoch,
-            updateDate: updateDate.millisecondsSinceEpoch,
+            createDate: createDate,
+            updateDate: updateDate,
             summary: 'Summary',
             tags: {TaleTag.text},
             text: TextContentDto(
