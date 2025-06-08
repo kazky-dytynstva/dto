@@ -116,7 +116,9 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     );
   }
 
-  static final _keyIsCrew = 'is_crew';
+  static const stubId = 4242424242;
+
+  static const _keyIsCrew = 'is_crew';
 
   static const nameMinLength = 2;
   static const nameMaxLength = 50;
