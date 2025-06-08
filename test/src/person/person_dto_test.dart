@@ -26,6 +26,27 @@ void main() {
             );
           },
         );
+
+        test(
+          'given id equal to stub id '
+          'when creating $PersonDto '
+          'then throws assertion error with correct message',
+          () {
+            // Given/When/Then
+            expect(
+              () => PersonDto(
+                id: PersonDto.stubId,
+                name: 'Neg',
+                surname: 'Id',
+                gender: PersonGenderDto.female,
+                url: null,
+                info: null,
+                roles: null,
+              ),
+              throwsAssertErrorWithMessage('Person id should NOT be a stub id'),
+            );
+          },
+        );
       });
 
       group('name', () {
