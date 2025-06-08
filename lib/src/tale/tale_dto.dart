@@ -27,12 +27,13 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
           id >= 0,
           'Tale id should be positive',
         ),
+        assert(id != stubId, 'Tale id should NOT be a stub id'),
         assert(
-          name.isNotEmpty,
-          'Tale name should NOT be empty',
+          name.length >= nameMinLength && name.length <= nameMaxLength,
+          'Tale name should be between $nameMinLength and $nameMaxLength characters long',
         ),
         assert(
-          updateDate == null || updateDate > createDate,
+          updateDate == null || updateDate.isAfter(createDate),
           'updateDate can NOT be before createDate',
         ),
         assert(
@@ -59,10 +60,10 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   final String name;
 
   /// In millisecondsSinceEpoch
-  final int createDate;
+  final DateTime createDate;
 
   /// In millisecondsSinceEpoch
-  final int? updateDate;
+  final DateTime? updateDate;
 
   final String summary;
 
@@ -102,11 +103,11 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   factory TaleDto.fromSupaJson(Map<String, dynamic> json) {
     json[_keyCreateDate] =
-        DateTime.parse(json[_keyCreateDate] as String).millisecondsSinceEpoch;
+        DateTime.parse(json[_keyCreateDate] as String).toIso8601String();
 
     if (json[_keyUpdateDate] != null) {
       json[_keyUpdateDate] =
-          DateTime.parse(json[_keyUpdateDate] as String).millisecondsSinceEpoch;
+          DateTime.parse(json[_keyUpdateDate] as String).toIso8601String();
     }
 
     TextContentDto? textDto;
@@ -165,12 +166,10 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   Map<String, dynamic> toSupaJson() {
     final json = toJson();
-    json[_keyCreateDate] =
-        DateTime.fromMillisecondsSinceEpoch(createDate).toIso8601String();
+    json[_keyCreateDate] = createDate.toIso8601String();
 
     if (json[_keyUpdateDate] != null) {
-      json[_keyUpdateDate] =
-          DateTime.fromMillisecondsSinceEpoch(updateDate!).toIso8601String();
+      json[_keyUpdateDate] = updateDate!.toIso8601String();
     }
 
     final Map<String, dynamic>? textJson = json.remove(_keyText);
@@ -196,17 +195,39 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     return json;
   }
 
-  static final _keyCreateDate = 'create_date';
-  static final _keyUpdateDate = 'update_date';
+  TaleDto copyWith({
+    int? id,
+  }) {
+    return TaleDto(
+      id: id ?? this.id,
+      name: name,
+      createDate: createDate,
+      updateDate: updateDate,
+      summary: summary,
+      tags: tags,
+      text: text,
+      audio: audio,
+      crew: crew,
+      isHidden: isHidden,
+    );
+  }
 
-  static final _keyAudioSize = 'audio_file_size';
-  static final _keyAudioDuration = 'audio_duration';
-  static final _keyAudio = 'audio';
-  static final _keyCrew = 'crew';
-  static final _keyText = 'text';
-  static final _keyParagraphs = 'paragraphs';
-  static final _keyMinReadingTime = 'min_reading_time';
-  static final _keyMaxReadingTime = 'max_reading_time';
+  static const stubId = 4242424242;
+
+  static const nameMinLength = 2;
+  static const nameMaxLength = 50;
+
+  static const _keyCreateDate = 'create_date';
+  static const _keyUpdateDate = 'update_date';
+
+  static const _keyAudioSize = 'audio_file_size';
+  static const _keyAudioDuration = 'audio_duration';
+  static const _keyAudio = 'audio';
+  static const _keyCrew = 'crew';
+  static const _keyText = 'text';
+  static const _keyParagraphs = 'paragraphs';
+  static const _keyMinReadingTime = 'min_reading_time';
+  static const _keyMaxReadingTime = 'max_reading_time';
 
   static const _keyAuthors = 'authors';
   static const _keyReaders = 'readers';
