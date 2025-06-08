@@ -10,6 +10,8 @@ void main() {
   group('$TaleDto', () {
     final createDate = DateTime.fromMillisecondsSinceEpoch(1620000000000);
     final updateDate = DateTime.fromMillisecondsSinceEpoch(1620003600000);
+    final summaryMin = 'a' * TaleDto.summaryMinLength;
+    final summaryMax = 'a' * TaleDto.summaryMaxLength;
 
     group('constructor asserts', () {
       test(
@@ -24,7 +26,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -52,7 +54,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -81,7 +83,7 @@ void main() {
               name: name,
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -111,7 +113,7 @@ void main() {
               name: name,
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -140,7 +142,7 @@ void main() {
               name: 'Valid Name',
               createDate: updateDate,
               updateDate: createDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -169,7 +171,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {},
               text: null,
               audio: null,
@@ -182,7 +184,7 @@ void main() {
       );
 
       test(
-        'given summary is empty '
+        'given summary is too short '
         'when creating $TaleDto '
         'then an AssertionError with a specific message is thrown',
         () {
@@ -193,7 +195,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: '',
+              summary: summaryMin.substring(1),
               tags: {TaleTag.text},
               text: TextContentDto(
                 paragraphs: ['Paragraph 1'],
@@ -204,7 +206,39 @@ void main() {
               crew: null,
               isHidden: false,
             ),
-            throwsAssertErrorWithMessage('Tale summary should NOT be empty'),
+            throwsAssertErrorWithMessage(
+              'Tale summary should be between ${TaleDto.summaryMinLength} and ${TaleDto.summaryMaxLength} characters long',
+            ),
+          );
+        },
+      );
+
+      test(
+        'given summary is too long '
+        'when creating $TaleDto '
+        'then an AssertionError with a specific message is thrown',
+        () {
+          // Given, When, Then
+          expect(
+            () => TaleDto(
+              id: 1,
+              name: 'Valid Name',
+              createDate: createDate,
+              updateDate: updateDate,
+              summary: '${summaryMax}a',
+              tags: {TaleTag.text},
+              text: TextContentDto(
+                paragraphs: ['Paragraph 1'],
+                minReadingTime: 5,
+                maxReadingTime: 10,
+              ),
+              audio: null,
+              crew: null,
+              isHidden: false,
+            ),
+            throwsAssertErrorWithMessage(
+              'Tale summary should be between ${TaleDto.summaryMinLength} and ${TaleDto.summaryMaxLength} characters long',
+            ),
           );
         },
       );
@@ -221,7 +255,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.text},
               text: null,
               audio: null,
@@ -246,7 +280,7 @@ void main() {
               name: 'Valid Name',
               createDate: createDate,
               updateDate: updateDate,
-              summary: 'Valid Summary',
+              summary: summaryMin,
               tags: {TaleTag.audio},
               text: null,
               audio: null,
@@ -272,7 +306,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'text': {
               'paragraphs': ['Paragraph 1', 'Paragraph 2'],
@@ -292,7 +326,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -355,7 +389,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'text': {
               'paragraphs': ['Paragraph 1', 'Paragraph 2'],
@@ -373,7 +407,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -392,7 +426,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'text': {
               'paragraphs': ['Paragraph 1', 'Paragraph 2'],
@@ -412,7 +446,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -439,7 +473,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text', 'audio'],
             'paragraphs': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
@@ -459,7 +493,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text, TaleTag.audio}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -523,7 +557,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'paragraphs': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
@@ -539,7 +573,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -558,7 +592,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'paragraphs': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
@@ -577,7 +611,7 @@ void main() {
           expect(tale.name, equals('Tale Name'));
           expect(tale.createDate, equals(createDate));
           expect(tale.updateDate, equals(updateDate));
-          expect(tale.summary, equals('A short summary'));
+          expect(tale.summary, equals(summaryMin));
           expect(tale.tags, equals({TaleTag.text}));
           expect(tale.text?.paragraphs, equals(['Paragraph 1', 'Paragraph 2']));
           expect(tale.text?.minReadingTime, equals(5));
@@ -601,7 +635,7 @@ void main() {
             name: 'Tale Name',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Valid Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['Paragraph 1'],
@@ -618,7 +652,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Valid Summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'text': {
               'paragraphs': ['Paragraph 1'],
@@ -646,7 +680,7 @@ void main() {
             name: 'Minimal Tale',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['Only one'],
@@ -662,7 +696,7 @@ void main() {
             'name': 'Minimal Tale',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'text': {
               'paragraphs': ['Only one'],
@@ -690,7 +724,7 @@ void main() {
             name: 'Null Optionals',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -723,7 +757,7 @@ void main() {
             name: 'Text and Audio',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -767,7 +801,7 @@ void main() {
             name: 'With Crew',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -814,7 +848,7 @@ void main() {
             name: 'Tale Name',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'A short summary',
+            summary: summaryMin,
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
               paragraphs: ['Paragraph 1', 'Paragraph 2'],
@@ -840,7 +874,7 @@ void main() {
             'name': 'Tale Name',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'A short summary',
+            'summary': summaryMin,
             'tags': ['text', 'audio'],
             'paragraphs': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
@@ -876,7 +910,7 @@ void main() {
             name: 'Minimal Tale',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['Only one'],
@@ -893,7 +927,7 @@ void main() {
             'name': 'Minimal Tale',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'paragraphs': ['Only one'],
             'min_reading_time': 1,
@@ -921,7 +955,7 @@ void main() {
             name: 'Null Optionals',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -938,7 +972,7 @@ void main() {
             'name': 'Null Optionals',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'paragraphs': ['A'],
             'min_reading_time': 1,
@@ -966,7 +1000,7 @@ void main() {
             name: 'Text and Audio',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text, TaleTag.audio},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -986,7 +1020,7 @@ void main() {
             'name': 'Text and Audio',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Summary',
+            'summary': summaryMin,
             'tags': ['text', 'audio'],
             'paragraphs': ['A'],
             'min_reading_time': 1,
@@ -1016,7 +1050,7 @@ void main() {
             name: 'With Crew',
             createDate: createDate,
             updateDate: updateDate,
-            summary: 'Summary',
+            summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
               paragraphs: ['A'],
@@ -1039,7 +1073,7 @@ void main() {
             'name': 'With Crew',
             'create_date': createDate.toIso8601String(),
             'update_date': updateDate.toIso8601String(),
-            'summary': 'Summary',
+            'summary': summaryMin,
             'tags': ['text'],
             'paragraphs': ['A'],
             'min_reading_time': 1,
