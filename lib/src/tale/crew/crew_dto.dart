@@ -6,11 +6,11 @@ part 'crew_dto.g.dart';
 @JsonSerializable()
 class CrewDto extends Equatable {
   CrewDto({
-    required this.authors,
-    required this.readers,
-    required this.musicians,
-    required this.translators,
-    required this.graphics,
+    this.authors,
+    this.readers,
+    this.musicians,
+    this.translators,
+    this.graphics,
   }) : assert(
           (authors?.isNotEmpty == true) ||
               (readers?.isNotEmpty == true) ||
