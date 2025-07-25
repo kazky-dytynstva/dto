@@ -112,20 +112,18 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     }
 
     TextContentDto? textDto;
-    final paragrphs = json[_keyParagraphs] as List<dynamic>?;
+    final paragraphs = json[_keyParagraphs] as List<dynamic>? ?? [];
     final minReadingTime = json[_keyMinReadingTime] as int?;
     final maxReadingTime = json[_keyMaxReadingTime] as int?;
 
-    if (paragrphs != null && minReadingTime != null && maxReadingTime != null) {
+    if (paragraphs.isNotEmpty && minReadingTime != null && maxReadingTime != null) {
       textDto = TextContentDto(
         paragraphs: paragrphs.cast<String>(),
         minReadingTime: minReadingTime,
         maxReadingTime: maxReadingTime,
       );
       json[_keyText] = textDto.toJson();
-    } else if (paragrphs != null ||
-        minReadingTime != null ||
-        maxReadingTime != null) {
+    } else if (paragraphs.isNotEmpty || minReadingTime != null || maxReadingTime != null) {
       throw Exception(
         'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
       );
