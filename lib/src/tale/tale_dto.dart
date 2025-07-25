@@ -112,7 +112,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     }
 
     TextContentDto? textDto;
-    final paragraphs = json[_keyParagraphs] as List<dynamic>? ?? [];
+    final paragraphs = json[_keyParagraphs] as List<dynamic>? ?? <String>[];
     final minReadingTime = json[_keyMinReadingTime] as int?;
     final maxReadingTime = json[_keyMaxReadingTime] as int?;
 
