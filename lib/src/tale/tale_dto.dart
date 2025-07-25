@@ -118,7 +118,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
     if (paragraphs.isNotEmpty && minReadingTime != null && maxReadingTime != null) {
       textDto = TextContentDto(
-        paragraphs: paragrphs.cast<String>(),
+        paragraphs: paragraphs.cast<String>(),
         minReadingTime: minReadingTime,
         maxReadingTime: maxReadingTime,
       );
