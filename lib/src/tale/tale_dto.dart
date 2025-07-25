@@ -154,11 +154,11 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     final musicians = json[_keyMusicians] as List<dynamic>?;
     final translators = json[_keyTranslators] as List<dynamic>?;
 
-    if (authors != null ||
-        readers != null ||
-        graphics != null ||
-        musicians != null ||
-        translators != null) {
+    if (authors?.isNotEmpty == true ||
+        readers?.isNotEmpty == true ||
+        graphics?.isNotEmpty == true ||
+        musicians?.isNotEmpty == true ||
+        translators?.isNotEmpty == true) {  
       json[_keyCrew] = CrewDto.fromJson(json).toJson();
     }
 
