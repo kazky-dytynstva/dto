@@ -116,14 +116,18 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     final minReadingTime = json[_keyMinReadingTime] as int?;
     final maxReadingTime = json[_keyMaxReadingTime] as int?;
 
-    if (paragraphs.isNotEmpty && minReadingTime != null && maxReadingTime != null) {
+    if (paragraphs.isNotEmpty &&
+        minReadingTime != null &&
+        maxReadingTime != null) {
       textDto = TextContentDto(
         paragraphs: paragraphs.cast<String>(),
         minReadingTime: minReadingTime,
         maxReadingTime: maxReadingTime,
       );
       json[_keyText] = textDto.toJson();
-    } else if (paragraphs.isNotEmpty || minReadingTime != null || maxReadingTime != null) {
+    } else if (paragraphs.isNotEmpty ||
+        minReadingTime != null ||
+        maxReadingTime != null) {
       throw Exception(
         'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
       );
@@ -156,7 +160,23 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         readers?.isNotEmpty == true ||
         graphics?.isNotEmpty == true ||
         musicians?.isNotEmpty == true ||
-        translators?.isNotEmpty == true) {  
+        translators?.isNotEmpty == true) {
+      if (authors?.isEmpty == true) {
+        json.remove(_keyAuthors);
+      }
+      if (readers?.isEmpty == true) {
+        json.remove(_keyReaders);
+      }
+      if (graphics?.isEmpty == true) {
+        json.remove(_keyGraphics);
+      }
+      if (musicians?.isEmpty == true) {
+        json.remove(_keyMusicians);
+      }
+      if (translators?.isEmpty == true) {
+        json.remove(_keyTranslators);
+      }
+
       json[_keyCrew] = CrewDto.fromJson(json).toJson();
     }
 
@@ -165,11 +185,11 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   Map<String, dynamic> toSupaJson() {
     final json = toJson();
-    json[_keyCreateDate] = createDate.toIso8601String();
+    // json[_keyCreateDate] = createDate.toIso8601String();
 
-    if (json[_keyUpdateDate] != null) {
-      json[_keyUpdateDate] = updateDate!.toIso8601String();
-    }
+    // if (json[_keyUpdateDate] != null) {
+    // json[_keyUpdateDate] = updateDate!.toIso8601String();
+    // }
 
     final Map<String, dynamic>? textJson = json.remove(_keyText);
     if (textJson != null) {
