@@ -5,17 +5,9 @@ part 'audio_content_dto.g.dart';
 
 @JsonSerializable()
 class AudioContentDto extends Equatable {
-  AudioContentDto({
-    required this.fileSize,
-    required this.duration,
-  })  : assert(
-          fileSize > 0,
-          'File size should be positive',
-        ),
-        assert(
-          duration > Duration.zero,
-          'Duration should be positive',
-        );
+  AudioContentDto({required this.fileSize, required this.duration})
+    : assert(fileSize > 0, 'File size should be positive'),
+      assert(duration > Duration.zero, 'Duration should be positive');
 
   /// Represents a tale text.
   final int fileSize;
@@ -29,15 +21,9 @@ class AudioContentDto extends Equatable {
   Map<String, dynamic> toJson() => _$AudioContentDtoToJson(this);
 
   @override
-  List<Object?> get props => [
-        fileSize,
-        duration,
-      ];
+  List<Object?> get props => [fileSize, duration];
 
-  AudioContentDto copyWith({
-    int? fileSize,
-    Duration? duration,
-  }) {
+  AudioContentDto copyWith({int? fileSize, Duration? duration}) {
     return AudioContentDto(
       fileSize: fileSize ?? this.fileSize,
       duration: duration ?? this.duration,
