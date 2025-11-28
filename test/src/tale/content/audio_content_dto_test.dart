@@ -14,7 +14,7 @@ void main() {
           // Given
           final audioContent = AudioContentDto(
             fileSize: 1024,
-            duration: 120,
+            duration: Duration(seconds: 120),
           );
 
           // When
@@ -35,7 +35,7 @@ void main() {
           expect(
             () => AudioContentDto(
               fileSize: -1,
-              duration: 100,
+              duration: Duration(seconds: 100),
             ),
             throwsAssertErrorWithMessage('File size should be positive'),
           );
@@ -51,7 +51,7 @@ void main() {
           expect(
             () => AudioContentDto(
               fileSize: 0,
-              duration: 100,
+              duration: Duration(seconds: 100),
             ),
             throwsAssertErrorWithMessage('File size should be positive'),
           );
@@ -67,7 +67,7 @@ void main() {
           expect(
             () => AudioContentDto(
               fileSize: 100,
-              duration: -1,
+              duration: Duration(milliseconds: -1),
             ),
             throwsAssertErrorWithMessage('Duration should be positive'),
           );
@@ -83,7 +83,7 @@ void main() {
           expect(
             () => AudioContentDto(
               fileSize: 100,
-              duration: 0,
+              duration: Duration.zero,
             ),
             throwsAssertErrorWithMessage('Duration should be positive'),
           );
@@ -98,12 +98,12 @@ void main() {
           // Given
           final audioContent = AudioContentDto(
             fileSize: 1024,
-            duration: 120,
+            duration: Duration(seconds: 120),
           );
 
           // When, Then
           expect(audioContent.fileSize, equals(1024));
-          expect(audioContent.duration, equals(120));
+          expect(audioContent.duration, equals(Duration(seconds: 120)));
         },
       );
     },

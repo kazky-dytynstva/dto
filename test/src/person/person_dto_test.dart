@@ -21,6 +21,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage('Person id should be positive'),
             );
@@ -42,6 +44,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage('Person id should NOT be a stub id'),
             );
@@ -67,6 +71,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -88,6 +94,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -109,6 +117,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -134,6 +144,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               returnsNormally,
             );
@@ -155,6 +167,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -176,6 +190,8 @@ void main() {
                 url: null,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -211,6 +227,8 @@ void main() {
                 url: urlLessThanMinLength,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -238,6 +256,8 @@ void main() {
                 url: urlGreaterThanMaxLength,
                 info: null,
                 roles: null,
+                createDate: DateTime.now(),
+                updateDate: null,
               ),
               throwsAssertErrorWithMessage(error),
             );
@@ -258,6 +278,8 @@ void main() {
           final url = Uri.parse('https://example.com');
           final info = 'Some info';
           final roles = [PersonRoleDto.author, PersonRoleDto.reader];
+          final createDate = DateTime.now();
+          final updateDate = DateTime.now().add(Duration(hours: 1));
 
           // When
           final person = PersonDto(
@@ -268,6 +290,8 @@ void main() {
             url: url,
             info: info,
             roles: roles,
+            createDate: createDate,
+            updateDate: updateDate,
           );
 
           // Then
@@ -278,6 +302,8 @@ void main() {
           expect(person.url, url);
           expect(person.info, info);
           expect(person.roles, roles);
+          expect(person.createDate, createDate);
+          expect(person.updateDate, updateDate);
         },
       );
     });
@@ -294,6 +320,8 @@ void main() {
             'name': 'Unknown',
             'surname': 'Gender',
             'gender': 'other',
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
           // Then
           expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -312,6 +340,8 @@ void main() {
             'surname': 'Role',
             'gender': 'male',
             'roles': ['alien'],
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
           // Then
           expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -330,6 +360,8 @@ void main() {
             'surname': 'Role',
             'gender': 'female',
             'roles': ['author', 'author'],
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
           // Then
           expect(
@@ -351,6 +383,8 @@ void main() {
             'surname': 'Role',
             'gender': 'female',
             'roles': [null],
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
           // Then
           expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -370,6 +404,8 @@ void main() {
             'gender': 'male',
             'unknown1': 123,
             'unknown2': 'abc',
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
           // When
           final person = PersonDto.fromJson(json);
@@ -393,6 +429,8 @@ void main() {
             'url': 'https://example.org',
             'info': 'Other info',
             'roles': ['musician', 'graphic'],
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': DateTime.now().add(Duration(hours: 1)).toIso8601String(),
           };
 
           // When
@@ -423,6 +461,8 @@ void main() {
             'name': 'Alex',
             'surname': 'Brown',
             'gender': 'male',
+            'create_date': DateTime.now().toIso8601String(),
+            'update_date': null,
           };
 
           // When
@@ -435,52 +475,6 @@ void main() {
           expect(person.gender, PersonGenderDto.male);
           expect(person.url, isNull);
           expect(person.info, isNull);
-          expect(person.roles, isNull);
-        },
-      );
-    });
-
-    group('$PersonDto.fromSupaJson factory', () {
-      test(
-        'given JSON with is_crew true '
-        'when calling $PersonDto.fromSupaJson '
-        'then roles is set to crew',
-        () {
-          // Given
-          final json = {
-            'id': 8,
-            'name': 'Crew',
-            'surname': 'FromSupa',
-            'gender': 'male',
-            'is_crew': true,
-          };
-
-          // When
-          final person = PersonDto.fromSupaJson(json);
-
-          // Then
-          expect(person.roles, [PersonRoleDto.crew]);
-        },
-      );
-
-      test(
-        'given JSON with is_crew false '
-        'when calling $PersonDto.fromSupaJson '
-        'then roles is not set to crew',
-        () {
-          // Given
-          final json = {
-            'id': 9,
-            'name': 'NotCrew',
-            'surname': 'FromSupa',
-            'gender': 'female',
-            'is_crew': false,
-          };
-
-          // When
-          final person = PersonDto.fromSupaJson(json);
-
-          // Then
           expect(person.roles, isNull);
         },
       );
@@ -501,6 +495,8 @@ void main() {
             url: null,
             info: null,
             roles: [PersonRoleDto.author],
+            createDate: DateTime.now(),
+            updateDate: null,
           );
           final b = PersonDto(
             id: 20,
@@ -510,6 +506,8 @@ void main() {
             url: null,
             info: null,
             roles: [PersonRoleDto.author],
+            createDate: a.createDate,
+            updateDate: null,
           );
           // Then
           expect(a, b);
@@ -531,6 +529,8 @@ void main() {
             url: null,
             info: null,
             roles: [PersonRoleDto.author],
+            createDate: DateTime.now(),
+            updateDate: null,
           );
           final b = PersonDto(
             id: 22,
@@ -540,6 +540,8 @@ void main() {
             url: null,
             info: null,
             roles: [PersonRoleDto.author],
+            createDate: DateTime.now(),
+            updateDate: null,
           );
           // Then
           expect(a == b, isFalse);
@@ -559,6 +561,8 @@ void main() {
             url: null,
             info: null,
             roles: [PersonRoleDto.translator],
+            createDate: DateTime.now(),
+            updateDate: null,
           );
 
           // When
@@ -572,83 +576,6 @@ void main() {
           expect(json['url'], isNull);
           expect(json['info'], isNull);
           expect(json['roles'], ['translator']);
-        },
-      );
-    });
-
-    group('$PersonDto.toSupaJson method', () {
-      test(
-        'given PersonDto with roles containing crew '
-        'when calling $PersonDto.toSupaJson '
-        'then is_crew is true and roles removed',
-        () {
-          // Given
-          final person = PersonDto(
-            id: 5,
-            name: 'Crew',
-            surname: 'Member',
-            gender: PersonGenderDto.male,
-            url: null,
-            info: null,
-            roles: [PersonRoleDto.crew],
-          );
-
-          // When
-          final json = person.toSupaJson();
-
-          // Then
-          expect(json['is_crew'], true);
-          expect(json.containsKey('roles'), isFalse);
-        },
-      );
-
-      test(
-        'given PersonDto with roles not containing crew '
-        'when calling $PersonDto.toSupaJson '
-        'then is_crew is not set',
-        () {
-          // Given
-          final person = PersonDto(
-            id: 6,
-            name: 'NotCrew',
-            surname: 'Member',
-            gender: PersonGenderDto.female,
-            url: null,
-            info: null,
-            roles: [PersonRoleDto.author],
-          );
-
-          // When
-          final json = person.toSupaJson();
-
-          // Then
-          expect(json.containsKey('is_crew'), isFalse);
-          expect(json.containsKey('roles'), isFalse);
-        },
-      );
-
-      test(
-        'given PersonDto with null roles '
-        'when calling $PersonDto.toSupaJson '
-        'then roles and is_crew are not set',
-        () {
-          // Given
-          final person = PersonDto(
-            id: 7,
-            name: 'NoRoles',
-            surname: 'Person',
-            gender: PersonGenderDto.female,
-            url: null,
-            info: null,
-            roles: null,
-          );
-
-          // When
-          final json = person.toSupaJson();
-
-          // Then
-          expect(json.containsKey('roles'), isFalse);
-          expect(json.containsKey('is_crew'), isFalse);
         },
       );
     });

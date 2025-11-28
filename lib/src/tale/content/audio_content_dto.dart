@@ -13,7 +13,7 @@ class AudioContentDto extends Equatable {
           'File size should be positive',
         ),
         assert(
-          duration.isNegative == false,
+          duration > Duration.zero,
           'Duration should be positive',
         );
 
