@@ -17,6 +17,8 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.url,
     required this.info,
     required this.roles,
+    required this.createDate,
+    required this.updateDate,
   })  : assert(
           id >= 0,
           'Person id should be positive',
@@ -25,6 +27,10 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
         assert(
           name.length >= nameMinLength && name.length <= nameMaxLength,
           'Person name should be between $nameMinLength and $nameMaxLength characters long',
+        ),
+        assert(
+          updateDate == null || updateDate.isAfter(createDate),
+          'updateDate can NOT be before createDate',
         ),
         assert(
           surname.isEmpty ||
@@ -55,6 +61,8 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   final Uri? url;
   final String? info;
   final List<PersonRoleDto>? roles;
+  final DateTime createDate;
+  final DateTime? updateDate;
 
   factory PersonDto.fromJson(Map<String, dynamic> json) =>
       _$PersonDtoFromJson(json);
@@ -71,55 +79,35 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
         url,
         info,
         roles,
+        createDate,
+        updateDate,
       ];
-
-  factory PersonDto.fromSupaJson(Map<String, dynamic> json) {
-    final dto = PersonDto.fromJson(json);
-
-    final isCrew = json[_keyIsCrew] as bool?;
-    if (isCrew == null || isCrew == false) {
-      return dto;
-    }
-
-    return dto.copyWith(
-      roles: [PersonRoleDto.crew],
-    );
-  }
-
-  Map<String, dynamic> toSupaJson() {
-    final json = toJson();
-
-    if (roles == null) {
-      return json;
-    }
-
-    json.remove('roles');
-
-    final isCrew = roles!.contains(PersonRoleDto.crew);
-    if (isCrew) {
-      json[_keyIsCrew] = true;
-    }
-    return json;
-  }
 
   PersonDto copyWith({
     int? id,
     List<PersonRoleDto>? roles,
+    Uri? url,
+    String? info,
+    String? name,
+    String? surname,
+    PersonGenderDto? gender,
+    DateTime? createDate,
+    DateTime? updateDate,
   }) {
     return PersonDto(
       id: id ?? this.id,
-      name: name,
-      surname: surname,
-      gender: gender,
-      url: url,
-      info: info,
-      roles: roles,
+      name: name ?? this.name,
+      surname: surname ?? this.surname,
+      gender: gender ?? this.gender,
+      url: url ?? this.url,
+      info: info ?? this.info,
+      roles: roles ?? this.roles,
+      createDate: createDate ?? this.createDate,
+      updateDate: updateDate ?? this.updateDate,
     );
   }
 
   static const stubId = 4242424242;
-
-  static const _keyIsCrew = 'is_crew';
 
   static const nameMinLength = 2;
   static const nameMaxLength = 50;

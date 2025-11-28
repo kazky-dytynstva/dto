@@ -7,36 +7,27 @@ part of 'crew_dto.dart';
 // **************************************************************************
 
 CrewDto _$CrewDtoFromJson(Map<String, dynamic> json) => CrewDto(
-      authors: (json['authors'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
-      readers: (json['readers'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
-      musicians: (json['musicians'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
-      translators: (json['translators'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
-      graphics: (json['graphics'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
-    );
+  authors: (json['authors'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  readers: (json['readers'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  musicians: (json['musicians'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  translators: (json['translators'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  graphics: (json['graphics'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+);
 
-Map<String, dynamic> _$CrewDtoToJson(CrewDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('authors', instance.authors);
-  writeNotNull('readers', instance.readers);
-  writeNotNull('musicians', instance.musicians);
-  writeNotNull('translators', instance.translators);
-  writeNotNull('graphics', instance.graphics);
-  return val;
-}
+Map<String, dynamic> _$CrewDtoToJson(CrewDto instance) => <String, dynamic>{
+  'authors': ?instance.authors,
+  'readers': ?instance.readers,
+  'musicians': ?instance.musicians,
+  'translators': ?instance.translators,
+  'graphics': ?instance.graphics,
+};

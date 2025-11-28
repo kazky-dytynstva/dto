@@ -5,18 +5,6 @@ part 'text_content_dto.g.dart';
 
 @JsonSerializable()
 class TextContentDto extends Equatable {
-  /// Represents a tale text.
-  ///
-  /// If list item is a number, it means that this is an image reference.
-  /// In that case, the number represents the image index for this tale.
-  final List<String> paragraphs;
-
-  /// Represents a minimum reading time in minutes.
-  final int minReadingTime;
-
-  /// Represents a maximum reading time in minutes.
-  final int maxReadingTime;
-
   const TextContentDto({
     required this.paragraphs,
     required this.minReadingTime,
@@ -34,6 +22,18 @@ class TextContentDto extends Equatable {
           'Max reading time should be greater than min reading time',
         );
 
+  /// Represents a tale text.
+  ///
+  /// If list item is a number, it means that this is an image reference.
+  /// In that case, the number represents the image index for this tale.
+  final List<String> paragraphs;
+
+  /// Represents a minimum reading time in minutes.
+  final int minReadingTime;
+
+  /// Represents a maximum reading time in minutes.
+  final int maxReadingTime;
+
   factory TextContentDto.fromJson(Map<String, dynamic> json) =>
       _$TextContentDtoFromJson(json);
 
@@ -45,4 +45,16 @@ class TextContentDto extends Equatable {
         minReadingTime,
         maxReadingTime,
       ];
+
+  TextContentDto copyWith({
+    List<String>? paragraphs,
+    int? minReadingTime,
+    int? maxReadingTime,
+  }) {
+    return TextContentDto(
+      paragraphs: paragraphs ?? this.paragraphs,
+      minReadingTime: minReadingTime ?? this.minReadingTime,
+      maxReadingTime: maxReadingTime ?? this.maxReadingTime,
+    );
+  }
 }

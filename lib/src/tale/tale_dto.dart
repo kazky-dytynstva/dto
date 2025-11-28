@@ -60,10 +60,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   final int id;
   final String name;
 
-  /// In millisecondsSinceEpoch
   final DateTime createDate;
 
-  /// In millisecondsSinceEpoch
   final DateTime? updateDate;
 
   final String summary;
@@ -102,132 +100,29 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
         isHidden,
       ];
 
-  factory TaleDto.fromSupaJson(Map<String, dynamic> json) {
-    json[_keyCreateDate] =
-        DateTime.parse(json[_keyCreateDate] as String).toIso8601String();
-
-    if (json[_keyUpdateDate] != null) {
-      json[_keyUpdateDate] =
-          DateTime.parse(json[_keyUpdateDate] as String).toIso8601String();
-    }
-
-    TextContentDto? textDto;
-    final paragraphs = json[_keyParagraphs] as List<dynamic>? ?? <String>[];
-    final minReadingTime = json[_keyMinReadingTime] as int?;
-    final maxReadingTime = json[_keyMaxReadingTime] as int?;
-
-    if (paragraphs.isNotEmpty &&
-        minReadingTime != null &&
-        maxReadingTime != null) {
-      textDto = TextContentDto(
-        paragraphs: paragraphs.cast<String>(),
-        minReadingTime: minReadingTime,
-        maxReadingTime: maxReadingTime,
-      );
-      json[_keyText] = textDto.toJson();
-    } else if (paragraphs.isNotEmpty ||
-        minReadingTime != null ||
-        maxReadingTime != null) {
-      throw Exception(
-        'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
-      );
-    }
-
-    final audioSize = json[_keyAudioSize] as int?;
-    final audioDuration = json[_keyAudioDuration] as int?;
-    assert(
-      audioSize == null && audioDuration == null ||
-          audioSize != null && audioDuration != null,
-      'Audio size and duration should be both present or absent',
-    );
-
-    if (audioSize != null && audioDuration != null) {
-      final audioDto = AudioContentDto(
-        fileSize: audioSize,
-        duration: audioDuration,
-      );
-
-      json[_keyAudio] = audioDto.toJson();
-    }
-
-    final authors = json[_keyAuthors] as List<dynamic>?;
-    final readers = json[_keyReaders] as List<dynamic>?;
-    final graphics = json[_keyGraphics] as List<dynamic>?;
-    final musicians = json[_keyMusicians] as List<dynamic>?;
-    final translators = json[_keyTranslators] as List<dynamic>?;
-
-    if (authors?.isNotEmpty == true ||
-        readers?.isNotEmpty == true ||
-        graphics?.isNotEmpty == true ||
-        musicians?.isNotEmpty == true ||
-        translators?.isNotEmpty == true) {
-      if (authors?.isEmpty == true) {
-        json.remove(_keyAuthors);
-      }
-      if (readers?.isEmpty == true) {
-        json.remove(_keyReaders);
-      }
-      if (graphics?.isEmpty == true) {
-        json.remove(_keyGraphics);
-      }
-      if (musicians?.isEmpty == true) {
-        json.remove(_keyMusicians);
-      }
-      if (translators?.isEmpty == true) {
-        json.remove(_keyTranslators);
-      }
-
-      json[_keyCrew] = CrewDto.fromJson(json).toJson();
-    }
-
-    return TaleDto.fromJson(json);
-  }
-
-  Map<String, dynamic> toSupaJson() {
-    final json = toJson();
-    // json[_keyCreateDate] = createDate.toIso8601String();
-
-    // if (json[_keyUpdateDate] != null) {
-    // json[_keyUpdateDate] = updateDate!.toIso8601String();
-    // }
-
-    final Map<String, dynamic>? textJson = json.remove(_keyText);
-    if (textJson != null) {
-      for (final entry in textJson.entries) {
-        json[entry.key] = entry.value;
-      }
-    }
-
-    json.remove(_keyAudio);
-    if (audio != null) {
-      json[_keyAudioSize] = audio!.fileSize;
-      json[_keyAudioDuration] = audio!.duration;
-    }
-
-    final Map<String, dynamic>? crewJson = json.remove(_keyCrew);
-    if (crewJson != null) {
-      for (final entry in crewJson.entries) {
-        json[entry.key] = entry.value;
-      }
-    }
-
-    return json;
-  }
-
   TaleDto copyWith({
     int? id,
+    String? name,
+    DateTime? createDate,
+    DateTime? updateDate,
+    String? summary,
+    Set<TaleTag>? tags,
+    TextContentDto? text,
+    AudioContentDto? audio,
+    CrewDto? crew,
+    bool? isHidden,
   }) {
     return TaleDto(
       id: id ?? this.id,
-      name: name,
-      createDate: createDate,
-      updateDate: updateDate,
-      summary: summary,
-      tags: tags,
-      text: text,
-      audio: audio,
-      crew: crew,
-      isHidden: isHidden,
+      name: name ?? this.name,
+      createDate: createDate ?? this.createDate,
+      updateDate: updateDate ?? this.updateDate,
+      summary: summary ?? this.summary,
+      tags: tags ?? this.tags,
+      text: text ?? this.text,
+      audio: audio ?? this.audio,
+      crew: crew ?? this.crew,
+      isHidden: isHidden ?? this.isHidden,
     );
   }
 
@@ -238,24 +133,6 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   static const summaryMinLength = 140;
   static const summaryMaxLength = 200;
-
-  static const _keyCreateDate = 'create_date';
-  static const _keyUpdateDate = 'update_date';
-
-  static const _keyAudioSize = 'audio_file_size';
-  static const _keyAudioDuration = 'audio_duration';
-  static const _keyAudio = 'audio';
-  static const _keyCrew = 'crew';
-  static const _keyText = 'text';
-  static const _keyParagraphs = 'paragraphs';
-  static const _keyMinReadingTime = 'min_reading_time';
-  static const _keyMaxReadingTime = 'max_reading_time';
-
-  static const _keyAuthors = 'authors';
-  static const _keyReaders = 'readers';
-  static const _keyGraphics = 'graphics';
-  static const _keyMusicians = 'musicians';
-  static const _keyTranslators = 'translators';
 }
 
 enum TaleTag {

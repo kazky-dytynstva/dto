@@ -7,37 +7,32 @@ part of 'person_dto.dart';
 // **************************************************************************
 
 PersonDto _$PersonDtoFromJson(Map<String, dynamic> json) => PersonDto(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      surname: json['surname'] as String,
-      gender: $enumDecode(_$PersonGenderDtoEnumMap, json['gender']),
-      url: json['url'] == null ? null : Uri.parse(json['url'] as String),
-      info: json['info'] as String?,
-      roles: (json['roles'] as List<dynamic>?)
-          ?.map((e) => $enumDecode(_$PersonRoleDtoEnumMap, e))
-          .toList(),
-    );
+  id: (json['id'] as num).toInt(),
+  name: json['name'] as String,
+  surname: json['surname'] as String,
+  gender: $enumDecode(_$PersonGenderDtoEnumMap, json['gender']),
+  url: json['url'] == null ? null : Uri.parse(json['url'] as String),
+  info: json['info'] as String?,
+  roles: (json['roles'] as List<dynamic>?)
+      ?.map((e) => $enumDecode(_$PersonRoleDtoEnumMap, e))
+      .toList(),
+  createDate: DateTime.parse(json['create_date'] as String),
+  updateDate: json['update_date'] == null
+      ? null
+      : DateTime.parse(json['update_date'] as String),
+);
 
-Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-    'name': instance.name,
-    'surname': instance.surname,
-    'gender': _$PersonGenderDtoEnumMap[instance.gender]!,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('url', instance.url?.toString());
-  writeNotNull('info', instance.info);
-  writeNotNull(
-      'roles', instance.roles?.map((e) => _$PersonRoleDtoEnumMap[e]!).toList());
-  return val;
-}
+Map<String, dynamic> _$PersonDtoToJson(PersonDto instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'surname': instance.surname,
+  'gender': _$PersonGenderDtoEnumMap[instance.gender]!,
+  'url': ?instance.url?.toString(),
+  'info': ?instance.info,
+  'roles': ?instance.roles?.map((e) => _$PersonRoleDtoEnumMap[e]!).toList(),
+  'create_date': instance.createDate.toIso8601String(),
+  'update_date': ?instance.updateDate?.toIso8601String(),
+};
 
 const _$PersonGenderDtoEnumMap = {
   PersonGenderDto.female: 'female',
