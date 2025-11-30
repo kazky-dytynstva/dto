@@ -22,39 +22,33 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.audio,
     required this.crew,
     bool? isHidden,
-  })  : isHidden = isHidden == true ? true : null,
-        assert(
-          id >= 0,
-          'Tale id should be positive',
-        ),
-        assert(id != stubId, 'Tale id should NOT be a stub id'),
-        assert(
-          name.length >= nameMinLength && name.length <= nameMaxLength,
-          'Tale name should be between $nameMinLength and $nameMaxLength characters long',
-        ),
-        assert(
-          updateDate == null || updateDate.isAfter(createDate),
-          'updateDate can NOT be before createDate',
-        ),
-        assert(
-          tags.isNotEmpty,
-          'There should be at least one tag',
-        ),
-        assert(
-          summary.length >= summaryMinLength &&
-              summary.length <= summaryMaxLength,
-          'Tale summary should be between $summaryMinLength and $summaryMaxLength characters long',
-        ),
-        assert(
-          tags.contains(TaleTag.text) == false && text == null ||
-              tags.contains(TaleTag.text) == true && text != null,
-          'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
-        ),
-        assert(
-          tags.contains(TaleTag.audio) == false && audio == null ||
-              tags.contains(TaleTag.audio) == true && audio != null,
-          'Audio content should be present if and only if the tale has a ${TaleTag.audio} tag',
-        );
+  }) : isHidden = isHidden == true ? true : null,
+       assert(id >= 0, 'Tale id should be positive'),
+       assert(id != stubId, 'Tale id should NOT be a stub id'),
+       assert(
+         name.length >= nameMinLength && name.length <= nameMaxLength,
+         'Tale name should be between $nameMinLength and $nameMaxLength characters long',
+       ),
+       assert(
+         updateDate == null || updateDate.isAfter(createDate),
+         'updateDate can NOT be before createDate',
+       ),
+       assert(tags.isNotEmpty, 'There should be at least one tag'),
+       assert(
+         summary.length >= summaryMinLength &&
+             summary.length <= summaryMaxLength,
+         'Tale summary should be between $summaryMinLength and $summaryMaxLength characters long',
+       ),
+       assert(
+         tags.contains(TaleTag.text) == false && text == null ||
+             tags.contains(TaleTag.text) == true && text != null,
+         'Text content should be present if and only if the tale has a ${TaleTag.text} tag',
+       ),
+       assert(
+         tags.contains(TaleTag.audio) == false && audio == null ||
+             tags.contains(TaleTag.audio) == true && audio != null,
+         'Audio content should be present if and only if the tale has a ${TaleTag.audio} tag',
+       );
 
   @override
   final int id;
@@ -88,17 +82,17 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        createDate,
-        updateDate,
-        summary,
-        tags,
-        text,
-        audio,
-        crew,
-        isHidden,
-      ];
+    id,
+    name,
+    createDate,
+    updateDate,
+    summary,
+    tags,
+    text,
+    audio,
+    crew,
+    isHidden,
+  ];
 
   TaleDto copyWith({
     int? id,
@@ -111,12 +105,13 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     AudioContentDto? audio,
     CrewDto? crew,
     bool? isHidden,
+    bool resetUpdateDate = false,
   }) {
     return TaleDto(
       id: id ?? this.id,
       name: name ?? this.name,
       createDate: createDate ?? this.createDate,
-      updateDate: updateDate ?? this.updateDate,
+      updateDate: resetUpdateDate ? null : updateDate ?? this.updateDate,
       summary: summary ?? this.summary,
       tags: tags ?? this.tags,
       text: text ?? this.text,

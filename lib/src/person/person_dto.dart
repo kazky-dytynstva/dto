@@ -19,39 +19,36 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     required this.roles,
     required this.createDate,
     required this.updateDate,
-  })  : assert(
-          id >= 0,
-          'Person id should be positive',
-        ),
-        assert(id != stubId, 'Person id should NOT be a stub id'),
-        assert(
-          name.length >= nameMinLength && name.length <= nameMaxLength,
-          'Person name should be between $nameMinLength and $nameMaxLength characters long',
-        ),
-        assert(
-          updateDate == null || updateDate.isAfter(createDate),
-          'updateDate can NOT be before createDate',
-        ),
-        assert(
-          surname.isEmpty ||
-              surname.length >= surnameMinLength &&
-                  surname.length <= surnameMaxLength,
-          'Person surname should be between $surnameMinLength and $surnameMaxLength characters long',
-        ),
-        assert(
-          roles == null || roles.isNotEmpty,
-          'Person roles should NOT be empty',
-        ),
-        assert(
-          roles == null || roles.length == roles.toSet().length,
-          'Person roles should be unique',
-        ),
-        assert(
-          url == null ||
-              url.toString().length >= urlMinLength &&
-                  url.toString().length <= urlMaxLength,
-          'Person url should be a valid URL, with length between $urlMinLength and $urlMaxLength characters',
-        );
+  }) : assert(id >= 0, 'Person id should be positive'),
+       assert(id != stubId, 'Person id should NOT be a stub id'),
+       assert(
+         name.length >= nameMinLength && name.length <= nameMaxLength,
+         'Person name should be between $nameMinLength and $nameMaxLength characters long',
+       ),
+       assert(
+         updateDate == null || updateDate.isAfter(createDate),
+         'updateDate can NOT be before createDate',
+       ),
+       assert(
+         surname.isEmpty ||
+             surname.length >= surnameMinLength &&
+                 surname.length <= surnameMaxLength,
+         'Person surname should be between $surnameMinLength and $surnameMaxLength characters long',
+       ),
+       assert(
+         roles == null || roles.isNotEmpty,
+         'Person roles should NOT be empty',
+       ),
+       assert(
+         roles == null || roles.length == roles.toSet().length,
+         'Person roles should be unique',
+       ),
+       assert(
+         url == null ||
+             url.toString().length >= urlMinLength &&
+                 url.toString().length <= urlMaxLength,
+         'Person url should be a valid URL, with length between $urlMinLength and $urlMaxLength characters',
+       );
 
   @override
   final int id;
@@ -72,16 +69,16 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        surname,
-        gender,
-        url,
-        info,
-        roles,
-        createDate,
-        updateDate,
-      ];
+    id,
+    name,
+    surname,
+    gender,
+    url,
+    info,
+    roles,
+    createDate,
+    updateDate,
+  ];
 
   PersonDto copyWith({
     int? id,
@@ -93,6 +90,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
     PersonGenderDto? gender,
     DateTime? createDate,
     DateTime? updateDate,
+    bool resetUpdateDate = false,
   }) {
     return PersonDto(
       id: id ?? this.id,
@@ -103,7 +101,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
       info: info ?? this.info,
       roles: roles ?? this.roles,
       createDate: createDate ?? this.createDate,
-      updateDate: updateDate ?? this.updateDate,
+      updateDate: resetUpdateDate ? null : updateDate ?? this.updateDate,
     );
   }
 
