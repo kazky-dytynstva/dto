@@ -5,13 +5,10 @@ part 'rating_dto.g.dart';
 
 @JsonSerializable()
 class RatingDto extends Equatable {
-  RatingDto(
-    this.taleId,
-    this.amount,
-    this.averageRating,
-  )   : assert(taleId >= 0),
-        assert(amount > 0),
-        assert(averageRating > 0 && averageRating <= 5);
+  RatingDto(this.taleId, this.amount, this.averageRating)
+    : assert(taleId >= 0),
+      assert(amount > 0),
+      assert(averageRating > 0 && averageRating <= 5);
 
   @JsonKey(name: "id")
   final int taleId;
@@ -25,9 +22,5 @@ class RatingDto extends Equatable {
   Map<String, dynamic> toJson() => _$RatingDtoToJson(this);
 
   @override
-  List<Object> get props => [
-        taleId,
-        amount,
-        averageRating,
-      ];
+  List<Object> get props => [taleId, amount, averageRating];
 }

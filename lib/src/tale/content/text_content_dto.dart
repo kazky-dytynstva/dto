@@ -9,24 +9,16 @@ class TextContentDto extends Equatable {
     required this.paragraphs,
     required this.minReadingTime,
     required this.maxReadingTime,
-  })  : assert(
-          paragraphs.length > 0,
-          'Paragraphs should not be empty',
-        ),
-        assert(
-          minReadingTime > 0,
-          'Min reading time should be positive',
-        ),
-        assert(
-          maxReadingTime > minReadingTime,
-          'Max reading time should be greater than min reading time',
-        );
+  }) : assert(paragraphs.length > 0, 'Paragraphs should not be empty'),
+       assert(minReadingTime > 0, 'Min reading time should be positive'),
+       assert(
+         maxReadingTime > minReadingTime,
+         'Max reading time should be greater than min reading time',
+       );
 
   /// Represents a tale text.
-  ///
-  /// If list item is a number, it means that this is an image reference.
-  /// In that case, the number represents the image index for this tale.
-  final List<String> paragraphs;
+  @_ParagraphConverter()
+  final List<Paragraph> paragraphs;
 
   /// Represents a minimum reading time in minutes.
   final int minReadingTime;
@@ -40,14 +32,10 @@ class TextContentDto extends Equatable {
   Map<String, dynamic> toJson() => _$TextContentDtoToJson(this);
 
   @override
-  List<Object?> get props => [
-        paragraphs,
-        minReadingTime,
-        maxReadingTime,
-      ];
+  List<Object?> get props => [paragraphs, minReadingTime, maxReadingTime];
 
   TextContentDto copyWith({
-    List<String>? paragraphs,
+    List<Paragraph>? paragraphs,
     int? minReadingTime,
     int? maxReadingTime,
   }) {
@@ -57,4 +45,63 @@ class TextContentDto extends Equatable {
       maxReadingTime: maxReadingTime ?? this.maxReadingTime,
     );
   }
+}
+
+sealed class Paragraph extends Equatable {
+  const Paragraph();
+
+  const factory Paragraph.text({required String text}) = TextParagraph._;
+  const factory Paragraph.image({required int imageIndex}) = ImageParagraph._;
+
+  T when<T>({
+    required T Function(String text) text,
+    required T Function(int imageIndex) image,
+  }) {
+    final self = this;
+    return switch (self) {
+      TextParagraph() => text(self.text),
+      ImageParagraph() => image(self.imageIndex),
+    };
+  }
+}
+
+class TextParagraph extends Paragraph {
+  const TextParagraph._({required this.text}) : super();
+
+  final String text;
+
+  @override
+  List<Object?> get props => [text];
+}
+
+class ImageParagraph extends Paragraph {
+  const ImageParagraph._({required this.imageIndex}) : super();
+
+  final int imageIndex;
+
+  @override
+  List<Object?> get props => [imageIndex];
+}
+
+final _imagePattern = RegExp(r'^\[(\d+)\]$');
+
+class _ParagraphConverter implements JsonConverter<Paragraph, String> {
+  const _ParagraphConverter();
+
+  @override
+  Paragraph fromJson(String json) {
+    final match = _imagePattern.firstMatch(json);
+    if (match != null) {
+      final imageIndex = int.parse(match.group(1)!);
+      return Paragraph.image(imageIndex: imageIndex);
+    }
+
+    return Paragraph.text(text: json);
+  }
+
+  @override
+  String toJson(Paragraph paragraph) => paragraph.when(
+    text: (text) => text,
+    image: (imageIndex) => '[$imageIndex]',
+  );
 }
