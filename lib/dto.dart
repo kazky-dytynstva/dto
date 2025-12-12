@@ -1,5 +1,7 @@
 library dto;
 
+export 'src/compression/dto_compression.dart';
+
 export 'src/utils/to_json_item.dart';
 export 'src/utils/id_holder.dart';
 
