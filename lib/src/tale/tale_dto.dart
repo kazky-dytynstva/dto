@@ -1,8 +1,8 @@
-import 'package:dto/src/id_holder.dart';
+import 'package:dto/src/utils/id_holder.dart';
 import 'package:dto/src/tale/content/audio_content_dto.dart';
 import 'package:dto/src/tale/content/text_content_dto.dart';
 import 'package:dto/src/tale/crew/crew_dto.dart';
-import 'package:dto/src/to_json_item.dart';
+import 'package:dto/src/utils/to_json_item.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

@@ -1,7 +1,7 @@
 library dto;
 
-export 'src/to_json_item.dart';
-export 'src/id_holder.dart';
+export 'src/utils/to_json_item.dart';
+export 'src/utils/id_holder.dart';
 
 export 'src/person/person_dto.dart';
 export 'src/person/person_gender_dto.dart';
