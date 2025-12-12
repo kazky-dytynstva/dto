@@ -15,11 +15,28 @@ class TextContentDto extends Equatable {
              (items.first as ContentItemImage).imageIndex == 0,
          'First item should be an image with index 0',
        ),
+       assert(
+         _hasSequentialImageIndexes(items),
+         'Image indexes should be sequential starting from 0',
+       ),
        assert(minReadingTime > 0, 'Min reading time should be positive'),
        assert(
          maxReadingTime > minReadingTime,
          'Max reading time should be greater than min reading time',
        );
+
+  static bool _hasSequentialImageIndexes(List<ContentItem> items) {
+    int expectedIndex = 0;
+    for (final item in items) {
+      if (item is ContentItemImage) {
+        if (item.imageIndex != expectedIndex) {
+          return false;
+        }
+        expectedIndex++;
+      }
+    }
+    return true;
+  }
 
   /// Represents a tale content items (text and images).
   @_ContentItemConverter()

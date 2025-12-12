@@ -181,5 +181,65 @@ void main() {
         ),
       );
     });
+
+    test('given image indexes are not sequential '
+        'when creating $TextContentDto '
+        'then an AssertionError with a specific message is thrown', () {
+      // Given, When, Then
+      expect(
+        () => TextContentDto(
+          items: [
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'Text'),
+            ContentItem.image(imageIndex: 5),
+            ContentItem.text(text: 'Text 2'),
+          ],
+          minReadingTime: 5,
+          maxReadingTime: 10,
+        ),
+        throwsAssertErrorWithMessage(
+          'Image indexes should be sequential starting from 0',
+        ),
+      );
+    });
+
+    test('given image indexes skip a number '
+        'when creating $TextContentDto '
+        'then an AssertionError with a specific message is thrown', () {
+      // Given, When, Then
+      expect(
+        () => TextContentDto(
+          items: [
+            ContentItem.image(imageIndex: 0),
+            ContentItem.image(imageIndex: 1),
+            ContentItem.image(imageIndex: 3),
+          ],
+          minReadingTime: 5,
+          maxReadingTime: 10,
+        ),
+        throwsAssertErrorWithMessage(
+          'Image indexes should be sequential starting from 0',
+        ),
+      );
+    });
+
+    test('given image indexes are sequential '
+        'when creating $TextContentDto '
+        'then the object is created successfully', () {
+      // Given, When, Then
+      final textContent = TextContentDto(
+        items: [
+          ContentItem.image(imageIndex: 0),
+          ContentItem.text(text: 'Text 1'),
+          ContentItem.image(imageIndex: 1),
+          ContentItem.text(text: 'Text 2'),
+          ContentItem.image(imageIndex: 2),
+        ],
+        minReadingTime: 5,
+        maxReadingTime: 10,
+      );
+
+      expect(textContent.items.length, equals(5));
+    });
   });
 }
