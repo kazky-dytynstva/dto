@@ -9,7 +9,7 @@ void main() {
         'then the object remains consistent', () {
       // Given
       final textContent = TextContentDto(
-        paragraphs: [
+        items: [
           Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
           Paragraph.text(text: 'Paragraph 2'),
@@ -26,17 +26,13 @@ void main() {
       expect(deserialized, equals(textContent));
     });
 
-    test('given empty paragraphs '
+    test('given empty items '
         'when creating $TextContentDto '
         'then an AssertionError with a specific message is thrown', () {
       // Given, When, Then
       expect(
-        () => TextContentDto(
-          paragraphs: [],
-          minReadingTime: 5,
-          maxReadingTime: 10,
-        ),
-        throwsAssertErrorWithMessage('Paragraphs should not be empty'),
+        () => TextContentDto(items: [], minReadingTime: 5, maxReadingTime: 10),
+        throwsAssertErrorWithMessage('Items should not be empty'),
       );
     });
 
@@ -46,7 +42,7 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.image(imageIndex: 0),
             Paragraph.text(text: 'Paragraph 1'),
           ],
@@ -63,7 +59,7 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.image(imageIndex: 0),
             Paragraph.text(text: 'Paragraph 1'),
           ],
@@ -80,7 +76,7 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.image(imageIndex: 0),
             Paragraph.text(text: 'Paragraph 1'),
           ],
@@ -94,7 +90,7 @@ void main() {
 
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.image(imageIndex: 0),
             Paragraph.text(text: 'Paragraph 1'),
           ],
@@ -112,7 +108,7 @@ void main() {
         'then the fields return correct values', () {
       // Given
       final textContent = TextContentDto(
-        paragraphs: [
+        items: [
           Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
           Paragraph.text(text: 'Paragraph 2'),
@@ -123,7 +119,7 @@ void main() {
 
       // When, Then
       expect(
-        textContent.paragraphs,
+        textContent.items,
         equals([
           Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
@@ -134,13 +130,13 @@ void main() {
       expect(textContent.maxReadingTime, equals(10));
     });
 
-    test('given first paragraph is not an image '
+    test('given first item is not an image '
         'when creating $TextContentDto '
         'then an AssertionError with a specific message is thrown', () {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.text(text: 'Paragraph 1'),
             Paragraph.image(imageIndex: 0),
           ],
@@ -148,18 +144,18 @@ void main() {
           maxReadingTime: 10,
         ),
         throwsAssertErrorWithMessage(
-          'First paragraph should be an image with index 0',
+          'First item should be an image with index 0',
         ),
       );
     });
 
-    test('given first paragraph is an image but not with index 0 '
+    test('given first item is an image but not with index 0 '
         'when creating $TextContentDto '
         'then an AssertionError with a specific message is thrown', () {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [
+          items: [
             Paragraph.image(imageIndex: 1),
             Paragraph.text(text: 'Paragraph 1'),
           ],
@@ -167,7 +163,7 @@ void main() {
           maxReadingTime: 10,
         ),
         throwsAssertErrorWithMessage(
-          'First paragraph should be an image with index 0',
+          'First item should be an image with index 0',
         ),
       );
     });

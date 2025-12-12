@@ -27,7 +27,7 @@ void main() {
             summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -52,7 +52,7 @@ void main() {
             summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -78,7 +78,7 @@ void main() {
             summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -106,7 +106,7 @@ void main() {
             summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -133,7 +133,7 @@ void main() {
             summary: summaryMin,
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -181,7 +181,7 @@ void main() {
             summary: summaryMin.substring(1),
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -208,7 +208,7 @@ void main() {
             summary: '${summaryMax}a',
             tags: {TaleTag.text},
             text: TextContentDto(
-              paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+              items: [Paragraph.text(text: 'Paragraph 1')],
               minReadingTime: 5,
               maxReadingTime: 10,
             ),
@@ -282,7 +282,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['Paragraph 1', 'Paragraph 2'],
+            'items': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -302,7 +302,7 @@ void main() {
         expect(tale.summary, equals(summaryMin));
         expect(tale.tags, equals({TaleTag.text}));
         expect(
-          tale.text?.paragraphs,
+          tale.text?.items,
           equals([
             Paragraph.text(text: 'Paragraph 1'),
             Paragraph.text(text: 'Paragraph 2'),
@@ -356,7 +356,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['Paragraph 1', 'Paragraph 2'],
+            'items': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -374,7 +374,7 @@ void main() {
         expect(tale.summary, equals(summaryMin));
         expect(tale.tags, equals({TaleTag.text}));
         expect(
-          tale.text?.paragraphs,
+          tale.text?.items,
           equals([
             Paragraph.text(text: 'Paragraph 1'),
             Paragraph.text(text: 'Paragraph 2'),
@@ -396,7 +396,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['Paragraph 1', 'Paragraph 2'],
+            'items': ['Paragraph 1', 'Paragraph 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -416,7 +416,7 @@ void main() {
         expect(tale.summary, equals(summaryMin));
         expect(tale.tags, equals({TaleTag.text}));
         expect(
-          tale.text?.paragraphs,
+          tale.text?.items,
           equals([
             Paragraph.text(text: 'Paragraph 1'),
             Paragraph.text(text: 'Paragraph 2'),
@@ -443,7 +443,7 @@ void main() {
           summary: summaryMin,
           tags: {TaleTag.text},
           text: TextContentDto(
-            paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+            items: [Paragraph.text(text: 'Paragraph 1')],
             minReadingTime: 5,
             maxReadingTime: 10,
           ),
@@ -460,7 +460,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['Paragraph 1'],
+            'items': ['Paragraph 1'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -485,7 +485,7 @@ void main() {
           summary: summaryMin,
           tags: {TaleTag.text},
           text: TextContentDto(
-            paragraphs: [Paragraph.text(text: 'Only one')],
+            items: [Paragraph.text(text: 'Only one')],
             minReadingTime: 1,
             maxReadingTime: 2,
           ),
@@ -501,7 +501,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['Only one'],
+            'items': ['Only one'],
             'min_reading_time': 1,
             'max_reading_time': 2,
           },
@@ -526,7 +526,7 @@ void main() {
           summary: summaryMin,
           tags: {TaleTag.text},
           text: TextContentDto(
-            paragraphs: [Paragraph.text(text: 'A')],
+            items: [Paragraph.text(text: 'A')],
             minReadingTime: 1,
             maxReadingTime: 2,
           ),
@@ -556,7 +556,7 @@ void main() {
           summary: summaryMin,
           tags: {TaleTag.text, TaleTag.audio},
           text: TextContentDto(
-            paragraphs: [Paragraph.text(text: 'A')],
+            items: [Paragraph.text(text: 'A')],
             minReadingTime: 1,
             maxReadingTime: 2,
           ),
@@ -569,7 +569,7 @@ void main() {
         );
         final expectedAudioJson = {'file_size': 123, 'duration': 456000000};
         final expectedTextJson = {
-          'paragraphs': ['A'],
+          'items': ['A'],
           'min_reading_time': 1,
           'max_reading_time': 2,
         };
@@ -594,7 +594,7 @@ void main() {
           summary: summaryMin,
           tags: {TaleTag.text},
           text: TextContentDto(
-            paragraphs: [Paragraph.text(text: 'A')],
+            items: [Paragraph.text(text: 'A')],
             minReadingTime: 1,
             maxReadingTime: 2,
           ),

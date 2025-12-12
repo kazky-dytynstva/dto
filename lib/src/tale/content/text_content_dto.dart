@@ -6,14 +6,14 @@ part 'text_content_dto.g.dart';
 @JsonSerializable()
 class TextContentDto extends Equatable {
   TextContentDto({
-    required this.paragraphs,
+    required this.items,
     required this.minReadingTime,
     required this.maxReadingTime,
-  }) : assert(paragraphs.isNotEmpty, 'Paragraphs should not be empty'),
+  }) : assert(items.isNotEmpty, 'Items should not be empty'),
        assert(
-         paragraphs.first is ImageParagraph &&
-             (paragraphs.first as ImageParagraph).imageIndex == 0,
-         'First paragraph should be an image with index 0',
+         items.first is ImageParagraph &&
+             (items.first as ImageParagraph).imageIndex == 0,
+         'First item should be an image with index 0',
        ),
        assert(minReadingTime > 0, 'Min reading time should be positive'),
        assert(
@@ -21,9 +21,9 @@ class TextContentDto extends Equatable {
          'Max reading time should be greater than min reading time',
        );
 
-  /// Represents a tale text.
+  /// Represents a tale content items (text and images).
   @_ParagraphConverter()
-  final List<Paragraph> paragraphs;
+  final List<Paragraph> items;
 
   /// Represents a minimum reading time in minutes.
   final int minReadingTime;
@@ -37,15 +37,15 @@ class TextContentDto extends Equatable {
   Map<String, dynamic> toJson() => _$TextContentDtoToJson(this);
 
   @override
-  List<Object?> get props => [paragraphs, minReadingTime, maxReadingTime];
+  List<Object?> get props => [items, minReadingTime, maxReadingTime];
 
   TextContentDto copyWith({
-    List<Paragraph>? paragraphs,
+    List<Paragraph>? items,
     int? minReadingTime,
     int? maxReadingTime,
   }) {
     return TextContentDto(
-      paragraphs: paragraphs ?? this.paragraphs,
+      items: items ?? this.items,
       minReadingTime: minReadingTime ?? this.minReadingTime,
       maxReadingTime: maxReadingTime ?? this.maxReadingTime,
     );
