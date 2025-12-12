@@ -8,8 +8,8 @@ part of 'text_content_dto.dart';
 
 TextContentDto _$TextContentDtoFromJson(Map<String, dynamic> json) =>
     TextContentDto(
-      items: (json['paragraphs'] as List<dynamic>)
-          .map((e) => const _ParagraphConverter().fromJson(e as String))
+      items: (json['items'] as List<dynamic>)
+          .map((e) => const _ContentItemConverter().fromJson(e as String))
           .toList(),
       minReadingTime: (json['min_reading_time'] as num).toInt(),
       maxReadingTime: (json['max_reading_time'] as num).toInt(),
@@ -18,7 +18,7 @@ TextContentDto _$TextContentDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TextContentDtoToJson(
   TextContentDto instance,
 ) => <String, dynamic>{
-  'paragraphs': instance.items.map(const _ParagraphConverter().toJson).toList(),
+  'items': instance.items.map(const _ContentItemConverter().toJson).toList(),
   'min_reading_time': instance.minReadingTime,
   'max_reading_time': instance.maxReadingTime,
 };

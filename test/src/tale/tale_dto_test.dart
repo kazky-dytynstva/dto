@@ -28,8 +28,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -56,8 +56,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -85,8 +85,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -116,8 +116,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -146,8 +146,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -197,8 +197,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -227,8 +227,8 @@ void main() {
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
-                Paragraph.image(imageIndex: 0),
-                Paragraph.text(text: 'Paragraph 1'),
+                ContentItem.image(imageIndex: 0),
+                ContentItem.text(text: 'ContentItem 1'),
               ],
               minReadingTime: 5,
               maxReadingTime: 10,
@@ -303,7 +303,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['[0]', 'Paragraph 1', 'Paragraph 2'],
+            'items': ['[0]', 'ContentItem 1', 'ContentItem 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -325,9 +325,9 @@ void main() {
         expect(
           tale.text?.items,
           equals([
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
-            Paragraph.text(text: 'Paragraph 2'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
+            ContentItem.text(text: 'ContentItem 2'),
           ]),
         );
         expect(tale.text?.minReadingTime, equals(5));
@@ -378,7 +378,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['[0]', 'Paragraph 1', 'Paragraph 2'],
+            'items': ['[0]', 'ContentItem 1', 'ContentItem 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -398,9 +398,9 @@ void main() {
         expect(
           tale.text?.items,
           equals([
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
-            Paragraph.text(text: 'Paragraph 2'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
+            ContentItem.text(text: 'ContentItem 2'),
           ]),
         );
         expect(tale.text?.minReadingTime, equals(5));
@@ -419,7 +419,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['[0]', 'Paragraph 1', 'Paragraph 2'],
+            'items': ['[0]', 'ContentItem 1', 'ContentItem 2'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -441,9 +441,9 @@ void main() {
         expect(
           tale.text?.items,
           equals([
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
-            Paragraph.text(text: 'Paragraph 2'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
+            ContentItem.text(text: 'ContentItem 2'),
           ]),
         );
         expect(tale.text?.minReadingTime, equals(5));
@@ -468,8 +468,8 @@ void main() {
           tags: {TaleTag.text},
           text: TextContentDto(
             items: [
-              Paragraph.image(imageIndex: 0),
-              Paragraph.text(text: 'Paragraph 1'),
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'ContentItem 1'),
             ],
             minReadingTime: 5,
             maxReadingTime: 10,
@@ -487,7 +487,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['[0]', 'Paragraph 1'],
+            'items': ['[0]', 'ContentItem 1'],
             'min_reading_time': 5,
             'max_reading_time': 10,
           },
@@ -513,8 +513,8 @@ void main() {
           tags: {TaleTag.text},
           text: TextContentDto(
             items: [
-              Paragraph.image(imageIndex: 0),
-              Paragraph.text(text: 'Only one'),
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Only one'),
             ],
             minReadingTime: 1,
             maxReadingTime: 2,
@@ -531,7 +531,7 @@ void main() {
           'summary': summaryMin,
           'tags': ['text'],
           'text': {
-            'paragraphs': ['[0]', 'Only one'],
+            'items': ['[0]', 'Only one'],
             'min_reading_time': 1,
             'max_reading_time': 2,
           },
@@ -557,8 +557,8 @@ void main() {
           tags: {TaleTag.text},
           text: TextContentDto(
             items: [
-              Paragraph.image(imageIndex: 0),
-              Paragraph.text(text: 'A'),
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'A'),
             ],
             minReadingTime: 1,
             maxReadingTime: 2,
@@ -590,8 +590,8 @@ void main() {
           tags: {TaleTag.text, TaleTag.audio},
           text: TextContentDto(
             items: [
-              Paragraph.image(imageIndex: 0),
-              Paragraph.text(text: 'A'),
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'A'),
             ],
             minReadingTime: 1,
             maxReadingTime: 2,
@@ -605,7 +605,7 @@ void main() {
         );
         final expectedAudioJson = {'file_size': 123, 'duration': 456000000};
         final expectedTextJson = {
-          'paragraphs': ['[0]', 'A'],
+          'items': ['[0]', 'A'],
           'min_reading_time': 1,
           'max_reading_time': 2,
         };
@@ -631,8 +631,8 @@ void main() {
           tags: {TaleTag.text},
           text: TextContentDto(
             items: [
-              Paragraph.image(imageIndex: 0),
-              Paragraph.text(text: 'A'),
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'A'),
             ],
             minReadingTime: 1,
             maxReadingTime: 2,

@@ -10,9 +10,9 @@ void main() {
       // Given
       final textContent = TextContentDto(
         items: [
-          Paragraph.image(imageIndex: 0),
-          Paragraph.text(text: 'Paragraph 1'),
-          Paragraph.text(text: 'Paragraph 2'),
+          ContentItem.image(imageIndex: 0),
+          ContentItem.text(text: 'ContentItem 1'),
+          ContentItem.text(text: 'ContentItem 2'),
         ],
         minReadingTime: 5,
         maxReadingTime: 10,
@@ -43,8 +43,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
           ],
           minReadingTime: 0,
           maxReadingTime: 10,
@@ -60,8 +60,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
           ],
           minReadingTime: -1,
           maxReadingTime: 10,
@@ -77,8 +77,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
           ],
           minReadingTime: 5,
           maxReadingTime: 5,
@@ -91,8 +91,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.image(imageIndex: 0),
-            Paragraph.text(text: 'Paragraph 1'),
+            ContentItem.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
           ],
           minReadingTime: 5,
           maxReadingTime: 4,
@@ -109,9 +109,9 @@ void main() {
       // Given
       final textContent = TextContentDto(
         items: [
-          Paragraph.image(imageIndex: 0),
-          Paragraph.text(text: 'Paragraph 1'),
-          Paragraph.text(text: 'Paragraph 2'),
+          ContentItem.image(imageIndex: 0),
+          ContentItem.text(text: 'ContentItem 1'),
+          ContentItem.text(text: 'ContentItem 2'),
         ],
         minReadingTime: 5,
         maxReadingTime: 10,
@@ -121,9 +121,9 @@ void main() {
       expect(
         textContent.items,
         equals([
-          Paragraph.image(imageIndex: 0),
-          Paragraph.text(text: 'Paragraph 1'),
-          Paragraph.text(text: 'Paragraph 2'),
+          ContentItem.image(imageIndex: 0),
+          ContentItem.text(text: 'ContentItem 1'),
+          ContentItem.text(text: 'ContentItem 2'),
         ]),
       );
       expect(textContent.minReadingTime, equals(5));
@@ -137,8 +137,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.text(text: 'Paragraph 1'),
-            Paragraph.image(imageIndex: 0),
+            ContentItem.text(text: 'ContentItem 1'),
+            ContentItem.image(imageIndex: 0),
           ],
           minReadingTime: 5,
           maxReadingTime: 10,
@@ -156,8 +156,8 @@ void main() {
       expect(
         () => TextContentDto(
           items: [
-            Paragraph.image(imageIndex: 1),
-            Paragraph.text(text: 'Paragraph 1'),
+            ContentItem.image(imageIndex: 1),
+            ContentItem.text(text: 'ContentItem 1'),
           ],
           minReadingTime: 5,
           maxReadingTime: 10,

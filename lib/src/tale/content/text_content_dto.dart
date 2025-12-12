@@ -11,8 +11,8 @@ class TextContentDto extends Equatable {
     required this.maxReadingTime,
   }) : assert(items.isNotEmpty, 'Items should not be empty'),
        assert(
-         items.first is ImageParagraph &&
-             (items.first as ImageParagraph).imageIndex == 0,
+         items.first is ContentItemImage &&
+             (items.first as ContentItemImage).imageIndex == 0,
          'First item should be an image with index 0',
        ),
        assert(minReadingTime > 0, 'Min reading time should be positive'),
@@ -22,8 +22,8 @@ class TextContentDto extends Equatable {
        );
 
   /// Represents a tale content items (text and images).
-  @_ParagraphConverter()
-  final List<Paragraph> items;
+  @_ContentItemConverter()
+  final List<ContentItem> items;
 
   /// Represents a minimum reading time in minutes.
   final int minReadingTime;
@@ -40,7 +40,7 @@ class TextContentDto extends Equatable {
   List<Object?> get props => [items, minReadingTime, maxReadingTime];
 
   TextContentDto copyWith({
-    List<Paragraph>? items,
+    List<ContentItem>? items,
     int? minReadingTime,
     int? maxReadingTime,
   }) {
@@ -52,11 +52,12 @@ class TextContentDto extends Equatable {
   }
 }
 
-sealed class Paragraph extends Equatable {
-  const Paragraph();
+sealed class ContentItem extends Equatable {
+  const ContentItem();
 
-  const factory Paragraph.text({required String text}) = TextParagraph._;
-  const factory Paragraph.image({required int imageIndex}) = ImageParagraph._;
+  const factory ContentItem.text({required String text}) = ContentItemText._;
+  const factory ContentItem.image({required int imageIndex}) =
+      ContentItemImage._;
 
   T when<T>({
     required T Function(String text) text,
@@ -64,14 +65,14 @@ sealed class Paragraph extends Equatable {
   }) {
     final self = this;
     return switch (self) {
-      TextParagraph() => text(self.text),
-      ImageParagraph() => image(self.imageIndex),
+      ContentItemText() => text(self.text),
+      ContentItemImage() => image(self.imageIndex),
     };
   }
 }
 
-class TextParagraph extends Paragraph {
-  const TextParagraph._({required this.text}) : super();
+class ContentItemText extends ContentItem {
+  const ContentItemText._({required this.text}) : super();
 
   final String text;
 
@@ -79,8 +80,8 @@ class TextParagraph extends Paragraph {
   List<Object?> get props => [text];
 }
 
-class ImageParagraph extends Paragraph {
-  const ImageParagraph._({required this.imageIndex}) : super();
+class ContentItemImage extends ContentItem {
+  const ContentItemImage._({required this.imageIndex}) : super();
 
   final int imageIndex;
 
@@ -90,22 +91,22 @@ class ImageParagraph extends Paragraph {
 
 final _imagePattern = RegExp(r'^\[(\d+)\]$');
 
-class _ParagraphConverter implements JsonConverter<Paragraph, String> {
-  const _ParagraphConverter();
+class _ContentItemConverter implements JsonConverter<ContentItem, String> {
+  const _ContentItemConverter();
 
   @override
-  Paragraph fromJson(String json) {
+  ContentItem fromJson(String json) {
     final match = _imagePattern.firstMatch(json);
     if (match != null) {
       final imageIndex = int.parse(match.group(1)!);
-      return Paragraph.image(imageIndex: imageIndex);
+      return ContentItem.image(imageIndex: imageIndex);
     }
 
-    return Paragraph.text(text: json);
+    return ContentItem.text(text: json);
   }
 
   @override
-  String toJson(Paragraph paragraph) => paragraph.when(
+  String toJson(ContentItem contentItem) => contentItem.when(
     text: (text) => text,
     image: (imageIndex) => '[$imageIndex]',
   );
