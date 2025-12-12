@@ -5,11 +5,16 @@ part 'text_content_dto.g.dart';
 
 @JsonSerializable()
 class TextContentDto extends Equatable {
-  const TextContentDto({
+  TextContentDto({
     required this.paragraphs,
     required this.minReadingTime,
     required this.maxReadingTime,
-  }) : assert(paragraphs.length > 0, 'Paragraphs should not be empty'),
+  }) : assert(paragraphs.isNotEmpty, 'Paragraphs should not be empty'),
+       assert(
+         paragraphs.first is ImageParagraph &&
+             (paragraphs.first as ImageParagraph).imageIndex == 0,
+         'First paragraph should be an image with index 0',
+       ),
        assert(minReadingTime > 0, 'Min reading time should be positive'),
        assert(
          maxReadingTime > minReadingTime,

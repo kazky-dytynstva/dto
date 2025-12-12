@@ -10,6 +10,7 @@ void main() {
       // Given
       final textContent = TextContentDto(
         paragraphs: [
+          Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
           Paragraph.text(text: 'Paragraph 2'),
         ],
@@ -45,7 +46,10 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+          paragraphs: [
+            Paragraph.image(imageIndex: 0),
+            Paragraph.text(text: 'Paragraph 1'),
+          ],
           minReadingTime: 0,
           maxReadingTime: 10,
         ),
@@ -59,7 +63,10 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+          paragraphs: [
+            Paragraph.image(imageIndex: 0),
+            Paragraph.text(text: 'Paragraph 1'),
+          ],
           minReadingTime: -1,
           maxReadingTime: 10,
         ),
@@ -73,7 +80,10 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(
-          paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+          paragraphs: [
+            Paragraph.image(imageIndex: 0),
+            Paragraph.text(text: 'Paragraph 1'),
+          ],
           minReadingTime: 5,
           maxReadingTime: 5,
         ),
@@ -84,7 +94,10 @@ void main() {
 
       expect(
         () => TextContentDto(
-          paragraphs: [Paragraph.text(text: 'Paragraph 1')],
+          paragraphs: [
+            Paragraph.image(imageIndex: 0),
+            Paragraph.text(text: 'Paragraph 1'),
+          ],
           minReadingTime: 5,
           maxReadingTime: 4,
         ),
@@ -100,6 +113,7 @@ void main() {
       // Given
       final textContent = TextContentDto(
         paragraphs: [
+          Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
           Paragraph.text(text: 'Paragraph 2'),
         ],
@@ -111,12 +125,51 @@ void main() {
       expect(
         textContent.paragraphs,
         equals([
+          Paragraph.image(imageIndex: 0),
           Paragraph.text(text: 'Paragraph 1'),
           Paragraph.text(text: 'Paragraph 2'),
         ]),
       );
       expect(textContent.minReadingTime, equals(5));
       expect(textContent.maxReadingTime, equals(10));
+    });
+
+    test('given first paragraph is not an image '
+        'when creating $TextContentDto '
+        'then an AssertionError with a specific message is thrown', () {
+      // Given, When, Then
+      expect(
+        () => TextContentDto(
+          paragraphs: [
+            Paragraph.text(text: 'Paragraph 1'),
+            Paragraph.image(imageIndex: 0),
+          ],
+          minReadingTime: 5,
+          maxReadingTime: 10,
+        ),
+        throwsAssertErrorWithMessage(
+          'First paragraph should be an image with index 0',
+        ),
+      );
+    });
+
+    test('given first paragraph is an image but not with index 0 '
+        'when creating $TextContentDto '
+        'then an AssertionError with a specific message is thrown', () {
+      // Given, When, Then
+      expect(
+        () => TextContentDto(
+          paragraphs: [
+            Paragraph.image(imageIndex: 1),
+            Paragraph.text(text: 'Paragraph 1'),
+          ],
+          minReadingTime: 5,
+          maxReadingTime: 10,
+        ),
+        throwsAssertErrorWithMessage(
+          'First paragraph should be an image with index 0',
+        ),
+      );
     });
   });
 }
