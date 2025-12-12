@@ -32,7 +32,21 @@ void main() {
       // Given, When, Then
       expect(
         () => TextContentDto(items: [], minReadingTime: 5, maxReadingTime: 10),
-        throwsAssertErrorWithMessage('Items should not be empty'),
+        throwsAssertErrorWithMessage('Items should contain more than 1 item'),
+      );
+    });
+
+    test('given only 1 item '
+        'when creating $TextContentDto '
+        'then an AssertionError with a specific message is thrown', () {
+      // Given, When, Then
+      expect(
+        () => TextContentDto(
+          items: [ContentItem.image(imageIndex: 0)],
+          minReadingTime: 5,
+          maxReadingTime: 10,
+        ),
+        throwsAssertErrorWithMessage('Items should contain more than 1 item'),
       );
     });
 

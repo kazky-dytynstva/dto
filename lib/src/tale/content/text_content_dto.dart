@@ -9,7 +9,7 @@ class TextContentDto extends Equatable {
     required this.items,
     required this.minReadingTime,
     required this.maxReadingTime,
-  }) : assert(items.isNotEmpty, 'Items should not be empty'),
+  }) : assert(items.length > 1, 'Items should contain more than 1 item'),
        assert(
          items.first is ContentItemImage &&
              (items.first as ContentItemImage).imageIndex == 0,
