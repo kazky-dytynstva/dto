@@ -106,7 +106,27 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     CrewDto? crew,
     bool? isHidden,
     bool resetUpdateDate = false,
+    bool resetCrew = false,
+    bool resetText = false,
+    bool resetAudio = false,
   }) {
+    assert(
+      !(resetUpdateDate && updateDate != null),
+      'Cannot reset and set updateDate at the same time',
+    );
+    assert(
+      !(resetCrew && crew != null),
+      'Cannot reset and set crew at the same time',
+    );
+    assert(
+      !(resetText && text != null),
+      'Cannot reset and set text at the same time',
+    );
+    assert(
+      !(resetAudio && audio != null),
+      'Cannot reset and set audio at the same time',
+    );
+
     return TaleDto(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -114,9 +134,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       updateDate: resetUpdateDate ? null : updateDate ?? this.updateDate,
       summary: summary ?? this.summary,
       tags: tags ?? this.tags,
-      text: text ?? this.text,
-      audio: audio ?? this.audio,
-      crew: crew ?? this.crew,
+      text: resetText ? null : text ?? this.text,
+      audio: resetAudio ? null : audio ?? this.audio,
+      crew: resetCrew ? null : crew ?? this.crew,
       isHidden: isHidden ?? this.isHidden,
     );
   }
