@@ -25,6 +25,14 @@ class CrewDto extends Equatable {
   final List<int>? translators;
   final List<int>? graphics;
 
+  late final Set<int> allMembers = {
+    ...?authors,
+    ...?readers,
+    ...?musicians,
+    ...?translators,
+    ...?graphics,
+  };
+
   factory CrewDto.fromJson(Map<String, dynamic> json) =>
       _$CrewDtoFromJson(json);
 
@@ -58,5 +66,9 @@ class CrewDto extends Equatable {
       translators: clearTranslators ? null : translators ?? this.translators,
       graphics: clearGraphics ? null : graphics ?? this.graphics,
     );
+  }
+
+  bool containsMember({required int personId}) {
+    return allMembers.contains(personId);
   }
 }
