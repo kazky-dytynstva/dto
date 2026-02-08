@@ -523,6 +523,45 @@ void main() {
         expect(json['info'], isNull);
         expect(json['roles'], ['translator']);
       });
+
+      test('given unsorted roles '
+          'when calling copyWith '
+          'then roles are sorted by index', () {
+        // Given
+        final person = PersonDto(
+          id: 5,
+          name: 'Test',
+          surname: 'User',
+          gender: PersonGenderDto.male,
+          url: null,
+          info: null,
+          roles: null,
+          createDate: DateTime.now(),
+          updateDate: null,
+        );
+        final unsortedRoles = [
+          PersonRoleDto.crew, // index 5
+          PersonRoleDto.author, // index 0
+          PersonRoleDto.translator, // index 4
+          PersonRoleDto.reader, // index 1
+          PersonRoleDto.graphic, // index 3
+          PersonRoleDto.musician, // index 2
+        ];
+        final expectedSortedRoles = [
+          PersonRoleDto.author, // index 0
+          PersonRoleDto.reader, // index 1
+          PersonRoleDto.musician, // index 2
+          PersonRoleDto.graphic, // index 3
+          PersonRoleDto.translator, // index 4
+          PersonRoleDto.crew, // index 5
+        ];
+
+        // When
+        final updatedPerson = person.copyWith(roles: unsortedRoles);
+
+        // Then
+        expect(updatedPerson.roles, equals(expectedSortedRoles));
+      });
     });
   });
 }

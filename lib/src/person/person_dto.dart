@@ -99,7 +99,7 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
       gender: gender ?? this.gender,
       url: url ?? this.url,
       info: info ?? this.info,
-      roles: roles ?? this.roles,
+      roles: (roles ?? this.roles)?..sort((a, b) => a.index.compareTo(b.index)),
       createDate: createDate ?? this.createDate,
       updateDate: resetUpdateDate ? null : updateDate ?? this.updateDate,
     );
