@@ -26,7 +26,9 @@ TaleDto _$TaleDtoFromJson(Map<String, dynamic> json) => TaleDto(
   crew: json['crew'] == null
       ? null
       : CrewDto.fromJson(json['crew'] as Map<String, dynamic>),
-  isHidden: json['is_hidden'] as bool?,
+  adminConfig: json['admin_config'] == null
+      ? null
+      : AdminConfigDto.fromJson(json['admin_config'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) => <String, dynamic>{
@@ -39,7 +41,7 @@ Map<String, dynamic> _$TaleDtoToJson(TaleDto instance) => <String, dynamic>{
   'text': ?instance.text?.toJson(),
   'audio': ?instance.audio?.toJson(),
   'crew': ?instance.crew?.toJson(),
-  'is_hidden': ?instance.isHidden,
+  'admin_config': ?instance.adminConfig?.toJson(),
 };
 
 const _$TaleTagEnumMap = {

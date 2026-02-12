@@ -36,7 +36,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage('Tale id should be positive'),
         );
@@ -64,7 +64,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage('Tale id should NOT be a stub id'),
         );
@@ -93,7 +93,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Tale name should be between ${TaleDto.nameMinLength} and ${TaleDto.nameMaxLength} characters long',
@@ -124,7 +124,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Tale name should be between ${TaleDto.nameMinLength} and ${TaleDto.nameMaxLength} characters long',
@@ -154,7 +154,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'updateDate can NOT be before createDate',
@@ -177,7 +177,7 @@ void main() {
             text: null,
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage('There should be at least one tag'),
         );
@@ -205,7 +205,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Tale summary should be between ${TaleDto.summaryMinLength} and ${TaleDto.summaryMaxLength} characters long',
@@ -235,7 +235,7 @@ void main() {
             ),
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Tale summary should be between ${TaleDto.summaryMinLength} and ${TaleDto.summaryMaxLength} characters long',
@@ -258,7 +258,7 @@ void main() {
             text: null,
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Text content should be present if and only if the tale has a TaleTag.text tag',
@@ -281,7 +281,7 @@ void main() {
             text: null,
             audio: null,
             crew: null,
-            isHidden: false,
+            adminConfig: null,
           ),
           throwsAssertErrorWithMessage(
             'Audio content should be present if and only if the tale has a TaleTag.audio tag',
@@ -334,7 +334,7 @@ void main() {
         expect(tale.text?.maxReadingTime, equals(10));
         expect(tale.audio, isNull);
         expect(tale.crew, isNull);
-        expect(tale.isHidden, isNull);
+        expect(tale.adminConfig, isNull);
       });
 
       test('given JSON with missing required fields '
@@ -450,7 +450,7 @@ void main() {
         expect(tale.text?.maxReadingTime, equals(10));
         expect(tale.audio, isNull);
         expect(tale.crew, isNull);
-        expect(tale.isHidden, isNull);
+        expect(tale.adminConfig, isNull);
       });
     });
 
@@ -476,7 +476,7 @@ void main() {
           ),
           audio: null,
           crew: null,
-          isHidden: false,
+          adminConfig: null,
         );
 
         final expectedJson = {
@@ -565,7 +565,7 @@ void main() {
           ),
           audio: null,
           crew: null,
-          isHidden: null,
+          adminConfig: null,
         );
 
         // When
@@ -601,7 +601,7 @@ void main() {
             duration: Duration(seconds: 456),
           ),
           crew: null,
-          isHidden: false,
+          adminConfig: null,
         );
         final expectedAudioJson = {'file_size': 123, 'duration': 456000000};
         final expectedTextJson = {
@@ -645,7 +645,7 @@ void main() {
             translators: [1, 2, 3, 4, 5, 6],
             graphics: [1, 2, 3],
           ),
-          isHidden: false,
+          adminConfig: null,
         );
         final expectedCrewJson = {
           'authors': [1],

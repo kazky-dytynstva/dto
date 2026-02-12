@@ -1,3 +1,4 @@
+import 'package:dto/src/admin_config/admin_config_dto.dart';
 import 'package:dto/src/utils/id_holder.dart';
 import 'package:dto/src/tale/content/audio_content_dto.dart';
 import 'package:dto/src/tale/content/text_content_dto.dart';
@@ -21,8 +22,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.text,
     required this.audio,
     required this.crew,
-    bool? isHidden,
-  }) : isHidden = isHidden == true ? true : null,
+    AdminConfigDto? adminConfig,
+  }) : adminConfig = adminConfig?.isEmpty == true ? null : adminConfig,
        assert(id >= 0, 'Tale id should be positive'),
        assert(id != stubId, 'Tale id should NOT be a stub id'),
        assert(
@@ -67,12 +68,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
 
   final CrewDto? crew;
 
-  /// Used for the development and testing purposes
-  /// When flag is true, the tale should not be shown in the production tales list
-  ///
-  /// This value can be or true or null. False is not allowed.
-  @JsonKey()
-  final bool? isHidden;
+  final AdminConfigDto? adminConfig;
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);
@@ -91,7 +87,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     text,
     audio,
     crew,
-    isHidden,
+    adminConfig,
   ];
 
   TaleDto copyWith({
@@ -104,11 +100,11 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     TextContentDto? text,
     AudioContentDto? audio,
     CrewDto? crew,
-    bool? isHidden,
     bool resetUpdateDate = false,
     bool resetCrew = false,
     bool resetText = false,
     bool resetAudio = false,
+    AdminConfigDto? adminConfig,
   }) {
     assert(
       !(resetUpdateDate && updateDate != null),
@@ -137,7 +133,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       text: resetText ? null : text ?? this.text,
       audio: resetAudio ? null : audio ?? this.audio,
       crew: resetCrew ? null : crew ?? this.crew,
-      isHidden: isHidden ?? this.isHidden,
+      adminConfig: adminConfig ?? this.adminConfig,
     );
   }
 
