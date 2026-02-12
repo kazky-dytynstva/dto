@@ -511,18 +511,23 @@ void main() {
           createDate: DateTime.now(),
           updateDate: null,
         );
+        final expectedJson = {
+          PersonKeys.id: 4,
+          PersonKeys.name: 'Sam',
+          PersonKeys.surname: 'Green',
+          PersonKeys.gender: 'female',
+          PersonKeys.url: null,
+          PersonKeys.info: null,
+          PersonKeys.roles: ['translator'],
+          PersonKeys.createDate: person.createDate.toIso8601String(),
+          PersonKeys.updateDate: null,
+        };
 
         // When
         final json = person.toJson();
 
         // Then
-        expect(json['id'], 4);
-        expect(json['name'], 'Sam');
-        expect(json['surname'], 'Green');
-        expect(json['gender'], 'female');
-        expect(json['url'], isNull);
-        expect(json['info'], isNull);
-        expect(json['roles'], ['translator']);
+        expect(json, expectedJson);
       });
 
       test('given unsorted roles '

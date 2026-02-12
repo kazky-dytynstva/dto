@@ -68,6 +68,9 @@ class PersonDto extends Equatable implements ToJsonItem, IdHolder {
   Map<String, dynamic> toJson() => _$PersonDtoToJson(this);
 
   @override
+  Map<String, dynamic> toProdJson() => toJson();
+
+  @override
   List<Object?> get props => [
     id,
     name,
