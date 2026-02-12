@@ -530,16 +530,16 @@ void main() {
         );
 
         final expectedJson = {
-          'id': 2,
-          'name': 'Minimal Tale',
-          'create_date': createDate.toIso8601String(),
-          'update_date': updateDate.toIso8601String(),
-          'summary': summaryMin,
-          'tags': ['text'],
-          'text': {
-            'items': ['[0]', 'Only one'],
-            'min_reading_time': 1,
-            'max_reading_time': 2,
+          TaleKeys.id: 2,
+          TaleKeys.name: 'Minimal Tale',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Only one'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
           },
         };
 
@@ -573,14 +573,25 @@ void main() {
           crew: null,
           adminConfig: null,
         );
+        final expectedJson = {
+          TaleKeys.id: 3,
+          TaleKeys.name: 'Null Optionals',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'A'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+        };
 
         // When
         final json = tale.toJson();
 
         // Then
-        expect(json[TaleKeys.audio], isNull);
-        expect(json[TaleKeys.crew], isNull);
-        expect(json[TaleKeys.adminConfig], isNull);
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto with both text and audio tags and content '
@@ -609,22 +620,29 @@ void main() {
           crew: null,
           adminConfig: null,
         );
-        final expectedAudioJson = {
-          AudioContentKeys.fileSize: 123,
-          AudioContentKeys.duration: 456000000,
-        };
-        final expectedTextJson = {
-          TextContentKeys.items: ['[0]', 'A'],
-          TextContentKeys.minReadingTime: 1,
-          TextContentKeys.maxReadingTime: 2,
+        final expectedJson = {
+          TaleKeys.id: 4,
+          TaleKeys.name: 'Text and Audio',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text', 'audio'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'A'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+          TaleKeys.audio: {
+            AudioContentKeys.fileSize: 123,
+            AudioContentKeys.duration: 456000000,
+          },
         };
 
         // When
         final json = tale.toJson();
 
         // Then
-        expect(json[TaleKeys.text], equals(expectedTextJson));
-        expect(json[TaleKeys.audio], equals(expectedAudioJson));
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto with crew '
@@ -656,19 +674,32 @@ void main() {
           ),
           adminConfig: null,
         );
-        final expectedCrewJson = {
-          CrewKeys.authors: [1],
-          CrewKeys.readers: [42],
-          CrewKeys.musicians: [43, 42],
-          CrewKeys.translators: [1, 2, 3, 4, 5, 6],
-          CrewKeys.graphics: [1, 2, 3],
+        final expectedJson = {
+          TaleKeys.id: 5,
+          TaleKeys.name: 'With Crew',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'A'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+          TaleKeys.crew: {
+            CrewKeys.authors: [1],
+            CrewKeys.readers: [42],
+            CrewKeys.musicians: [43, 42],
+            CrewKeys.translators: [1, 2, 3, 4, 5, 6],
+            CrewKeys.graphics: [1, 2, 3],
+          },
         };
 
         // When
         final json = tale.toJson();
 
         // Then
-        expect(json[TaleKeys.crew], equals(expectedCrewJson));
+        expect(json, expectedJson);
       });
     });
 
@@ -791,16 +822,29 @@ void main() {
             comment: 'Admin comment',
           ),
         );
-        final expectedAdminConfigJson = {
-          AdminConfigKeys.isHidden: true,
-          AdminConfigKeys.comment: 'Admin comment',
+        final expectedJson = {
+          TaleKeys.id: 1,
+          TaleKeys.name: 'Tale Name',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Content'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+          TaleKeys.adminConfig: {
+            AdminConfigKeys.isHidden: true,
+            AdminConfigKeys.comment: 'Admin comment',
+          },
         };
 
         // When
         final json = tale.toJson();
 
         // Then
-        expect(json[TaleKeys.adminConfig], equals(expectedAdminConfigJson));
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto without adminConfig '
@@ -826,12 +870,25 @@ void main() {
           crew: null,
           adminConfig: null,
         );
+        final expectedJson = {
+          TaleKeys.id: 1,
+          TaleKeys.name: 'Tale Name',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Content'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+        };
 
         // When
         final json = tale.toJson();
 
         // Then
-        expect(json[TaleKeys.adminConfig], isNull);
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto with adminConfig '
@@ -861,12 +918,25 @@ void main() {
             comment: 'Admin comment',
           ),
         );
+        final expectedJson = {
+          TaleKeys.id: 1,
+          TaleKeys.name: 'Tale Name',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Content'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+        };
 
         // When
         final json = tale.toProdJson();
 
         // Then
-        expect(json[TaleKeys.adminConfig], isNull);
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto without adminConfig '
@@ -892,12 +962,25 @@ void main() {
           crew: null,
           adminConfig: null,
         );
+        final expectedJson = {
+          TaleKeys.id: 1,
+          TaleKeys.name: 'Tale Name',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Content'],
+            TextContentKeys.minReadingTime: 1,
+            TextContentKeys.maxReadingTime: 2,
+          },
+        };
 
         // When
         final json = tale.toProdJson();
 
         // Then
-        expect(json[TaleKeys.adminConfig], isNull);
+        expect(json, expectedJson);
       });
 
       test('given $TaleDto with adminConfig '
@@ -939,18 +1022,33 @@ void main() {
 
         // When
         final json = tale.toProdJson();
+        final expectedJson = {
+          TaleKeys.id: 42,
+          TaleKeys.name: 'Full Tale',
+          TaleKeys.createDate: createDate.toIso8601String(),
+          TaleKeys.updateDate: updateDate.toIso8601String(),
+          TaleKeys.summary: summaryMin,
+          TaleKeys.tags: ['text', 'audio', 'poem'],
+          TaleKeys.text: {
+            TextContentKeys.items: ['[0]', 'Text content'],
+            TextContentKeys.minReadingTime: 5,
+            TextContentKeys.maxReadingTime: 10,
+          },
+          TaleKeys.audio: {
+            AudioContentKeys.fileSize: 12345,
+            AudioContentKeys.duration: 600000000,
+          },
+          TaleKeys.crew: {
+            CrewKeys.authors: [1, 2],
+            CrewKeys.readers: [3],
+            CrewKeys.musicians: [4, 5],
+            CrewKeys.translators: [6],
+            CrewKeys.graphics: [7, 8, 9],
+          },
+        };
 
         // Then
-        expect(json[TaleKeys.id], equals(42));
-        expect(json[TaleKeys.name], equals('Full Tale'));
-        expect(json[TaleKeys.createDate], equals(createDate.toIso8601String()));
-        expect(json[TaleKeys.updateDate], equals(updateDate.toIso8601String()));
-        expect(json[TaleKeys.summary], equals(summaryMin));
-        expect(json[TaleKeys.tags], containsAll(['text', 'audio', 'poem']));
-        expect(json[TaleKeys.text], isNotNull);
-        expect(json[TaleKeys.audio], isNotNull);
-        expect(json[TaleKeys.crew], isNotNull);
-        expect(json[TaleKeys.adminConfig], isNull);
+        expect(json, expectedJson);
         // Verify the original tale still has adminConfig
         expect(tale.adminConfig, isNotNull);
       });
