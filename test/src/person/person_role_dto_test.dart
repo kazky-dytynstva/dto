@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:dto/dto.dart';
 
+import '../../json_keys/person_role_keys.dart';
+
 void main() {
   group('$PersonRoleDto', () {
     test('given enum value author '
@@ -83,8 +85,8 @@ void main() {
           'when decoding with json_annotation '
           'then returns PersonRoleDto.$roleStr', () {
         // Given
-        final json = {'role': roleStr};
-        final roleValue = json['role'] ?? '';
+        final json = {PersonRoleKeys.role: roleStr};
+        final roleValue = json[PersonRoleKeys.role] ?? '';
         // When
         final decoded = PersonRoleDto.values.firstWhere(
           (e) => _enumJsonValue(e) == roleValue,
@@ -101,8 +103,8 @@ void main() {
         'when decoding with json_annotation '
         'then throws StateError', () {
       // Given
-      final json = {'role': 'invalid'};
-      final roleValue = json['role'] ?? '';
+      final json = {PersonRoleKeys.role: 'invalid'};
+      final roleValue = json[PersonRoleKeys.role] ?? '';
       // Then
       expect(
         () => PersonRoleDto.values.firstWhere(
