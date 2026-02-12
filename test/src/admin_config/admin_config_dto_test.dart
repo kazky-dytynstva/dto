@@ -1,9 +1,7 @@
 import 'package:test/test.dart';
 import 'package:dto/dto.dart';
 
-const _isHiddenKey = 'is_hidden';
-const _isReviewedKey = 'is_reviewed';
-const _commentKey = 'comment';
+import '../../json_keys/admin_config_keys.dart';
 
 void main() {
   group('$AdminConfigDto', () {
@@ -201,9 +199,9 @@ void main() {
           'then AdminConfigDto is created correctly', () {
         // Given
         final json = {
-          _isHiddenKey: true,
-          _isReviewedKey: true,
-          _commentKey: 'Test comment',
+          AdminConfigKeys.isHidden: true,
+          AdminConfigKeys.isReviewed: true,
+          AdminConfigKeys.comment: 'Test comment',
         };
 
         // When
@@ -220,9 +218,9 @@ void main() {
           'then AdminConfigDto is created with nulls', () {
         // Given
         final json = {
-          _isHiddenKey: null,
-          _isReviewedKey: null,
-          _commentKey: null,
+          AdminConfigKeys.isHidden: null,
+          AdminConfigKeys.isReviewed: null,
+          AdminConfigKeys.comment: null,
         };
 
         // When
@@ -253,7 +251,7 @@ void main() {
           'when calling $AdminConfigDto.fromJson '
           'then AdminConfigDto is created with other fields null', () {
         // Given
-        final json = {_isHiddenKey: true};
+        final json = {AdminConfigKeys.isHidden: true};
 
         // When
         final config = AdminConfigDto.fromJson(json);
@@ -268,7 +266,7 @@ void main() {
           'when calling $AdminConfigDto.fromJson '
           'then AdminConfigDto is created with other fields null', () {
         // Given
-        final json = {_isReviewedKey: true};
+        final json = {AdminConfigKeys.isReviewed: true};
 
         // When
         final config = AdminConfigDto.fromJson(json);
@@ -283,7 +281,7 @@ void main() {
           'when calling $AdminConfigDto.fromJson '
           'then AdminConfigDto is created with other fields null', () {
         // Given
-        final json = {_commentKey: 'Only comment'};
+        final json = {AdminConfigKeys.comment: 'Only comment'};
 
         // When
         final config = AdminConfigDto.fromJson(json);
@@ -311,9 +309,9 @@ void main() {
 
         // Then
         expect(json, {
-          _isHiddenKey: true,
-          _isReviewedKey: true,
-          _commentKey: 'Test',
+          AdminConfigKeys.isHidden: true,
+          AdminConfigKeys.isReviewed: true,
+          AdminConfigKeys.comment: 'Test',
         });
       });
 
@@ -340,7 +338,7 @@ void main() {
         final json = config.toJson();
 
         // Then
-        expect(json, {_isHiddenKey: true});
+        expect(json, {AdminConfigKeys.isHidden: true});
       });
     });
 
