@@ -424,13 +424,9 @@ void main() {
         final copied = original.copyWith(isHidden: true);
 
         // Then
-        // Note: copyWith currently uses the parameter directly without falling back to current values
         expect(copied.isHidden, isTrue);
-        expect(
-          copied.isReviewed,
-          isNull,
-        ); // Bug: doesn't preserve current value
-        expect(copied.comment, isNull); // Bug: doesn't preserve current value
+        expect(copied.isReviewed, isTrue);
+        expect(copied.comment, equals('Original'));
       });
 
       test('given AdminConfigDto '
@@ -447,10 +443,9 @@ void main() {
         final copied = original.copyWith(isReviewed: true);
 
         // Then
-        // Note: copyWith currently uses the parameter directly without falling back to current values
-        expect(copied.isHidden, isNull); // Bug: doesn't preserve current value
+        expect(copied.isHidden, isTrue);
         expect(copied.isReviewed, isTrue);
-        expect(copied.comment, isNull); // Bug: doesn't preserve current value
+        expect(copied.comment, equals('Original'));
       });
 
       test('given AdminConfigDto '
@@ -467,16 +462,9 @@ void main() {
         final copied = original.copyWith(comment: 'Updated');
 
         // Then
-        // Note: copyWith parameter works for comment
-        expect(copied.isHidden, isNull); // Bug: doesn't preserve current value
-        expect(
-          copied.isReviewed,
-          isNull,
-        ); // Bug: doesn't preserve current value
-        expect(
-          copied.comment,
-          equals('Updated'),
-        ); // This parameter works correctly
+        expect(copied.isHidden, isTrue);
+        expect(copied.isReviewed, isTrue);
+        expect(copied.comment, equals('Updated'));
       });
 
       test('given AdminConfigDto with isHidden '
@@ -494,11 +482,8 @@ void main() {
 
         // Then
         expect(copied.isHidden, isNull);
-        expect(
-          copied.isReviewed,
-          isNull,
-        ); // Bug: doesn't preserve current value
-        expect(copied.comment, isNull); // Bug: doesn't preserve current value
+        expect(copied.isReviewed, isTrue);
+        expect(copied.comment, equals('Original'));
       });
 
       test('given AdminConfigDto with isReviewed '
@@ -512,12 +497,12 @@ void main() {
         );
 
         // When
-        final copied = original.copyWith(resetIsREviewed: true);
+        final copied = original.copyWith(resetIsReviewed: true);
 
         // Then
-        expect(copied.isHidden, isNull); // Bug: doesn't preserve current value
+        expect(copied.isHidden, isTrue);
         expect(copied.isReviewed, isNull);
-        expect(copied.comment, isNull); // Bug: doesn't preserve current value
+        expect(copied.comment, equals('Original'));
       });
 
       test('given AdminConfigDto with comment '
@@ -534,11 +519,8 @@ void main() {
         final copied = original.copyWith(resetComment: true);
 
         // Then
-        expect(copied.isHidden, isNull); // Bug: doesn't preserve current value
-        expect(
-          copied.isReviewed,
-          isNull,
-        ); // Bug: doesn't preserve current value
+        expect(copied.isHidden, isTrue);
+        expect(copied.isReviewed, isTrue);
         expect(copied.comment, isNull);
       });
 
@@ -555,7 +537,7 @@ void main() {
         // When
         final copied = original.copyWith(
           resetIsHidden: true,
-          resetIsREviewed: true,
+          resetIsReviewed: true,
           resetComment: true,
         );
 
@@ -568,7 +550,7 @@ void main() {
 
       test('given AdminConfigDto '
           'when calling copyWith with no parameters '
-          'then new instance with null values is returned due to bug', () {
+          'then new instance with preserved values is returned', () {
         // Given
         final original = AdminConfigDto(
           isHidden: true,
@@ -580,11 +562,10 @@ void main() {
         final copied = original.copyWith();
 
         // Then
-        // Bug: copyWith doesn't preserve current values
-        expect(copied.isHidden, isNull);
-        expect(copied.isReviewed, isNull);
-        expect(copied.comment, isNull);
-        expect(copied.isEmpty, isTrue);
+        expect(copied.isHidden, isTrue);
+        expect(copied.isReviewed, isTrue);
+        expect(copied.comment, equals('Original'));
+        expect(copied.isEmpty, isFalse);
       });
 
       test('given AdminConfigDto '
@@ -598,12 +579,12 @@ void main() {
         );
 
         // When
-        final copied = original.copyWith(isHidden: true, resetIsREviewed: true);
+        final copied = original.copyWith(isHidden: true, resetIsReviewed: true);
 
         // Then
         expect(copied.isHidden, isTrue);
         expect(copied.isReviewed, isNull);
-        expect(copied.comment, isNull); // Bug: doesn't preserve current value
+        expect(copied.comment, equals('Original'));
       });
     });
 

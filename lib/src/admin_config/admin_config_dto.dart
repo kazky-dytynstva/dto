@@ -29,13 +29,13 @@ class AdminConfigDto extends Equatable {
     bool? isReviewed,
     String? comment,
     bool resetIsHidden = false,
-    bool resetIsREviewed = false,
+    bool resetIsReviewed = false,
     bool resetComment = false,
   }) {
     return AdminConfigDto(
-      isHidden: resetIsHidden ? null : isHidden,
-      isReviewed: resetIsREviewed ? null : isReviewed,
-      comment: resetComment ? null : comment,
+      isHidden: resetIsHidden ? null : isHidden ?? this.isHidden,
+      isReviewed: resetIsReviewed ? null : isReviewed ?? this.isReviewed,
+      comment: resetComment ? null : comment ?? this.comment,
     );
   }
 }
