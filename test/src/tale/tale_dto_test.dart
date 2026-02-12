@@ -1,3 +1,4 @@
+import 'package:dto/src/admin_config/admin_config_dto.dart';
 import 'package:dto/src/tale/content/audio_content_dto.dart';
 import 'package:dto/src/tale/content/text_content_dto.dart';
 import 'package:dto/src/tale/crew/crew_dto.dart';
@@ -309,7 +310,7 @@ void main() {
           },
           'audio': null,
           'crew': null,
-          'is_hidden': false,
+          'admin_config': null,
         };
 
         // When
@@ -660,6 +661,348 @@ void main() {
 
         // Then
         expect(json['crew'], equals(expectedCrewJson));
+      });
+    });
+
+    group('adminConfig', () {
+      test('given adminConfig with non-empty values '
+          'when creating $TaleDto '
+          'then adminConfig is preserved', () {
+        // Given/When
+        final tale = TaleDto(
+          id: 1,
+          name: 'Tale Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: true,
+            comment: 'Test comment',
+          ),
+        );
+
+        // Then
+        expect(tale.adminConfig, isNotNull);
+        expect(tale.adminConfig?.isHidden, isTrue);
+        expect(tale.adminConfig?.isReviewed, isTrue);
+        expect(tale.adminConfig?.comment, equals('Test comment'));
+      });
+
+      test('given adminConfig with empty values '
+          'when creating $TaleDto '
+          'then adminConfig becomes null', () {
+        // Given/When
+        final tale = TaleDto(
+          id: 1,
+          name: 'Tale Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(),
+        );
+
+        // Then
+        expect(tale.adminConfig, isNull);
+      });
+
+      test('given adminConfig is null '
+          'when creating $TaleDto '
+          'then adminConfig is null', () {
+        // Given/When
+        final tale = TaleDto(
+          id: 1,
+          name: 'Tale Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: null,
+        );
+
+        // Then
+        expect(tale.adminConfig, isNull);
+      });
+
+      test('given $TaleDto with adminConfig '
+          'when calling toJson '
+          'then admin_config field is in the map', () {
+        // Given
+        final tale = TaleDto(
+          id: 1,
+          name: 'Tale Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: false,
+            comment: 'Admin comment',
+          ),
+        );
+        final expectedAdminConfigJson = {
+          'is_hidden': true,
+          'comment': 'Admin comment',
+        };
+
+        // When
+        final json = tale.toJson();
+
+        // Then
+        expect(json['admin_config'], equals(expectedAdminConfigJson));
+      });
+
+      test('given $TaleDto without adminConfig '
+          'when calling toJson '
+          'then admin_config field is null in the map', () {
+        // Given
+        final tale = TaleDto(
+          id: 1,
+          name: 'Tale Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: null,
+        );
+
+        // When
+        final json = tale.toJson();
+
+        // Then
+        expect(json['admin_config'], isNull);
+      });
+
+      test('given JSON with admin_config '
+          'when calling fromJson '
+          'then $TaleDto with adminConfig is created', () {
+        // Given
+        final json = {
+          'id': 1,
+          'name': 'Tale Name',
+          'create_date': createDate.toIso8601String(),
+          'update_date': updateDate.toIso8601String(),
+          'summary': summaryMin,
+          'tags': ['text'],
+          'text': {
+            'items': ['[0]', 'Content'],
+            'min_reading_time': 1,
+            'max_reading_time': 2,
+          },
+          'audio': null,
+          'crew': null,
+          'admin_config': {
+            'is_hidden': true,
+            'is_reviewed': true,
+            'comment': 'From JSON',
+          },
+        };
+
+        // When
+        final tale = TaleDto.fromJson(json);
+
+        // Then
+        expect(tale.adminConfig, isNotNull);
+        expect(tale.adminConfig?.isHidden, isTrue);
+        expect(tale.adminConfig?.isReviewed, isTrue);
+        expect(tale.adminConfig?.comment, equals('From JSON'));
+      });
+
+      test('given JSON without admin_config '
+          'when calling fromJson '
+          'then $TaleDto with null adminConfig is created', () {
+        // Given
+        final json = {
+          'id': 1,
+          'name': 'Tale Name',
+          'create_date': createDate.toIso8601String(),
+          'update_date': updateDate.toIso8601String(),
+          'summary': summaryMin,
+          'tags': ['text'],
+          'text': {
+            'items': ['[0]', 'Content'],
+            'min_reading_time': 1,
+            'max_reading_time': 2,
+          },
+          'audio': null,
+          'crew': null,
+          'admin_config': null,
+        };
+
+        // When
+        final tale = TaleDto.fromJson(json);
+
+        // Then
+        expect(tale.adminConfig, isNull);
+      });
+
+      test('given $TaleDto '
+          'when calling copyWith with adminConfig '
+          'then new instance with updated adminConfig is returned', () {
+        // Given
+        final original = TaleDto(
+          id: 1,
+          name: 'Original',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: null,
+        );
+
+        // When
+        final copied = original.copyWith(
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: false,
+            comment: 'New config',
+          ),
+        );
+
+        // Then
+        expect(copied.adminConfig, isNotNull);
+        expect(copied.adminConfig?.isHidden, isTrue);
+        expect(copied.adminConfig?.isReviewed, isFalse);
+        expect(copied.adminConfig?.comment, equals('New config'));
+        expect(copied.id, equals(original.id));
+        expect(copied.name, equals(original.name));
+      });
+
+      test('given $TaleDto with adminConfig '
+          'when calling copyWith without adminConfig parameter '
+          'then new instance preserves existing adminConfig', () {
+        // Given
+        final original = TaleDto(
+          id: 1,
+          name: 'Original',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: true,
+            comment: 'Original config',
+          ),
+        );
+
+        // When
+        final copied = original.copyWith(name: 'Updated');
+
+        // Then
+        expect(copied.adminConfig, isNotNull);
+        expect(copied.adminConfig?.isHidden, isTrue);
+        expect(copied.adminConfig?.isReviewed, isTrue);
+        expect(copied.adminConfig?.comment, equals('Original config'));
+        expect(copied.name, equals('Updated'));
+      });
+
+      test('given $TaleDto with adminConfig '
+          'when calling copyWith with null adminConfig '
+          'then new instance has null adminConfig', () {
+        // Given
+        final original = TaleDto(
+          id: 1,
+          name: 'Original',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: true,
+            comment: 'Original config',
+          ),
+        );
+
+        // When
+        final copied = original.copyWith(adminConfig: null);
+
+        // Then
+        expect(copied.adminConfig, isNull);
       });
     });
   });
