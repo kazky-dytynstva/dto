@@ -1,0 +1,40 @@
+{
+	"Test template": {
+		"prefix": ["tst", "test"],
+		"body": [
+			"test(",
+			"  'given ${1:[the pre-conditions to the test]} '",
+			"  'when ${2:[the behavior you testing]} '",
+			"  'then ${3:[the changes you expect due to the specified behavior]}',",
+			"  () {",
+			"		// Given",
+			"    // ${4:describe 'Given' part}",
+			"",
+			"		// When",
+			"",
+			"		// Then",
+			"  },",
+			");"
+		],
+		"description": "Unit test template"
+	},
+	"Widget test template": {
+		"prefix": ["tstWidget", "testWidget"],
+		"body": [
+			"testWidgets(",
+			"  'given ${1:[the pre-conditions to the test]} '",
+			"  'when ${2:[the behavior you testing]} '",
+			"  'then ${3:[the changes you expect due to the specified behavior]}',",
+			"  (tester) async {",
+			"		// Given",
+			"    // ${4:describe GIVEN part}",
+			"",
+			"		// When",
+			"",
+			"		// Then",
+			"  },",
+			");"
+		],
+		"description": "Widget test template"
+	},
+}
