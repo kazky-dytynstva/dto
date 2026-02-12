@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:dto/dto.dart';
 
+import '../../json_keys/person_gender_keys.dart';
+
 void main() {
   group('$PersonGenderDto', () {
     test('given enum value female '
@@ -29,8 +31,8 @@ void main() {
         'when decoding with json_annotation '
         'then returns PersonGenderDto.female', () {
       // Given
-      final json = {'gender': 'female'};
-      final genderStr = json['gender'] ?? '';
+      final json = {PersonGenderKeys.gender: 'female'};
+      final genderStr = json[PersonGenderKeys.gender] ?? '';
       // When
       final decoded = PersonGenderDto.values.firstWhere(
         (e) => _enumJsonValue(e) == genderStr,
@@ -43,8 +45,8 @@ void main() {
         'when decoding with json_annotation '
         'then returns PersonGenderDto.male', () {
       // Given
-      final json = {'gender': 'male'};
-      final genderStr = json['gender'] ?? '';
+      final json = {PersonGenderKeys.gender: 'male'};
+      final genderStr = json[PersonGenderKeys.gender] ?? '';
       // When
       final decoded = PersonGenderDto.values.firstWhere(
         (e) => _enumJsonValue(e) == genderStr,
@@ -57,8 +59,8 @@ void main() {
         'when decoding with json_annotation '
         'then throws StateError', () {
       // Given
-      final json = {'gender': 'other'};
-      final genderStr = json['gender'] ?? '';
+      final json = {PersonGenderKeys.gender: 'other'};
+      final genderStr = json[PersonGenderKeys.gender] ?? '';
       // Then
       expect(
         () => PersonGenderDto.values.firstWhere(
