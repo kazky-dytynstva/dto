@@ -26,7 +26,7 @@ void main() {
           name: 'Test Tale',
           createDate: DateTime(2023, 1, 1),
           updateDate: DateTime(2023, 1, 2),
-          summary: 'This is a test summary for the tale.' + ('a' * 104),
+          summary: 'This is a test summary for the tale.${'a' * 104}',
           tags: {TaleTag.text},
           text: TextContentDto(
             items: [
@@ -60,7 +60,7 @@ void main() {
             name: 'First Tale',
             createDate: DateTime(2023, 1, 1),
             updateDate: null,
-            summary: 'This is the first test summary.' + ('a' * 109),
+            summary: 'This is the first test summary.${'a' * 109}',
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
@@ -84,7 +84,7 @@ void main() {
             name: 'Second Tale',
             createDate: DateTime(2023, 2, 1),
             updateDate: DateTime(2023, 2, 2),
-            summary: 'This is the second test summary.' + ('a' * 108),
+            summary: 'This is the second test summary.${'a' * 108}',
             tags: {TaleTag.text},
             text: TextContentDto(
               items: [
