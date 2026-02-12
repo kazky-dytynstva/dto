@@ -20,8 +20,6 @@ include: package:lints/recommended.yaml
 #     - camel_case_types
 
 analyzer:
-  enable-experiment:
-    - null-aware-elements
 #   exclude:
 #     - path/to/excluded/files/**
 
