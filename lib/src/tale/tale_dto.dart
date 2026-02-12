@@ -77,6 +77,11 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   Map<String, dynamic> toJson() => _$TaleDtoToJson(this);
 
   @override
+  Map<String, dynamic> toProdJson() {
+    return _$TaleDtoToJson(copyWith(resetAdminConfig: true));
+  }
+
+  @override
   List<Object?> get props => [
     id,
     name,
@@ -105,6 +110,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     bool resetText = false,
     bool resetAudio = false,
     AdminConfigDto? adminConfig,
+    bool resetAdminConfig = false,
   }) {
     assert(
       !(resetUpdateDate && updateDate != null),
@@ -122,6 +128,10 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       !(resetAudio && audio != null),
       'Cannot reset and set audio at the same time',
     );
+    assert(
+      !(resetAdminConfig && adminConfig != null),
+      'Cannot reset and set adminConfig at the same time',
+    );
 
     return TaleDto(
       id: id ?? this.id,
@@ -133,7 +143,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
       text: resetText ? null : text ?? this.text,
       audio: resetAudio ? null : audio ?? this.audio,
       crew: resetCrew ? null : crew ?? this.crew,
-      adminConfig: adminConfig ?? this.adminConfig,
+      adminConfig: resetAdminConfig ? null : adminConfig ?? this.adminConfig,
     );
   }
 
