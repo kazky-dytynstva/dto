@@ -917,7 +917,7 @@ void main() {
         final copied = original.copyWith(
           adminConfig: AdminConfigDto(
             isHidden: true,
-            isReviewed: false,
+            isReviewed: true,
             comment: 'New config',
           ),
         );
@@ -925,7 +925,7 @@ void main() {
         // Then
         expect(copied.adminConfig, isNotNull);
         expect(copied.adminConfig?.isHidden, isTrue);
-        expect(copied.adminConfig?.isReviewed, isFalse);
+        expect(copied.adminConfig?.isReviewed, isTrue);
         expect(copied.adminConfig?.comment, equals('New config'));
         expect(copied.id, equals(original.id));
         expect(copied.name, equals(original.name));
@@ -972,7 +972,7 @@ void main() {
 
       test('given $TaleDto with adminConfig '
           'when calling copyWith with null adminConfig '
-          'then new instance has null adminConfig', () {
+          'then existing adminConfig is preserved', () {
         // Given
         final original = TaleDto(
           id: 1,
@@ -999,7 +999,46 @@ void main() {
         );
 
         // When
+        // Note: copyWith uses adminConfig ?? this.adminConfig, so passing null preserves the original
         final copied = original.copyWith(adminConfig: null);
+
+        // Then
+        expect(copied.adminConfig, isNotNull);
+        expect(copied.adminConfig?.isHidden, isTrue);
+        expect(copied.adminConfig?.isReviewed, isTrue);
+        expect(copied.adminConfig?.comment, equals('Original config'));
+      });
+
+      test('given $TaleDto with adminConfig '
+          'when calling copyWith with empty AdminConfigDto '
+          'then adminConfig becomes null due to isEmpty normalization', () {
+        // Given
+        final original = TaleDto(
+          id: 1,
+          name: 'Original',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 1,
+            maxReadingTime: 2,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(
+            isHidden: true,
+            isReviewed: true,
+            comment: 'Original config',
+          ),
+        );
+
+        // When
+        final copied = original.copyWith(adminConfig: AdminConfigDto());
 
         // Then
         expect(copied.adminConfig, isNull);
