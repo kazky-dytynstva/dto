@@ -370,9 +370,18 @@ void main() {
         // When
         final person = PersonDto.fromJson(json);
         // Then
-        expect(person.id, 15);
-        expect(person.name, 'Extra');
-        expect(person.surname, 'Fields');
+        final expectedPerson = PersonDto(
+          id: 15,
+          name: 'Extra',
+          surname: 'Fields',
+          gender: PersonGenderDto.male,
+          url: null,
+          info: null,
+          roles: null,
+          createDate: person.createDate,
+          updateDate: person.updateDate,
+        );
+        expect(person, equals(expectedPerson));
       });
       test('given JSON with all fields '
           'when calling $PersonDto.fromJson '
@@ -396,16 +405,18 @@ void main() {
         final person = PersonDto.fromJson(json);
 
         // Then
-        expect(person.id, equals(2));
-        expect(person.name, equals('Jane'));
-        expect(person.surname, equals('Smith'));
-        expect(person.gender, equals(PersonGenderDto.female));
-        expect(person.url, equals(Uri.parse('https://example.org')));
-        expect(person.info, equals('Other info'));
-        expect(
-          person.roles,
-          equals([PersonRoleDto.musician, PersonRoleDto.graphic]),
+        final expectedPerson = PersonDto(
+          id: 2,
+          name: 'Jane',
+          surname: 'Smith',
+          gender: PersonGenderDto.female,
+          url: Uri.parse('https://example.org'),
+          info: 'Other info',
+          roles: [PersonRoleDto.musician, PersonRoleDto.graphic],
+          createDate: person.createDate,
+          updateDate: person.updateDate,
         );
+        expect(person, equals(expectedPerson));
       });
 
       test('given JSON with missing optional fields '
@@ -425,13 +436,18 @@ void main() {
         final person = PersonDto.fromJson(json);
 
         // Then
-        expect(person.id, 3);
-        expect(person.name, 'Alex');
-        expect(person.surname, 'Brown');
-        expect(person.gender, PersonGenderDto.male);
-        expect(person.url, isNull);
-        expect(person.info, isNull);
-        expect(person.roles, isNull);
+        final expectedPerson = PersonDto(
+          id: 3,
+          name: 'Alex',
+          surname: 'Brown',
+          gender: PersonGenderDto.male,
+          url: null,
+          info: null,
+          roles: null,
+          createDate: person.createDate,
+          updateDate: person.updateDate,
+        );
+        expect(person, equals(expectedPerson));
       });
     });
 

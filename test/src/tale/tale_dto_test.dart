@@ -733,10 +733,13 @@ void main() {
         );
 
         // Then
+        final expectedAdminConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Test comment',
+        );
         expect(tale.adminConfig, isNotNull);
-        expect(tale.adminConfig?.isHidden, isTrue);
-        expect(tale.adminConfig?.isReviewed, isTrue);
-        expect(tale.adminConfig?.comment, equals('Test comment'));
+        expect(tale.adminConfig, equals(expectedAdminConfig));
       });
 
       test('given adminConfig with empty values '
@@ -1082,10 +1085,13 @@ void main() {
         final tale = TaleDto.fromJson(json);
 
         // Then
+        final expectedAdminConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'From JSON',
+        );
         expect(tale.adminConfig, isNotNull);
-        expect(tale.adminConfig?.isHidden, isTrue);
-        expect(tale.adminConfig?.isReviewed, isTrue);
-        expect(tale.adminConfig?.comment, equals('From JSON'));
+        expect(tale.adminConfig, equals(expectedAdminConfig));
       });
 
       test('given JSON without admin_config '
@@ -1150,10 +1156,13 @@ void main() {
         );
 
         // Then
+        final expectedAdminConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'New config',
+        );
         expect(copied.adminConfig, isNotNull);
-        expect(copied.adminConfig?.isHidden, isTrue);
-        expect(copied.adminConfig?.isReviewed, isTrue);
-        expect(copied.adminConfig?.comment, equals('New config'));
+        expect(copied.adminConfig, equals(expectedAdminConfig));
         expect(copied.id, equals(original.id));
         expect(copied.name, equals(original.name));
       });
@@ -1190,10 +1199,13 @@ void main() {
         final copied = original.copyWith(name: 'Updated');
 
         // Then
+        final expectedAdminConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Original config',
+        );
         expect(copied.adminConfig, isNotNull);
-        expect(copied.adminConfig?.isHidden, isTrue);
-        expect(copied.adminConfig?.isReviewed, isTrue);
-        expect(copied.adminConfig?.comment, equals('Original config'));
+        expect(copied.adminConfig, equals(expectedAdminConfig));
         expect(copied.name, equals('Updated'));
       });
 
@@ -1230,10 +1242,13 @@ void main() {
         final copied = original.copyWith(adminConfig: null);
 
         // Then
+        final expectedAdminConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Original config',
+        );
         expect(copied.adminConfig, isNotNull);
-        expect(copied.adminConfig?.isHidden, isTrue);
-        expect(copied.adminConfig?.isReviewed, isTrue);
-        expect(copied.adminConfig?.comment, equals('Original config'));
+        expect(copied.adminConfig, equals(expectedAdminConfig));
       });
 
       test('given $TaleDto with adminConfig '

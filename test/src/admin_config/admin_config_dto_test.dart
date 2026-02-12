@@ -113,9 +113,12 @@ void main() {
         );
 
         // Then
-        expect(config.isHidden, isTrue);
-        expect(config.isReviewed, isTrue);
-        expect(config.comment, equals('Full config'));
+        final expectedConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Full config',
+        );
+        expect(config, equals(expectedConfig));
       });
     });
 
@@ -208,9 +211,12 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isTrue);
-        expect(config.isReviewed, isTrue);
-        expect(config.comment, equals('Test comment'));
+        final expectedConfig = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Test comment',
+        );
+        expect(config, equals(expectedConfig));
       });
 
       test('given JSON with null fields '
@@ -227,9 +233,8 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isNull);
-        expect(config.isReviewed, isNull);
-        expect(config.comment, isNull);
+        final expectedConfig = AdminConfigDto();
+        expect(config, equals(expectedConfig));
       });
 
       test('given JSON with missing fields '
@@ -242,9 +247,8 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isNull);
-        expect(config.isReviewed, isNull);
-        expect(config.comment, isNull);
+        final expectedConfig = AdminConfigDto();
+        expect(config, equals(expectedConfig));
       });
 
       test('given JSON with only isHidden '
@@ -257,9 +261,8 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isTrue);
-        expect(config.isReviewed, isNull);
-        expect(config.comment, isNull);
+        final expectedConfig = AdminConfigDto(isHidden: true);
+        expect(config, equals(expectedConfig));
       });
 
       test('given JSON with only isReviewed '
@@ -272,9 +275,8 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isNull);
-        expect(config.isReviewed, isTrue);
-        expect(config.comment, isNull);
+        final expectedConfig = AdminConfigDto(isReviewed: true);
+        expect(config, equals(expectedConfig));
       });
 
       test('given JSON with only comment '
@@ -287,9 +289,8 @@ void main() {
         final config = AdminConfigDto.fromJson(json);
 
         // Then
-        expect(config.isHidden, isNull);
-        expect(config.isReviewed, isNull);
-        expect(config.comment, equals('Only comment'));
+        final expectedConfig = AdminConfigDto(comment: 'Only comment');
+        expect(config, equals(expectedConfig));
       });
     });
 
@@ -462,9 +463,12 @@ void main() {
         final copied = original.copyWith(comment: 'Updated');
 
         // Then
-        expect(copied.isHidden, isTrue);
-        expect(copied.isReviewed, isTrue);
-        expect(copied.comment, equals('Updated'));
+        final expectedCopied = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Updated',
+        );
+        expect(copied, equals(expectedCopied));
       });
 
       test('given AdminConfigDto with isHidden '
@@ -481,9 +485,11 @@ void main() {
         final copied = original.copyWith(resetIsHidden: true);
 
         // Then
-        expect(copied.isHidden, isNull);
-        expect(copied.isReviewed, isTrue);
-        expect(copied.comment, equals('Original'));
+        final expectedCopied = AdminConfigDto(
+          isReviewed: true,
+          comment: 'Original',
+        );
+        expect(copied, equals(expectedCopied));
       });
 
       test('given AdminConfigDto with isReviewed '
@@ -519,9 +525,8 @@ void main() {
         final copied = original.copyWith(resetComment: true);
 
         // Then
-        expect(copied.isHidden, isTrue);
-        expect(copied.isReviewed, isTrue);
-        expect(copied.comment, isNull);
+        final expectedCopied = AdminConfigDto(isHidden: true, isReviewed: true);
+        expect(copied, equals(expectedCopied));
       });
 
       test('given AdminConfigDto '
@@ -542,9 +547,8 @@ void main() {
         );
 
         // Then
-        expect(copied.isHidden, isNull);
-        expect(copied.isReviewed, isNull);
-        expect(copied.comment, isNull);
+        final expectedCopied = AdminConfigDto();
+        expect(copied, equals(expectedCopied));
         expect(copied.isEmpty, isTrue);
       });
 
@@ -562,9 +566,12 @@ void main() {
         final copied = original.copyWith();
 
         // Then
-        expect(copied.isHidden, isTrue);
-        expect(copied.isReviewed, isTrue);
-        expect(copied.comment, equals('Original'));
+        final expectedCopied = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Original',
+        );
+        expect(copied, equals(expectedCopied));
         expect(copied.isEmpty, isFalse);
       });
 
@@ -582,9 +589,11 @@ void main() {
         final copied = original.copyWith(isHidden: true, resetIsReviewed: true);
 
         // Then
-        expect(copied.isHidden, isTrue);
-        expect(copied.isReviewed, isNull);
-        expect(copied.comment, equals('Original'));
+        final expectedCopied = AdminConfigDto(
+          isHidden: true,
+          comment: 'Original',
+        );
+        expect(copied, equals(expectedCopied));
       });
     });
 
