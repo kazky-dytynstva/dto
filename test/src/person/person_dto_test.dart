@@ -516,11 +516,8 @@ void main() {
           PersonKeys.name: 'Sam',
           PersonKeys.surname: 'Green',
           PersonKeys.gender: 'female',
-          PersonKeys.url: null,
-          PersonKeys.info: null,
           PersonKeys.roles: ['translator'],
           PersonKeys.createDate: person.createDate.toIso8601String(),
-          PersonKeys.updateDate: null,
         };
 
         // When
