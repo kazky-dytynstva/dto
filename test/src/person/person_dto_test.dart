@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import '../../json_keys/person_keys.dart';
 import '../../utils/throws_assert_error_with_message.dart';
 import 'package:dto/dto.dart';
 
@@ -287,12 +288,12 @@ void main() {
           'then throws error', () {
         // Given
         final json = {
-          'id': 11,
-          'name': 'Unknown',
-          'surname': 'Gender',
-          'gender': 'other',
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.id: 11,
+          PersonKeys.name: 'Unknown',
+          PersonKeys.surname: 'Gender',
+          PersonKeys.gender: 'other',
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
         // Then
         expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -303,13 +304,13 @@ void main() {
           'then throws error', () {
         // Given
         final json = {
-          'id': 12,
-          'name': 'Unknown',
-          'surname': 'Role',
-          'gender': 'male',
-          'roles': ['alien'],
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.id: 12,
+          PersonKeys.name: 'Unknown',
+          PersonKeys.surname: 'Role',
+          PersonKeys.gender: 'male',
+          PersonKeys.roles: ['alien'],
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
         // Then
         expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -320,13 +321,13 @@ void main() {
           'then throws assertion error with correct message', () {
         // Given
         final json = {
-          'id': 13,
-          'name': 'Dup',
-          'surname': 'Role',
-          'gender': 'female',
-          'roles': ['author', 'author'],
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.id: 13,
+          PersonKeys.name: 'Dup',
+          PersonKeys.surname: 'Role',
+          PersonKeys.gender: 'female',
+          PersonKeys.roles: ['author', 'author'],
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
         // Then
         expect(
@@ -340,13 +341,13 @@ void main() {
           'then throws error', () {
         // Given
         final json = {
-          'id': 14,
-          'name': 'Null',
-          'surname': 'Role',
-          'gender': 'female',
-          'roles': [null],
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.id: 14,
+          PersonKeys.name: 'Null',
+          PersonKeys.surname: 'Role',
+          PersonKeys.gender: 'female',
+          PersonKeys.roles: [null],
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
         // Then
         expect(() => PersonDto.fromJson(json), throwsA(isA<ArgumentError>()));
@@ -357,14 +358,14 @@ void main() {
           'then unknown fields are ignored', () {
         // Given
         final json = {
-          'id': 15,
-          'name': 'Extra',
-          'surname': 'Fields',
-          'gender': 'male',
+          PersonKeys.id: 15,
+          PersonKeys.name: 'Extra',
+          PersonKeys.surname: 'Fields',
+          PersonKeys.gender: 'male',
           'unknown1': 123,
           'unknown2': 'abc',
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
         // When
         final person = PersonDto.fromJson(json);
@@ -378,15 +379,15 @@ void main() {
           'then PersonDto is created correctly', () {
         // Given
         final json = {
-          'id': 2,
-          'name': 'Jane',
-          'surname': 'Smith',
-          'gender': 'female',
-          'url': 'https://example.org',
-          'info': 'Other info',
-          'roles': ['musician', 'graphic'],
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': DateTime.now()
+          PersonKeys.id: 2,
+          PersonKeys.name: 'Jane',
+          PersonKeys.surname: 'Smith',
+          PersonKeys.gender: 'female',
+          PersonKeys.url: 'https://example.org',
+          PersonKeys.info: 'Other info',
+          PersonKeys.roles: ['musician', 'graphic'],
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: DateTime.now()
               .add(Duration(hours: 1))
               .toIso8601String(),
         };
@@ -412,12 +413,12 @@ void main() {
           'then PersonDto is created with nulls', () {
         // Given
         final json = {
-          'id': 3,
-          'name': 'Alex',
-          'surname': 'Brown',
-          'gender': 'male',
-          'create_date': DateTime.now().toIso8601String(),
-          'update_date': null,
+          PersonKeys.id: 3,
+          PersonKeys.name: 'Alex',
+          PersonKeys.surname: 'Brown',
+          PersonKeys.gender: 'male',
+          PersonKeys.createDate: DateTime.now().toIso8601String(),
+          PersonKeys.updateDate: null,
         };
 
         // When
