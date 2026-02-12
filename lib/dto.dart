@@ -5,6 +5,8 @@ export 'src/compression/dto_compression.dart';
 export 'src/utils/to_json_item.dart';
 export 'src/utils/id_holder.dart';
 
+export 'src/admin_config/admin_config_dto.dart';
+
 export 'src/person/person_dto.dart';
 export 'src/person/person_gender_dto.dart';
 export 'src/person/person_role_dto.dart';
