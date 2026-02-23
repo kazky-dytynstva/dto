@@ -597,6 +597,54 @@ void main() {
       });
     });
 
+    group('$AdminConfigDto.toProdConfig', () {
+      test('given $AdminConfigDto with all fields set '
+          'when calling toProdConfig '
+          'then isHidden is preserved and isReviewed and comment are null', () {
+        // Given
+        final config = AdminConfigDto(
+          isHidden: true,
+          isReviewed: true,
+          comment: 'Admin note',
+        );
+
+        // When
+        final prodConfig = config.toProdConfig();
+
+        // Then
+        final expectedConfig = AdminConfigDto(isHidden: true);
+        expect(prodConfig, equals(expectedConfig));
+      });
+
+      test('given empty $AdminConfigDto '
+          'when calling toProdConfig '
+          'then result isEmpty', () {
+        // Given
+        final config = AdminConfigDto();
+
+        // When
+        final prodConfig = config.toProdConfig();
+
+        // Then
+        expect(prodConfig.isEmpty, isTrue);
+      });
+
+      test('given $AdminConfigDto with only isHidden set '
+          'when calling toProdConfig '
+          'then isHidden is preserved and isReviewed and comment are null', () {
+        // Given
+        final config = AdminConfigDto(isHidden: true);
+
+        // When
+        final prodConfig = config.toProdConfig();
+
+        // Then
+        expect(prodConfig.isHidden, isTrue);
+        expect(prodConfig.isReviewed, isNull);
+        expect(prodConfig.comment, isNull);
+      });
+    });
+
     group('$AdminConfigDto round-trip serialization', () {
       test('given AdminConfigDto '
           'when converting to JSON and back '

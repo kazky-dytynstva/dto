@@ -38,4 +38,8 @@ class AdminConfigDto extends Equatable {
       comment: resetComment ? null : comment ?? this.comment,
     );
   }
+
+  AdminConfigDto toProdConfig() {
+    return copyWith(resetIsReviewed: true, resetComment: true);
+  }
 }
