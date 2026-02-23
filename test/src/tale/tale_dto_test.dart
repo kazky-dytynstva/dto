@@ -1396,89 +1396,80 @@ void main() {
     });
 
     group('$TaleDto isHidden', () {
-      test(
-        'given adminConfig null '
-        'when creating $TaleDto '
-        'then isHidden is null',
-        () {
-          final tale = TaleDto(
-            id: 1,
-            name: 'Valid Name',
-            createDate: createDate,
-            updateDate: updateDate,
-            summary: summaryMin,
-            tags: {TaleTag.text},
-            text: TextContentDto(
-              items: [
-                ContentItem.image(imageIndex: 0),
-                ContentItem.text(text: 'Content'),
-              ],
-              minReadingTime: 5,
-              maxReadingTime: 10,
-            ),
-            audio: null,
-            crew: null,
-            adminConfig: null,
-          );
-          expect(tale.isHidden, isNull);
-        },
-      );
+      test('given adminConfig null '
+          'when creating $TaleDto '
+          'then isHidden is null', () {
+        final tale = TaleDto(
+          id: 1,
+          name: 'Valid Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 5,
+            maxReadingTime: 10,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: null,
+        );
+        expect(tale.isHidden, isNull);
+      });
 
-      test(
-        'given adminConfig with isHidden=true '
-        'when creating $TaleDto '
-        'then isHidden is true',
-        () {
-          final tale = TaleDto(
-            id: 1,
-            name: 'Valid Name',
-            createDate: createDate,
-            updateDate: updateDate,
-            summary: summaryMin,
-            tags: {TaleTag.text},
-            text: TextContentDto(
-              items: [
-                ContentItem.image(imageIndex: 0),
-                ContentItem.text(text: 'Content'),
-              ],
-              minReadingTime: 5,
-              maxReadingTime: 10,
-            ),
-            audio: null,
-            crew: null,
-            adminConfig: AdminConfigDto(isHidden: true),
-          );
-          expect(tale.isHidden, isTrue);
-        },
-      );
+      test('given adminConfig with isHidden=true '
+          'when creating $TaleDto '
+          'then isHidden is true', () {
+        final tale = TaleDto(
+          id: 1,
+          name: 'Valid Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 5,
+            maxReadingTime: 10,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(isHidden: true),
+        );
+        expect(tale.isHidden, isTrue);
+      });
 
-       test(
-        'given adminConfig with isHidden=false '
-        'when creating $TaleDto '
-        'then isHidden is null',
-        () {
-          final tale = TaleDto(
-            id: 1,
-            name: 'Valid Name',
-            createDate: createDate,
-            updateDate: updateDate,
-            summary: summaryMin,
-            tags: {TaleTag.text},
-            text: TextContentDto(
-              items: [
-                ContentItem.image(imageIndex: 0),
-                ContentItem.text(text: 'Content'),
-              ],
-              minReadingTime: 5,
-              maxReadingTime: 10,
-            ),
-            audio: null,
-            crew: null,
-            adminConfig: AdminConfigDto(isHidden: false),
-          );
-          expect(tale.isHidden, isNull);
-        },
-      );
+      test('given adminConfig with isHidden=false '
+          'when creating $TaleDto '
+          'then isHidden is null', () {
+        final tale = TaleDto(
+          id: 1,
+          name: 'Valid Name',
+          createDate: createDate,
+          updateDate: updateDate,
+          summary: summaryMin,
+          tags: {TaleTag.text},
+          text: TextContentDto(
+            items: [
+              ContentItem.image(imageIndex: 0),
+              ContentItem.text(text: 'Content'),
+            ],
+            minReadingTime: 5,
+            maxReadingTime: 10,
+          ),
+          audio: null,
+          crew: null,
+          adminConfig: AdminConfigDto(isHidden: false),
+        );
+        expect(tale.isHidden, isNull);
+      });
     });
   });
 }

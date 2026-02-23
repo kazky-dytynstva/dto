@@ -10,4 +10,5 @@ class TaleKeys {
   static const audio = 'audio';
   static const crew = 'crew';
   static const adminConfig = 'admin_config';
+  static const isHidden = 'is_hidden';
 }
