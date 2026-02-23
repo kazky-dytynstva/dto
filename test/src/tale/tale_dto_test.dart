@@ -841,6 +841,7 @@ void main() {
             AdminConfigKeys.isHidden: true,
             AdminConfigKeys.comment: 'Admin comment',
           },
+          TaleKeys.isHidden: true,
         };
 
         // When
