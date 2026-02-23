@@ -23,7 +23,9 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
     required this.audio,
     required this.crew,
     AdminConfigDto? adminConfig,
+    bool isHidden = false,
   }) : adminConfig = adminConfig?.isEmpty == true ? null : adminConfig,
+       isHidden = adminConfig?.isHidden == true ? true : null,
        assert(id >= 0, 'Tale id should be positive'),
        assert(id != stubId, 'Tale id should NOT be a stub id'),
        assert(
@@ -69,6 +71,8 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   final CrewDto? crew;
 
   final AdminConfigDto? adminConfig;
+
+  final bool? isHidden;
 
   factory TaleDto.fromJson(Map<String, dynamic> json) =>
       _$TaleDtoFromJson(json);
