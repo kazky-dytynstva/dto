@@ -156,7 +156,7 @@ class TaleDto extends Equatable implements ToJsonItem, IdHolder {
   static const nameMinLength = 4;
   static const nameMaxLength = 50;
 
-  static const summaryMinLength = 140;
+  static const summaryMinLength = 120;
   static const summaryMaxLength = 200;
 }
 
