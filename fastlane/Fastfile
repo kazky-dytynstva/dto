@@ -80,7 +80,7 @@ end
 
 def dart(args)
   Dir.chdir("..") do
-    sh "dart #{args}"
+    sh "fvm dart #{args}"
   end
 end
 
