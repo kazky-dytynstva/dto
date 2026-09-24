@@ -23,8 +23,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: ⚙️ Install Dart
-        uses: dart-lang/setup-dart@v1.3
+      - name: Read pinned Flutter version
+        id: sdk
+        run: echo "version=$(jq -r '.flutter' .fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - name: Install pinned Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.sdk.outputs.version }}
+
+      - name: Configure FVM
+        run: |
+          dart pub global activate fvm 3.2.1
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+          dart pub global run fvm:main use '${{ steps.sdk.outputs.version }}' --force --skip-pub-get
 
       - name: 🚑 Run sanity checks
         run: fastlane check
+
+      - name: Verify assertion-independent readiness
+        run: |
+          fvm dart run --no-enable-asserts test/src/validation/content_readiness_validator_test.dart assertions-off
+          fvm dart run --enable-asserts test/src/validation/content_readiness_validator_test.dart assertions-on
